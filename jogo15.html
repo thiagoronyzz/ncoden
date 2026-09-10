@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jogo 15 · Realidade Fragmentada — JogoZ</title>
+<style>
+  :root{--bg:#0d0a12;--panel:#171226;--line:#322a52;--txt:#ece7ff;--mut:#9a90c4;--ac:#b78bff;--gold:#ffd75c;--ok:#5cffa8;--bad:#ff8a80}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;background:radial-gradient(900px 400px at 85% -10%,rgba(183,139,255,.12),transparent 55%),linear-gradient(180deg,var(--bg),#07040d);color:var(--txt);min-height:100vh}
+  button{font-family:inherit;cursor:pointer}
+  .top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(13,10,18,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .top a{color:var(--ac);text-decoration:none;font-weight:700;font-size:14px;padding:6px 10px;border-radius:8px;display:flex;gap:5px}
+  .top a:hover{background:rgba(183,139,255,.1)}
+  .ttl{font-weight:800}
+  .sp{flex:1}
+  .btn{padding:8px 13px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:13px;font-weight:600;min-height:38px}
+  .btn:hover{border-color:var(--ac)}
+  .btn.go{background:linear-gradient(135deg,#b78bff,#6d3fd4);color:#140a26;border:0;font-weight:800}
+  .wrap{max-width:1150px;margin:0 auto;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .panel h3{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+  .stages{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .st{border:0;width:34px;height:34px;border-radius:9px;background:var(--panel);border:1px solid var(--line);color:var(--mut);font-weight:800}
+  .st.on{background:linear-gradient(135deg,#b78bff,#6d3fd4);color:#140a26}
+  .st.won{border-color:var(--ok);color:var(--ok)}
+  .st.lock{opacity:.35}
+  .tline{display:flex;gap:8px;align-items:flex-start;margin-bottom:12px;border:1px solid var(--line);border-radius:14px;padding:10px;background:#120e20}
+  .tline.active{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+  .tbtn{flex:0 0 auto;width:86px;padding:6px 4px;border-radius:10px;border:1px solid var(--line);background:#1b1530;color:#c9c0ea;font-size:11.5px;min-height:34px;text-align:center}
+  .tbtn.on{outline:2px solid var(--ac);background:#332260}
+  .cvwrap{flex:1;min-width:0}
+  canvas{width:100%;display:block;background:#0a0714;border:1px solid #2b2349;border-radius:8px}
+  .hud{font-size:12.5px;color:var(--mut);margin:2px 0 8px}
+  .hud b{color:#fff}
+  .keysI{display:flex;gap:8px;margin:4px 0 6px}
+  .kchip{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;border:1px solid #0004;opacity:.22}
+  .kchip.has{opacity:1}
+  .msgline{min-height:17px;font-size:13px;margin-top:8px;color:var(--mut)}
+  .msgline.bad{color:var(--bad)}.msgline.good{color:var(--ok)}
+  .bigmsg{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.88);z-index:90;padding:16px}
+  .bigmsg.open{display:grid}
+  .res{background:linear-gradient(160deg,#241b3f,#130e22);border:1px solid var(--ok);border-radius:18px;max-width:540px;width:100%;padding:24px;text-align:center;max-height:88vh;overflow:auto}
+  .res p{line-height:1.65;font-size:13.5px;color:#ded6f7;margin:7px 0;text-align:left}
+  .rowB{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+  .dp{display:none;grid-template-columns:repeat(3,52px);gap:6px;justify-content:center;margin:8px auto 0}
+  .dbtn{height:46px;border-radius:10px;border:1px solid var(--line);background:#1b1530;color:#fff;font-size:17px}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}.tline{flex-direction:column}.tbtn{width:auto}}
+  @media(pointer:coarse){.dp{display:grid}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="index.html">← JogoZ</a><span class="ttl">15 · Realidade Fragmentada</span><span class="sp"></span>
+  <span style="font-size:13px;color:var(--mut)">Linha <b id="actTxt" style="color:var(--ac)">A</b> · passos <b id="stpN" style="color:#fff">0</b></span>
+  <button class="btn" id="helpBtn">Manual</button>
+  <button class="btn" id="rstBtn">Reiniciar fase</button>
+</header>
+<div class="wrap">
+  <main>
+    <div class="panel">
+      <div class="stages" id="stages"></div>
+      <div class="hud">Fase <b id="lvName">—</b> · Cristais <b id="crN" style="color:var(--gold)">0/3</b> · meta ★★★ ≤ <b id="goldT">0</b> passos · limite <b id="limT">0</b></div>
+      <div class="keysI" id="keysI"></div>
+      <div id="lines"></div>
+      <div class="msgline" id="msg"></div>
+      <div class="dp">
+        <span></span><button class="dbtn" data-k="U">▲</button><span></span>
+        <button class="dbtn" data-k="L">◀</button><span></span><button class="dbtn" data-k="R">▶</button>
+        <span></span><button class="dbtn" data-k="D">▼</button><span></span>
+      </div>
+    </div>
+  </main>
+  <aside>
+    <div class="panel">
+      <h3>Linhas do tempo</h3>
+      <div id="side" style="font-size:12.5px;color:var(--mut);line-height:1.7"></div>
+      <div style="font-size:12px;color:var(--mut);line-height:1.6;margin-top:8px">💠 Cristais<br>🧿 Chave da cor (abre portas da mesma cor)<br>🔛 Alavanca (destrava a porta da cor permanentemente)</div>
+    </div>
+  </aside>
+</div>
+<div class="bigmsg" id="big"><div class="res" id="resBox"></div></div>
+<script>
+"use strict";
+let AC=null;
+function tone(f,d,type,g,when){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+(when||0),o=AC.createOscillator(),v=AC.createGain();o.type=type||'square';o.frequency.value=f;v.gain.value=g||.04;o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d);o.onended=function(){o.disconnect();v.disconnect();};}catch(e){}}
+function sfx(k){if(k==='ok'){tone(620,.09,'square',.05);tone(930,.14,'square',.05,.08);}else if(k==='bad')tone(200,.2,'sawtooth',.05);else if(k==='click')tone(480,.04,'square',.03);else if(k==='win'){[523,659,784,1046].forEach((f,i)=>tone(f,.15,'square',.05,i*.11));}else if(k==='key')tone(760,.08,'sine',.06);else if(k==='jump')tone(350,.1,'triangle',.05);}
+document.addEventListener('pointerdown',function(){if(AC&&AC.state==='suspended')AC.resume();},{once:true});
+const PREF='jzP15';
+function load(){try{const v=localStorage.getItem(PREF);return v?JSON.parse(v):null;}catch(e){return null;}}
+function save(){try{localStorage.setItem(PREF,JSON.stringify({unlock:unlock,best:best}));}catch(e){}}
+let unlock=1,best={};
+(function(){const s=load();if(s){unlock=Math.min(8,Math.max(1,s.unlock||1));best=s.best||{};}})();
+
+/* ===== dados das fases (geradas e validadas por busca automática) =====
+   gold = menor nº de passos que resolve a fase */
+const LEVELS=[
+ {name:'Linhas paralelas',gold:47,lim:71,tls:[{"rows": ["#####################", "#....################", "####.################", "####....#############", "#######.#############", "#######....##########", "##########.##########", "##########....#######", "#############.#######", "#############....####", "################.####", "################....#", "#####################"], "start": [1, 1], "keys": [[2, 4, 1]], "doors": [[4, 7, 1]], "levers": [], "crystals": [[7, 10]]},{"rows": ["#####################", "#....################", "####.################", "####....#############", "#######.#############", "#######....##########", "##########.##########", "##########....#######", "#############.#######", "#############....####", "################.####", "################....#", "#####################"], "start": [1, 1], "keys": [[2, 4, 2]], "doors": [[4, 7, 2]], "levers": [], "crystals": [[7, 10]]},{"rows": ["#####################", "#....################", "####.################", "####....#############", "#######.#############", "#######....##########", "##########.##########", "##########....#######", "#############.#######", "#############....####", "################.####", "################....#", "#####################"], "start": [1, 1], "keys": [[2, 4, 3]], "doors": [[4, 7, 3]], "levers": [], "crystals": [[7, 10]]}]},
+ {name:'Chaves trocadas',gold:44,lim:66,tls:[{"rows": ["##################", "#....#############", "####.#############", "####....##########", "#######.##########", "#######....#######", "##########.#######", "##########....####", "#############.####", "#############....#", "##################"], "start": [1, 1], "keys": [], "doors": [[3, 6, 1]], "levers": [], "crystals": [[6, 10]]},{"rows": ["##################", "#....#############", "####.#############", "####....##########", "#######.##########", "#######....#######", "##########.#######", "##########....####", "#############.####", "#############....#", "##################"], "start": [1, 1], "keys": [[1, 4, 1]], "doors": [[4, 7, 2]], "levers": [], "crystals": [[7, 11]]},{"rows": ["##################", "#....#############", "####.#############", "####....##########", "#######.##########", "#######....#######", "##########.#######", "##########....####", "#############.####", "#############....#", "##################"], "start": [1, 1], "keys": [[2, 4, 2]], "doors": [], "levers": [], "crystals": [[5, 9]]}]},
+ {name:'Alavanca oculta',gold:55,lim:83,tls:[{"rows": ["#######################", "#......################", "######.################", "######......###########", "###########.###########", "###########......######", "################.######", "################......#", "#######################"], "start": [1, 1], "keys": [[1, 6, 1]], "doors": [[3, 10, 1]], "levers": [], "crystals": [[5, 15]]},{"rows": ["#######################", "#......################", "######.################", "######......###########", "###########.###########", "###########......######", "################.######", "################......#", "#######################"], "start": [1, 1], "keys": [[1, 5, 2]], "doors": [[3, 9, 2]], "levers": [[5, 11, 3]], "crystals": [[6, 16]]},{"rows": ["#######################", "#......################", "######.################", "######......###########", "###########.###########", "###########......######", "################.######", "################......#", "#######################"], "start": [1, 1], "keys": [], "doors": [[3, 6, 3]], "levers": [], "crystals": [[5, 12]]}]},
+ {name:'Ciclo de portas',gold:68,lim:102,tls:[{"rows": ["###########################", "#....######################", "####.######################", "####....###################", "#######.###################", "#######....################", "##########.################", "##########....#############", "#############.#############", "#############....##########", "################.##########", "################....#######", "###################.#######", "###################....####", "######################.####", "######################....#", "###########################"], "start": [1, 1], "keys": [[2, 4, 3]], "doors": [[4, 7, 1]], "levers": [], "crystals": [[9, 13]]},{"rows": ["###########################", "#....######################", "####.######################", "####....###################", "#######.###################", "#######....################", "##########.################", "##########....#############", "#############.#############", "#############....##########", "################.##########", "################....#######", "###################.#######", "###################....####", "######################.####", "######################....#", "###########################"], "start": [1, 1], "keys": [[2, 4, 1]], "doors": [[5, 7, 2]], "levers": [], "crystals": [[9, 15]]},{"rows": ["###########################", "#....######################", "####.######################", "####....###################", "#######.###################", "#######....################", "##########.################", "##########....#############", "#############.#############", "#############....##########", "################.##########", "################....#######", "###################.#######", "###################....####", "######################.####", "######################....#", "###########################"], "start": [1, 1], "keys": [[2, 4, 2]], "doors": [[5, 9, 3]], "levers": [], "crystals": [[8, 13]]}]},
+ {name:'Dupla corrente',gold:60,lim:90,tls:[{"rows": ["############################", "#......#####################", "######.#####################", "######......################", "###########.################", "###########......###########", "################.###########", "################......######", "#####################.######", "#####################......#", "############################"], "start": [1, 1], "keys": [[1, 6, 1], [5, 13, 2]], "doors": [[3, 11, 1], [7, 16, 2]], "levers": [], "crystals": [[7, 21]]},{"rows": ["############################", "#......#####################", "######.#####################", "######......################", "###########.################", "###########......###########", "################.###########", "################......######", "#####################.######", "#####################......#", "############################"], "start": [1, 1], "keys": [[1, 5, 3]], "doors": [[3, 8, 3]], "levers": [[5, 11, 1]], "crystals": [[5, 16]]},{"rows": ["############################", "#......#####################", "######.#####################", "######......################", "###########.################", "###########......###########", "################.###########", "################......######", "#####################.######", "#####################......#", "############################"], "start": [1, 1], "keys": [], "doors": [], "levers": [[2, 6, 2]], "crystals": [[4, 11]]}]},
+ {name:'Dois portões',gold:74,lim:111,tls:[{"rows": ["#################################", "#.......#########################", "#######.#########################", "#######.......###################", "#############.###################", "#############.......#############", "###################.#############", "###################.......#######", "#########################.#######", "#########################.......#", "#################################"], "start": [1, 1], "keys": [[3, 11, 3]], "doors": [[1, 7, 1], [5, 15, 3]], "levers": [], "crystals": [[7, 21]]},{"rows": ["#################################", "#.......#########################", "#######.#########################", "#######.......###################", "#############.###################", "#############.......#############", "###################.#############", "###################.......#######", "#########################.#######", "#########################.......#", "#################################"], "start": [1, 1], "keys": [[1, 6, 1]], "doors": [[5, 14, 2]], "levers": [[3, 10, 2]], "crystals": [[7, 19]]},{"rows": ["#################################", "#.......#########################", "#######.#########################", "#######.......###################", "#############.###################", "#############.......#############", "###################.#############", "###################.......#######", "#########################.#######", "#########################.......#", "#################################"], "start": [1, 1], "keys": [[1, 7, 2]], "doors": [[3, 13, 1]], "levers": [], "crystals": [[5, 19]]}]},
+ {name:'Corrente cruzada',gold:67,lim:101,tls:[{"rows": ["###########################", "#....######################", "####.######################", "####....###################", "#######.###################", "#######....################", "##########.################", "##########....#############", "#############.#############", "#############....##########", "################.##########", "################....#######", "###################.#######", "###################....####", "######################.####", "######################....#", "###########################"], "start": [1, 1], "keys": [[3, 4, 1]], "doors": [[5, 7, 1]], "levers": [], "crystals": [[7, 13]]},{"rows": ["###########################", "#....######################", "####.######################", "####....###################", "#######.###################", "#######....################", "##########.################", "##########....#############", "#############.#############", "#############....##########", "################.##########", "################....#######", "###################.#######", "###################....####", "######################.####", "######################....#", "###########################"], "start": [1, 1], "keys": [[4, 7, 2]], "doors": [[7, 10, 2]], "levers": [[3, 4, 1], [9, 13, 3]], "crystals": [[11, 17]]},{"rows": ["###########################", "#....######################", "####.######################", "####....###################", "#######.###################", "#######....################", "##########.################", "##########....#############", "#############.#############", "#############....##########", "################.##########", "################....#######", "###################.#######", "###################....####", "######################.####", "######################....#", "###########################"], "start": [1, 1], "keys": [[6, 10, 1]], "doors": [[3, 7, 3]], "levers": [], "crystals": [[9, 14]]}]},
+ {name:'Cadeia final',gold:72,lim:108,tls:[{"rows": ["##############", "#............#", "############.#", "#............#", "#.############", "#............#", "##############"], "start": [1, 1], "keys": [[1, 6, 1]], "doors": [[2, 12, 1]], "levers": [], "crystals": [[3, 6]]},{"rows": ["##############", "#............#", "############.#", "#............#", "#.############", "#............#", "##############"], "start": [1, 1], "keys": [[1, 5, 2], [3, 9, 1]], "doors": [[1, 12, 2]], "levers": [[3, 4, 3]], "crystals": [[5, 2]]},{"rows": ["##############", "#............#", "############.#", "#............#", "#.############", "#............#", "##############"], "start": [1, 1], "keys": [[3, 10, 3]], "doors": [[1, 9, 3]], "levers": [], "crystals": [[3, 1]]}]},
+];
+const TLNAMES=['A','B','C'];
+const COLORS=[0,'#ffd75c','#7aa5ff','#ff8ac2'];
+const COLNAME=['','âmbar','azul','rosa'];
+let lvl=0,L=null,active=0,pos=[],steps=0,keys=0,latches=0,crystals=0,over=false;
+
+function renderStages(){
+  const st=document.getElementById('stages');st.innerHTML='';
+  LEVELS.forEach((_,i)=>{
+    const b=document.createElement('button');
+    b.className='st';if(i+1>unlock){b.classList.add('lock');b.disabled=true;}
+    if(i===lvl)b.classList.add('on');
+    if(best['l'+(i+1)])b.classList.add('won');
+    b.textContent=i+1;
+    b.addEventListener('click',()=>goLevel(i));
+    st.appendChild(b);
+  });
+}
+function loadLevel(i){
+  lvl=i;L=LEVELS[i];
+  active=0;steps=0;keys=0;latches=0;crystals=0;over=false;L.got=[];
+  pos=L.tls.map(t=>[t.start[0],t.start[1]]);
+  renderAll();renderStages();
+  setMsg('Escolha uma linha do tempo (A/B/C) e explore. Chaves e alavancas valem nas três linhas.','');
+}
+function hasKey(c){return ((keys>>c)&1)===1;}
+function latched(c){return ((latches>>c)&1)===1;}
+function doorOpen(ti,c){return hasKey(c)||latched(c);}
+function cellPassable(ti,r,c){
+  const tl=L.tls[ti];
+  if(r<0||c<0||r>=tl.rows.length||c>=tl.rows[0].length)return false;
+  if(tl.rows[r][c]==='#')return false;
+  const dr=tl.doors.find(d=>d[0]===r&&d[1]===c);
+  if(dr)return doorOpen(ti,dr[2]);
+  return true;
+}
+function settleEffects(){
+  const tl=L.tls[active];
+  const [r,c]=pos[active];
+  let ch=false;
+  const kd=tl.keys.find(k=>k[0]===r&&k[1]===c);
+  if(kd&&!hasKey(kd[2])){keys|=1<<kd[2];ch=true;sfx('key');logS('🧿 Chave '+COLNAME[kd[2]]+' obtida (linha '+TLNAMES[active]+').','ok');}
+  const lv=tl.levers.find(l=>l[0]===r&&l[1]===c);
+  if(lv&&!latched(lv[2])){latches|=1<<lv[2];ch=true;sfx('jump');logS('🔛 Alavanca '+COLNAME[lv[2]]+' acionada — portas '+COLNAME[lv[2]]+' destravadas.','ok');}
+  const x=tl.crystals.find(x=>x[0]===r&&x[1]===c);
+  if(x&&!crystalGot(active,r,c)){crystals++;ch=true;sfx('ok');logS('💠 Cristal da linha '+TLNAMES[active]+' integrado!','ok');}
+  if(ch){renderAll();}
+  if(crystals>=3&&!over){win();}
+}
+function crystalGot(ti,r,c){return L.got.some(g=>g[0]===ti&&g[1]===r&&g[2]===c);}
+function move(dr,dc){
+  if(over)return;
+  const tl=L.tls[active];
+  const nr=pos[active][0]+dr,nc=pos[active][1]+dc;
+  if(!cellPassable(active,nr,nc)){
+    setMsg('Parede ou porta fechada bloqueia o caminho.','bad');sfx('bad');return;
+  }
+  if(tl.rows[nr][nc]==='#'){setMsg('Parede.','bad');return;}
+  pos[active]=[nr,nc];steps++;sfx('click');
+  renderHud();drawAll();
+  settleEffects();
+}
+function switchLine(ti){
+  if(over||ti===active)return;
+  if(!L)return;
+  active=ti;pos[ti]=[L.tls[ti].start[0],L.tls[ti].start[1]];steps++;
+  sfx('jump');
+  logS('⏳ Salto para a linha '+TLNAMES[ti]+'.','i');
+  renderAll();
+}
+function renderHud(){
+  document.getElementById('stpN').textContent=steps;
+  document.getElementById('actTxt').textContent=TLNAMES[active];
+  document.getElementById('crN').textContent=crystals;
+  document.getElementById('lvName').textContent=L.name;
+  document.getElementById('goldT').textContent=L.gold;
+  document.getElementById('limT').textContent=L.lim;
+  const ki=document.getElementById('keysI');ki.innerHTML='';
+  for(let c=1;c<=3;c++){
+    const s=document.createElement('span');
+    s.className='kchip'+(hasKey(c)?' has':'');
+    s.style.background=COLORS[c];s.style.color='#111';
+    s.textContent='🧿';
+    s.title='Chave '+COLNAME[c];
+    ki.appendChild(s);
+  }
+}
+function drawLine(ti,canvas){
+  const tl=L.tls[ti];
+  const tile=22;
+  canvas.width=tl.rows[0].length*tile;canvas.height=tl.rows.length*tile;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let r=0;r<tl.rows.length;r++)for(let c=0;c<tl.rows[0].length;c++){
+    const ch=tl.rows[r][c];
+    ctx.fillStyle=((r+c)%2)?'#151022':'#100b1c';
+    ctx.fillRect(c*tile,r*tile,tile,tile);
+    if(ch==='#'){ctx.fillStyle='#3a2f63';ctx.fillRect(c*tile,r*tile,tile,tile);}
+  }
+  // portas
+  tl.doors.forEach(d=>{
+    const open=doorOpen(ti,d[2]);
+    const x=d[1]*tile,y=d[0]*tile;
+    if(open){ctx.fillStyle='rgba(255,255,255,.08)';ctx.fillRect(x,y,tile,tile);
+      ctx.fillStyle=COLORS[d[2]];ctx.globalAlpha=.5;ctx.fillRect(x+tile*.3,y+2,tile*.4,tile-4);ctx.globalAlpha=1;
+    }else{
+      ctx.fillStyle='#231a38';ctx.fillRect(x+2,y+2,tile-4,tile-4);
+      ctx.fillStyle=COLORS[d[2]];ctx.font='bold 9px sans-serif';ctx.textAlign='center';ctx.fillText('🔒',x+tile/2,y+tile/2+3);
+    }
+  });
+  // chaves
+  tl.keys.forEach(k=>{
+    if(hasKey(k[2]))return;
+    const x=k[1]*tile,y=k[0]*tile;
+    ctx.font=(tile*0.8)+'px sans-serif';ctx.textAlign='center';
+    ctx.fillText('🧿',x+tile/2,y+tile*.8);
+  });
+  // alavancas
+  tl.levers.forEach(lv=>{
+    const x=lv[1]*tile,y=lv[0]*tile;
+    if(latched(lv[2])){
+      ctx.font=(tile*0.8)+'px sans-serif';ctx.textAlign='center';ctx.fillText('✅',x+tile/2,y+tile*.8);
+    }else{
+      ctx.fillStyle=COLORS[lv[2]];ctx.fillRect(x+tile*.38,y+tile*.25,tile*.24,tile*.5);
+      ctx.fillStyle='#e8e2ff';ctx.beginPath();ctx.arc(x+tile/2,y+tile*.62,tile*.14,0,7);ctx.fill();
+    }
+  });
+  // cristais
+  tl.crystals.forEach(x=>{
+    const got=crystalGot(ti,x[0],x[1]);
+    const cx=x[1]*tile+tile/2,cy=x[0]*tile+tile/2;
+    ctx.globalAlpha=got?.25:1;
+    ctx.fillStyle=got?'#666':'#ffd75c';
+    ctx.beginPath();
+    ctx.moveTo(cx,cy-tile*.34);ctx.lineTo(cx+tile*.24,cy);ctx.lineTo(cx,cy+tile*.34);ctx.lineTo(cx-tile*.24,cy);
+    ctx.closePath();ctx.fill();
+    ctx.globalAlpha=1;
+  });
+  // avatar da linha ativa
+  const here=pos[ti];
+  const px=here[1]*tile+tile/2,py=here[0]*tile+tile/2;
+  ctx.fillStyle=ti===active?'#5cffa8':'#8b9bd6';
+  ctx.globalAlpha=ti===active?1:.35;
+  ctx.beginPath();ctx.arc(px,py,tile*.32,0,7);ctx.fill();
+  ctx.fillStyle='#07140e';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+  ctx.fillText('∎',px,py+4);
+  ctx.globalAlpha=1;
+}
+function drawAll(){
+  const box=document.getElementById('lines');box.innerHTML='';
+  L.tls.forEach((tl,ti)=>{
+    const line=document.createElement('div');
+    line.className='tline'+(ti===active?' active':'');
+    const btn=document.createElement('button');
+    btn.className='tbtn'+(ti===active?' on':'');
+    btn.textContent='Linha '+TLNAMES[ti]+(ti===active?' ✦':'');
+    btn.addEventListener('click',()=>{sfx('click');switchLine(ti);});
+    const cv=document.createElement('canvas');
+    line.appendChild(btn);
+    line.appendChild(cv);
+    box.appendChild(line);
+    drawLine(ti,cv);
+  });
+  renderHud();
+}
+function renderAll(){drawAll();}
+function logS(t,c){const el=document.getElementById('msg');el.textContent=t;el.className='msgline'+(c?' '+c:'');}
+function setMsg(t,c){const el=document.getElementById('msg');el.textContent=t;el.className='msgline'+(c?' '+c:'');}
+function win(){
+  over=true;sfx('win');
+  const g=L.gold,mx=L.lim;
+  let stars;
+  if(steps<=g){stars=3;}else if(steps<=mx){stars=2;}else{stars=1;}
+  if(lvl+1<LEVELS.length&&lvl+1>=unlock)unlock=lvl+2;
+  const k='l'+(lvl+1);
+  if(!best[k]||stars>best[k])best[k]=stars;
+  save();renderStages();
+  const mx2=document.getElementById('resBox');
+  mx2.innerHTML='<h2 style="color:var(--ok)">💠 Realidade restaurada!</h2>'+
+    '<p>Você integrou os 3 cristais em <b>'+steps+' passos</b> (meta ★★★: ≤ '+g+'; limite: '+mx+').</p>'+
+    '<p>Nota: <b style="color:var(--gold)">'+'★'.repeat(stars)+'☆'.repeat(3-stars)+'</b></p>'+
+    '<div class="rowB">'+(lvl+1<LEVELS.length?'<button class="btn go" onclick="goLevel('+(lvl+1)+')">Próxima linha do tempo →</button>':'<button class="btn go" onclick="goLevel(0)">Recomeçar tudo</button>')+
+    '<button class="btn" onclick="goLevel('+lvl+')">Repetir fase</button></div>';
+  document.getElementById('big').classList.add('open');
+}
+function goLevel(i){document.getElementById('big').classList.remove('open');sfx('click');loadLevel(i);}
+document.addEventListener('keydown',e=>{
+  if(over)return;
+  if(e.key==='ArrowUp'||e.key==='w'||e.key==='W'){e.preventDefault();move(-1,0);}
+  else if(e.key==='ArrowDown'||e.key==='s'||e.key==='S'){e.preventDefault();move(1,0);}
+  else if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A'){e.preventDefault();move(0,-1);}
+  else if(e.key==='ArrowRight'||e.key==='d'||e.key==='D'){e.preventDefault();move(0,1);}
+  else if(e.key==='Tab'){e.preventDefault();switchLine((active+1)%3);}
+});
+document.querySelectorAll('.dbtn[data-k]').forEach(b=>{
+  b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();
+    const k=b.dataset.k;
+    if(k==='U')move(-1,0);else if(k==='D')move(1,0);else if(k==='L')move(0,-1);else if(k==='R')move(0,1);});
+  b.addEventListener('contextmenu',e=>e.preventDefault());
+});
+document.getElementById('rstBtn').addEventListener('click',()=>{sfx('click');loadLevel(lvl);});
+document.getElementById('helpBtn').addEventListener('click',()=>{
+  sfx('click');
+  const mx=document.getElementById('resBox');
+  mx.innerHTML='<h2 style="color:var(--ac)">Como jogar</h2>'+
+  '<p>O mundo se partiu em <b>3 linhas do tempo</b> (A, B e C). Você pode <b>saltar</b> entre elas pelos botões (ou tecla Tab) — cada salto custa 1 passo e o coloca na entrada daquela linha.</p>'+
+  '<p><b>Chaves 🧿</b> têm cores e abrem <b>portas 🔒</b> da mesma cor em QUALQUER linha (o inventário é compartilhado). <b>Alavancas 🔛</b> destravam permanentemente as portas da sua cor.</p>'+
+  '<p>Objetivo: integrar os <b>3 cristais 💠</b> (um por linha). A cadeia causal pode exigir pegar uma chave na linha B para abrir uma porta na linha A… e assim por diante.</p>'+
+  '<p>Setas/WASD movem na linha ativa. Quanto menos passos, mais estrelas (meta ★★★ indicada no topo).</p>'+
+  '<div class="rowB"><button class="btn go" onclick="closeBig()">Entendi</button></div>';
+  document.getElementById('big').classList.add('open');
+});
+function closeBig(){document.getElementById('big').classList.remove('open');}
+renderStages();
+loadLevel(0);
+</script>
+</body>
+</html>
