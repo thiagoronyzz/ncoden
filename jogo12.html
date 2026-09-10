@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jogo 12 · Batalha de Máquinas — JogoZ</title>
+<style>
+  :root{--bg:#0a0d14;--panel:#121724;--line:#243049;--txt:#e9edf6;--mut:#8b96b8;--ac:#5cffa8;--ac2:#5bd6fd;--bad:#ff7a72;--gold:#ffd75c}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;background:radial-gradient(900px 400px at 85% -10%,rgba(92,255,168,.09),transparent 55%),linear-gradient(180deg,var(--bg),#05070c);color:var(--txt);min-height:100vh}
+  button{font-family:inherit;cursor:pointer}
+  .top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(10,13,20,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .top a{color:var(--ac2);text-decoration:none;font-weight:700;font-size:14px;padding:6px 10px;border-radius:8px;display:flex;gap:5px}
+  .top a:hover{background:rgba(91,214,253,.1)}
+  .ttl{font-weight:800}
+  .sp{flex:1}
+  .btn{padding:8px 13px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:13px;font-weight:600;min-height:38px}
+  .btn:hover{border-color:var(--ac)}
+  .btn.go{background:linear-gradient(135deg,#5cffa8,#1f9e6d);color:#04140c;border:0;font-weight:800}
+  .btn.bad{background:rgba(255,122,114,.12);border-color:#7a3a44;color:#ffc6c2}
+  .wrap{max-width:1160px;margin:0 auto;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:14px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .panel h3{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+  .stages{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+  .st{border:0;width:36px;height:36px;border-radius:10px;background:var(--panel);border:1px solid var(--line);color:var(--mut);font-weight:800}
+  .st.on{background:linear-gradient(135deg,#5cffa8,#1f9e6d);color:#04140c}
+  .st.won{border-color:var(--gold);color:var(--gold)}
+  .st.lock{opacity:.35}
+  .cvs{width:100%;max-width:640px;display:block;margin:0 auto}
+  .dp{display:none;grid-template-columns:repeat(3,56px);gap:6px;justify-content:center;margin:10px auto 0}
+  .dbtn{height:50px;border-radius:10px;border:1px solid var(--line);background:#182136;color:#fff;font-size:20px}
+  .msgline{min-height:18px;font-size:13px;margin-top:8px;color:var(--mut)}
+  .msgline.bad{color:var(--bad)}.msgline.good{color:var(--ac)}
+  .hud{display:flex;gap:10px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);margin:8px 0}
+  .hud b{color:#fff}
+  .bar{height:12px;background:#0a0f1a;border:1px solid #2a3550;border-radius:8px;overflow:hidden;margin:3px 0 9px;position:relative}
+  .bar i{display:block;height:100%;transition:width .25s}
+  .log{max-height:150px;overflow:auto;font-size:12px;color:#b9c2dd;line-height:1.5}
+  .log div{padding:2px 0}
+  .log .ok{color:var(--ac)}.log .bad{color:var(--bad)}.log .i{color:var(--ac2)}
+  .chassis{display:grid;grid-template-columns:repeat(4,56px);gap:6px;margin:6px 0 12px}
+  .cellc{width:56px;height:56px;border-radius:10px;border:1.5px dashed #31405f;background:#0b101c;display:grid;place-items:center;font-size:11px;text-align:center;color:var(--mut);position:relative}
+  .cellc.has{background:#182137;border-style:solid}
+  .cellc .arrow{position:absolute;font-size:14px}
+  .pal{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+  .pbtn{padding:8px 10px;border-radius:9px;background:#1b2740;color:#d6e0f5;border:1px solid #31436e;font-size:12px;font-weight:600;min-height:36px}
+  .pbtn.on{outline:2px solid var(--ac);background:#22406b}
+  .stats{font-size:12.5px;color:var(--mut);line-height:1.7;margin-bottom:8px}
+  .stats b{color:#fff}
+  .bigmsg{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.88);z-index:90;padding:16px}
+  .bigmsg.open{display:grid}
+  .res{background:linear-gradient(160deg,#182036,#0e1322);border:1px solid var(--ac);border-radius:18px;max-width:540px;width:100%;padding:24px;text-align:center;max-height:88vh;overflow:auto}
+  .res p{line-height:1.65;font-size:13.5px;color:#d6def2;margin:7px 0;text-align:left}
+  .rowB{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  @media(pointer:coarse){.dp{display:grid}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="index.html">← JogoZ</a><span class="ttl">12 · Batalha de Máquinas</span><span class="sp"></span>
+  <span style="font-size:13px;color:var(--mut)">Robô <b id="phN" style="color:#fff">1</b>/5</span>
+  <button class="btn" id="helpBtn">Manual</button>
+</header>
+<div class="wrap">
+  <main>
+    <div class="panel">
+      <div class="stages" id="stages"></div>
+      <div id="buildView"></div>
+      <div id="battleView" style="display:none"></div>
+      <div class="msgline" id="msg"></div>
+    </div>
+  </main>
+  <aside>
+    <div class="panel">
+      <h3>Oficina (antes da luta)</h3>
+      <div id="sideInfo"></div>
+      <h3 style="margin-top:10px">Diário da batalha</h3>
+      <div class="log" id="log"></div>
+    </div>
+  </aside>
+</div>
+<div class="bigmsg" id="big"><div class="res" id="resBox"></div></div>
+<script>
+"use strict";
+let AC=null;
+function tone(f,d,type,g,when){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+(when||0),o=AC.createOscillator(),v=AC.createGain();o.type=type||'square';o.frequency.value=f;v.gain.value=g||.04;o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d);o.onended=function(){o.disconnect();v.disconnect();};}catch(e){}}
+function sfx(k){if(k==='ok'){tone(700,.07,'square',.05);tone(1050,.12,'square',.05,.06);}else if(k==='bad')tone(160,.25,'sawtooth',.05);else if(k==='click')tone(500,.04,'square',.03);else if(k==='fire')tone(220,.1,'square',.06);else if(k==='hit')tone(120,.18,'sawtooth',.06);else if(k==='win'){[523,659,784,1046].forEach((f,i)=>tone(f,.14,'square',.05,i*.11));}}
+document.addEventListener('pointerdown',function(){if(AC&&AC.state==='suspended')AC.resume();},{once:true});
+const PREF='jzP12';
+function load(){try{const v=localStorage.getItem(PREF);return v?JSON.parse(v):null;}catch(e){return null;}}
+function save(){try{localStorage.setItem(PREF,JSON.stringify({unlock:unlock,best:best}));}catch(e){}}
+let unlock=1,best={};
+(function(){const s=load();if(s){unlock=Math.min(5,Math.max(1,s.unlock||1));best=s.best||{};}})();
+
+/* ---------- peças ---------- */
+const PARTS={
+ core:{n:'Núcleo',ic:'⚛️',s:1,hp:36,en:6,mov:1},
+ bat:{n:'Bateria',ic:'🔋',s:1,en:5},
+ arm:{n:'Blindagem',ic:'🛡️',s:1,hp:12},
+ leg:{n:'Perna',ic:'🦾',s:1,mov:1},
+ gun:{n:'Canhão',ic:'💥',s:1,dmg:7,cost:3,cd:1,rng:1},
+ rad:{n:'Radar',ic:'📡',s:1,rng:1}
+};
+const MAXP=9;
+const CHW=4,CHH=3;
+const PNAMES={core:'Núcleo ⚛️',bat:'Bateria 🔋',arm:'Blindagem 🛡️',leg:'Perna 🦾',gun:'Canhão 💥',rad:'Radar 📡'};
+/* ---------- fases: arena + robô rival (grade própria) ---------- */
+const LV=[
+ {name:'Arena do Ferro-velho',arena:[], walls:[[1,6],[2,6],[3,6],[4,6],[1,7],[2,7],[3,7],[4,7]], rival:{parts:[['core',1,1,'U'],['bat',1,2,'U'],['leg',0,1,'U'],['leg',2,1,'U'],['gun',1,0,'L'],['arm',0,0,'U']],hpMul:1.0,dmgMul:1.0}},
+ {name:'Pátio dos Contêineres',arena:[[2,1],[2,2],[2,3],[6,4],[6,5],[6,6]], walls:[[3,8],[4,8],[3,9],[4,9]], rival:{parts:[['core',1,1,'U'],['bat',1,0,'U'],['leg',2,1,'U'],['leg',1,2,'U'],['gun',0,1,'U'],['arm',2,2,'U']],hpMul:1.15,dmgMul:1.1}},
+ {name:'Corredor da Usina',arena:[], walls:[[0,5],[1,5],[2,5],[3,5],[4,5],[5,5],[6,5],[7,5]], rival:{parts:[['core',1,1,'U'],['bat',0,1,'U'],['bat',1,0,'U'],['leg',2,1,'U'],['leg',1,2,'U'],['gun',0,2,'R'],['gun',2,0,'L'],['arm',0,0,'U']],hpMul:1.3,dmgMul:1.15}},
+ {name:'Zona de Mísseis',arena:[[1,3],[1,4],[4,8],[4,9],[7,3],[7,4]], walls:[[5,6],[5,7],[5,8]], rival:{parts:[['core',1,1,'U'],['bat',1,0,'U'],['bat',1,2,'U'],['leg',0,1,'U'],['leg',2,1,'U'],['arm',0,0,'U'],['arm',2,2,'U'],['gun',0,2,'R'],['gun',2,0,'L']],hpMul:1.45,dmgMul:1.25}},
+ {name:'Arena Final',arena:[[3,3],[3,4],[4,3],[4,4]], walls:[], rival:{parts:[['core',1,1,'U'],['bat',0,1,'U'],['bat',1,0,'U'],['bat',2,1,'U'],['leg',1,2,'U'],['leg',2,2,'U'],['gun',0,2,'R'],['gun',2,0,'L'],['arm',0,0,'U']],hpMul:1.6,dmgMul:1.35}}
+];
+const ARW=12,ARH=9;
+const DIRS=[[-1,0],[0,1],[1,0],[0,-1]];
+const ARROW=['▲','▶','▼','◀'];
+
+let lvl=0, selPart='core', machine=null, mode='build';
+let B=null; // battle state
+
+/* ---------- cálculo de atributos a partir das peças ---------- */
+function machineStats(parts){
+  const st={hp:0,en:0,mov:1,rng:0,guns:[],cost:parts.length};
+  parts.forEach(p=>{
+    const t=PARTS[p.t];
+    st.hp+=t.hp||0; st.en+=t.en||0; st.mov+=(t.mov||0); st.rng+=(t.rng||0);
+    if(p.t==='gun')st.guns.push({r:p.r,c:p.c,dir:p.dir,cd:0,dmg:t.dmg,cost:t.cost,range:t.rng});
+  });
+  return st;
+}
+function gunBlocked(parts,p){
+  const dir=p.dir, nr=p.r+DIRS[dir][0], nc=p.c+DIRS[dir][1];
+  return !(nr<0||nc<0||nr>=CHH||nc>=CHW)&&parts.some(q=>q.r===nr&&q.c===nc);
+}
+function validateMachine(parts){
+  const errs=[];
+  if(parts.length<3)errs.push('Mínimo de 3 peças (núcleo incluso).');
+  if(parts.length>MAXP)errs.push('Máximo de '+MAXP+' peças.');
+  if(!parts.some(p=>p.t==='gun'))errs.push('Adicione ao menos 1 CANHÃO.');
+  if(!parts.some(p=>p.t==='leg'))errs.push('Adicione ao menos 1 PERNA para andar.');
+  if(!parts.some(p=>p.t==='core'))errs.push('Falta o NÚCLEO.');
+  if(parts.filter(p=>p.t==='core').length>1)errs.push('Só pode haver um núcleo.');
+  const occupied={};parts.forEach(p=>{if(occupied[p.r+'_'+p.c])errs.push('Peças sobrepostas.');occupied[p.r+'_'+p.c]=1;});
+  // conexão (tudo encostado à cadeia do núcleo)
+  const seen={};const open=[];
+  parts.forEach(p=>{if(p.t==='core')open.push(p);});
+  while(open.length){const p=open.pop();const k=p.r+'_'+p.c;if(seen[k])continue;seen[k]=1;
+    parts.forEach(q=>{if(!seen[q.r+'_'+q.c]&&Math.abs(q.r-p.r)+Math.abs(q.c-p.c)===1)open.push(q);});}
+  if(Object.keys(seen).length<parts.length)errs.push('Todas as peças precisam estar conectadas ao núcleo.');
+  parts.forEach(p=>{if(p.t==='gun'&&gunBlocked(parts,p))errs.push('Canhão em ('+p.r+','+p.c+') com o cano obstruído — gire ou mova.');});
+  return errs;
+}
+function machineName(st){return 'Você';}
+
+/* ---------- OFICINA (construção) ---------- */
+let chassis=[];
+function resetChassis(){
+  chassis=[{t:'core',r:1,c:1,dir:1}];
+  selPart='leg';renderBuild();renderSide();
+}
+function addPart(t,r,c){
+  if(chassis.length>=MAXP){setMsg('Limite de peças atingido ('+MAXP+').','bad');return;}
+  if(chassis.some(p=>p.r===r&&p.c===c)){setMsg('Célula ocupada.','bad');return;}
+  if(t!=='core'&&!chassis.some(q=>Math.abs(q.r-r)+Math.abs(q.c-c)===1)){setMsg('Peça precisa encostar em outra já instalada.','bad');return;}
+  chassis.push({t:t,r:r,c:c,dir:1});
+  sfx('click');setMsg('Peça '+PNAMES[t]+' instalada.');renderBuild();renderSide();
+}
+function removePart(r,c){
+  const idx=chassis.findIndex(p=>p.r===r&&p.c===c);
+  if(idx<0)return;
+  if(chassis[idx].t==='core'){setMsg('O núcleo não pode ser removido.','bad');return;}
+  chassis.splice(idx,1);
+  sfx('click');renderBuild();renderSide();
+}
+function cycleDir(r,c){
+  const p=chassis.find(q=>q.r===r&&q.c===c);
+  if(!p)return;
+  if(p.t==='gun'){p.dir=(p.dir+1)%4;sfx('click');}
+  renderBuild();renderSide();
+}
+function renderBuild(){
+  const v=document.getElementById('buildView');
+  const lv=LV[lvl];
+  let html='<div class="stats">Fase <b>'+lv.name+'</b> — rival: <b>'+lv.rival.parts.length+' peças</b>. Monitore canos livres e energia para vencer.</div>';
+  html+='<div class="pal" id="pal"></div>';
+  html+='<div class="chassis" id="chassis"></div>';
+  html+='<div class="rowB"><button class="btn" id="sugBtn">✨ Projeto sugerido</button><button class="btn" id="rstBtn2">Limpar projeto</button><button class="btn go" id="goBtn">🔌 Ligar e lutar</button></div>';
+  v.innerHTML=html;
+  const pal=document.getElementById('pal');
+  Object.keys(PARTS).forEach(t=>{
+    const b=document.createElement('button');
+    b.className='pbtn'+(selPart===t?' on':'');
+    b.textContent=PNAMES[t];
+    b.addEventListener('click',()=>{selPart=t;renderBuild();renderSide();});
+    pal.appendChild(b);
+  });
+  const box=document.getElementById('chassis');
+  for(let r=0;r<CHH;r++)for(let c=0;c<CHW;c++){
+    const d=document.createElement('div');
+    const p=chassis.find(q=>q.r===r&&q.c===c);
+    d.className='cellc'+(p?' has':'');
+    if(p){
+      const pa=PARTS[p.t];
+      d.style.borderColor=pa.ic?'#3a4c74':'#3a4c74';
+      d.innerHTML=(p.t==='gun'?'<span class="arrow">'+ARROW[p.dir]+'</span>':'')+'<span style="font-size:22px">'+pa.ic+'</span>'+(p.t==='core'?'Núcleo':p.t);
+    }else{
+      d.innerHTML='<small>+</small>';
+      d.addEventListener('click',()=>addPart(selPart,r,c));
+    }
+    d.addEventListener('click',()=>{if(p&&p.t==='gun'){cycleDir(r,c);}else if(p){removePart(r,c);}});
+    box.appendChild(d);
+  }
+  document.getElementById('sugBtn').addEventListener('click',()=>{
+    chassis=[{t:'core',r:1,c:1,dir:1},
+      {t:'bat',r:1,c:0,dir:1},{t:'bat',r:1,c:2,dir:1},
+      {t:'leg',r:2,c:1,dir:1},{t:'leg',r:0,c:1,dir:1},
+      {t:'gun',r:0,c:0,dir:0},{t:'gun',r:2,c:2,dir:1},
+      {t:'arm',r:2,c:0,dir:1}];
+    renderBuild();renderSide();setMsg('Projeto sugerido carregado: 2 canhões (▶) com canos livres, pernas e blindagem.');});
+  document.getElementById('rstBtn2').addEventListener('click',()=>{chassis=[chassis.find(p=>p.t==='core')];renderBuild();renderSide();});
+  document.getElementById('goBtn').addEventListener('click',startBattle);
+}
+function renderSide(){
+  const errs=validateMachine(chassis);
+  const st=machineStats(chassis);
+  const s=document.getElementById('sideInfo');
+  s.innerHTML='<div class="stats">'+
+   'Vida: <b>'+st.hp+'</b> · Energia: <b>'+st.en+'</b> (recarga +2)<br>'+
+   'Movimento: <b>'+st.mov+'</b>/turno · Canhões: <b>'+st.guns.length+'</b> · Alcance: <b>'+(3+st.rng)+'</b><br>'+
+   'Peças: <b>'+chassis.length+'</b>/'+MAXP+'</div>';
+  s.innerHTML+='<div style="font-size:12px;color:'+(errs.length?'var(--bad)':'var(--mut)')+'">'+(errs.length?'⚠ '+(errs.join(' ')):'✔ Projeto dentro das regras físicas.')+'</div>';
+}
+
+/* ---------- BATALHA ---------- */
+function normDir(d){return d==='U'?0:d==='R'?1:d==='D'?2:3;}
+function buildParts(list){return list.map(p=>({t:p[0],r:p[1],c:p[2],dir:typeof p[3]==='number'?p[3]:normDir(p[3])}));}
+function machineActor(parts,r0,c0,color,hpMul,dmgMul){
+  const st=machineStats(parts);
+  return {parts:parts,st:st,r:r0,c:c0,color:color,hp:Math.round(st.hp*hpMul),en:st.en,maxen:st.en,
+          dmgMul:dmgMul,dead:false,cool:0};
+}
+function arenaBlocked(r,c){
+  const lv=LV[lvl];
+  if(r<0||c<0||r>=ARH||c>=ARW)return true;
+  if(lv.arena.some(w=>w[0]===r&&w[1]===c))return true;
+  if(B.p1&&B.p1.r===r&&B.p1.c===c)return true;
+  if(B.p2&&B.p2.r===r&&B.p2.c===c)return true;
+  return false;
+}
+function startBattle(){
+  const errs=validateMachine(chassis);
+  if(errs.length){setMsg('Corrija o projeto: '+errs.join(' '),'bad');sfx('bad');return;}
+  const lv=LV[lvl];
+  B={p1:machineActor(chassis.map(function(p){return {t:p.t,r:p.r,c:p.c,dir:p.dir};}),7,2,'#5bd6fd',1,1),
+     p2:machineActor(buildParts(lv.rival.parts),1,9,'#ff7a72',lv.rival.hpMul,lv.rival.dmgMul),
+     turn:'p1',log:['🔧 Lutadores ligados!'],over:false,turnN:1};
+  B.p2.cool=0;
+  // recarga de energia por turno
+  mode='battle';
+  document.getElementById('buildView').style.display='none';
+  document.getElementById('battleView').style.display='block';
+  setMsg('');
+  drawBattle();
+  renderBattleHud();
+  logB('⚔ Fase '+lv.name+'. Você é o azul. Mova com WASD/setas e atire com ESPAÇO (ou botões).','i');
+}
+function actorsOf(){return [B.p1,B.p2];}
+function losClear(r,c,dr,dc,maxd){
+  for(let i=1;i<=maxd;i++){
+    const nr=r+dr*i,nc=c+dc*i;
+    if(nr<0||nc<0||nr>=ARH||nc>=ARW)return false;
+    if(LV[lvl].arena.some(w=>w[0]===nr&&w[1]===nc))return false;
+    if(i===maxd)return true;
+  }
+  return true;
+}
+function tryFire(me,target,auto){
+  // escolhe canhão com linha livre para o alvo
+  const dr=target.r-me.r,dc=target.c-me.c;
+  const axis=Math.abs(dr)>Math.abs(dc)?(dr<0?'U':'D'):(dc<0?'L':'R');
+  const dvec=axis==='U'?[-1,0]:axis==='D'?[1,0]:axis==='L'?[0,-1]:[0,1];
+  let fired=false;
+  me.st.guns.forEach(g=>{
+    if(g.cd>0)return;
+    if(g.dir!==(axis==='U'?0:axis==='D'?2:axis==='L'?3:1))return;
+    const dist=Math.abs(dr)+Math.abs(dc);
+    const range=3+me.st.rng;
+    if(dist>range)return;
+    if(!losClear(me.r,me.c,dvec[0],dvec[1],dist))return;
+    if(me.en<g.cost)return;
+    me.en-=g.cost;g.cd=1;
+    const dmg=Math.round(g.dmg*me.dmgMul);
+    target.hp-=dmg;
+    fired=true;
+    sfx('fire');
+    logB('💥 '+(me===B.p1?'Você':'Rival')+' acerta '+dmg+' de dano!','ok');
+  });
+  if(fired)setTimeout(()=>sfx('hit'),120);
+  return fired;
+}
+function completeTurn(side){
+  if(B.over)return;
+  side.st.guns.forEach(g=>{if(g.cd>0)g.cd--;});
+  side.en=Math.min(side.maxen,side.en+2);
+  drawBattle();renderBattleHud();
+  if(B.p2.hp<=0){winBattle();return;}
+  if(B.p1.hp<=0){loseBattle();return;}
+  B.turnN++;
+}
+function playerActed(){
+  completeTurn(B.p1);
+  if(B.over)return;
+  B.turn='p2';
+  setTimeout(rivalTurn,650);
+}
+function rivalTurn(){
+  if(B.over)return;
+  const me=B.p2,ta=B.p1;
+  // movimento heurístico: aproximar e alinhar eixo de um canhão disponível
+  const dr=ta.r-me.r,dc=ta.c-me.c;
+  let moved=0;
+  const can=me.st.mov;
+  for(let i=0;i<can;i++){
+    let best=null,bestv=-1;
+    [[-1,0],[0,1],[1,0],[0,-1]].forEach((d,di)=>{
+      const nr=me.r+d[0],nc=me.c+d[1];
+      if(arenaBlocked(nr,nc))return;
+      // preferência: reduzir distância Manhattan ao jogador
+      const dist=Math.abs(ta.r-nr)+Math.abs(ta.c-nc);
+      let aligned=0;
+      if(Math.abs(ta.r-nr)>Math.abs(ta.c-nc)){aligned=(ta.r>nr?0:2);}else{aligned=(ta.c>nc?3:1);}
+      const hasGun=me.st.guns.some(g=>g.dir===aligned);
+      const v=dist+ (hasGun?-2:0);
+      if(best===null||v<bestv){best=[nr,nc];bestv=v;}
+    });
+    if(best&&Math.abs(ta.r-best[0])+Math.abs(ta.c-best[1])<Math.abs(ta.r-me.r)+Math.abs(ta.c-me.c)){
+      me.r=best[0];me.c=best[1];moved++;
+    }else break;
+  }
+  if(moved)logB('Rival avança ('+moved+').','i');
+  const fired=tryFire(me,ta,true);
+  drawBattle();renderBattleHud();
+  setTimeout(()=>{
+    if(B.over)return;
+    completeTurn(B.p2);
+    if(B.over)return;
+    B.turn='p1';
+    setMsg('Sua vez.','good');
+  },400);
+}
+function playerFire(){
+  if(B.over||B.turn!=='p1')return;
+  const ok=tryFire(B.p1,B.p2,false);
+  if(!ok){setMsg('Nenhum canhão com linha de tiro, energia ou recarga pronta.','bad');drawBattle();renderBattleHud();return;}
+  setMsg('');
+  setTimeout(()=>{if(B.over)return;playerActed();},350);
+}
+function playerMove(dr,dc){
+  if(B.over||B.turn!=='p1')return;
+  const me=B.p1;
+  let m=0;
+  for(let i=0;i<me.st.mov;i++){
+    const nr=me.r+dr,nc=me.c+dc;
+    if(!arenaBlocked(nr,nc)){me.r=nr;me.c=nc;m++;}
+  }
+  drawBattle();renderBattleHud();
+  setTimeout(()=>{if(B.over)return;playerActed();},250);
+}
+function renderBattleHud(){
+  const bv=document.getElementById('battleView');
+  let html='<div class="hud">';
+  html+='<span>Vida: <b>'+B.p1.hp+'</b>/'+Math.round(B.p1.st.hp)+'</span><span>En: <b>'+B.p1.en+'</b></span><span>Mov: <b>'+B.p1.st.mov+'</b></span><span>Turno: <b>'+(B.turn==='p1'?'você':'rival')+'</b></span></div>';
+  html+='<div class="bar"><i style="width:'+Math.max(0,B.p1.hp)/Math.max(1,Math.round(B.p1.st.hp))*100+'%;background:linear-gradient(90deg,#5bd6fd,#2a7bd4)"></i></div>';
+  html+='<div class="hud"><span style="color:var(--mut)">Rival</span><span>Vida: <b>'+B.p2.hp+'</b></span><span>En: <b>'+B.p2.en+'</b></span></div>';
+  html+='<div class="bar"><i style="width:'+Math.max(0,B.p2.hp)/Math.max(1,Math.round(B.p2.st.hp*LV[lvl].rival.hpMul))*100+'%;background:linear-gradient(90deg,#ff7a72,#c0392b)"></i></div>';
+  html+='<canvas id="cv" class="cvs" width="'+ARW*40+'" height="'+ARH*40+'"></canvas>';
+  html+='<div class="dp">'+
+   '<span></span><button class="dbtn" data-k="ArrowUp">▲</button><span></span>'+
+   '<button class="dbtn" data-k="ArrowLeft">◀</button><button class="dbtn" id="fireBtn">💥</button><button class="dbtn" data-k="ArrowRight">▶</button>'+
+   '<span></span><button class="dbtn" data-k="ArrowDown">▼</button><span></span></div>';
+  html+='<div class="rowB"><button class="btn go" id="fireBtn2">💥 Atirar</button><button class="btn bad" id="quitBtn">🏳 Desistir (reinicia a fase)</button></div>';
+  bv.innerHTML=html;
+  const cv=document.getElementById('cv');
+  document.querySelectorAll('.dbtn[data-k]').forEach(b=>{
+    const fn=e=>{e.preventDefault();e.stopPropagation();
+      const k=b.dataset.k;
+      if(k==='ArrowUp')playerMove(-1,0);else if(k==='ArrowDown')playerMove(1,0);
+      else if(k==='ArrowLeft')playerMove(0,-1);else if(k==='ArrowRight')playerMove(0,1);};
+    b.addEventListener('pointerdown',fn);
+    b.addEventListener('contextmenu',e=>e.preventDefault());
+  });
+  document.getElementById('fireBtn2').addEventListener('click',playerFire);
+  document.getElementById('quitBtn').addEventListener('click',()=>{mode='build';B=null;document.getElementById('buildView').style.display='block';document.getElementById('battleView').style.display='none';renderBuild();renderSide();setMsg('Luta interrompida. Ajuste o projeto e tente de novo.');});
+}
+function drawBattle(){
+  const cv=document.getElementById('cv');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,cv.width,cv.height);
+  const lv=LV[lvl];
+  for(let r=0;r<ARH;r++)for(let c=0;c<ARW;c++){
+    ctx.fillStyle=((r+c)%2)?'#101725':'#0d131f';
+    ctx.fillRect(c*40,r*40,40,40);
+    if(lv.arena.some(w=>w[0]===r&&w[1]===c)){
+      ctx.fillStyle='#2a3550';ctx.fillRect(c*40+3,r*40+3,34,34);
+      ctx.strokeStyle='#46577e';ctx.lineWidth=2;ctx.strokeRect(c*40+3,r*40+3,34,34);
+    }
+    if(lv.walls.some(w=>w[0]===r&&w[1]===c)){
+      ctx.fillStyle='#3d2a35';ctx.fillRect(c*40+4,r*40+2,32,36);
+    }
+  }
+  [B.p2,B.p1].forEach(a=>{
+    const cx=a.c*40+20,cy=a.r*40+20;
+    ctx.fillStyle=a.color;ctx.beginPath();ctx.arc(cx,cy,13,0,7);ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,.4)';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#fff';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText(a.hp,cx,cy-16);
+    // direção dos canhões
+    a.st.guns.forEach(g=>{
+      const tip=DIRS[g.dir];
+      ctx.strokeStyle=ctx.fillStyle=a===B.p1?'#fff':'#ffe2dd';
+      ctx.beginPath();ctx.moveTo(cx+tip[1]*6,cy+tip[0]*6);ctx.lineTo(cx+tip[1]*24,cy+tip[0]*24);ctx.lineWidth=3;ctx.stroke();
+      ctx.fillStyle=a===B.p1?'#eafff5':'#ffe2dd';
+    });
+  });
+}
+function logB(t,c){B.log.push({t:t,c:c||''});const el=document.getElementById('log');const d=document.createElement('div');d.className=c||'';d.textContent=t;el.appendChild(d);while(el.children.length>80)el.removeChild(el.firstChild);el.scrollTop=el.scrollHeight;}
+function winBattle(){
+  B.over=true;mode='build';
+  sfx('win');
+  const hpPct=Math.max(0,B.p1.hp)/Math.max(1,Math.round(B.p1.st.hp));
+  const stars=hpPct>.7?3:(hpPct>.3?2:1);
+  const k='l'+(lvl+1);
+  if(lvl+1<LV.length&&lvl+1>=unlock)unlock=lvl+2;
+  if(!best[k]||stars>best[k])best[k]=stars;
+  save();renderStages();
+  const mx=document.getElementById('resBox');
+  mx.innerHTML='<h2 style="color:var(--ac)">🏆 Rival destruído!</h2>'+
+   '<p>Sua máquina sobreviveu com <b>'+Math.round(hpPct*100)+'%</b> de vida.</p>'+
+   '<p>Estrelas: <b style="color:var(--gold)">'+'★'.repeat(stars)+'☆'.repeat(3-stars)+'</b></p>'+
+   '<div class="rowB">'+(lvl+1<LV.length?'<button class="btn go" onclick="goLevel('+(lvl+1)+')">Próxima arena →</button>':'<button class="btn go" onclick="goLevel(0)">Recomeçar liga</button>')+
+   '<button class="btn" onclick="retryLevel()">Repetir arena</button></div>';
+  document.getElementById('big').classList.add('open');
+}
+function loseBattle(){
+  B.over=true;mode='build';
+  sfx('bad');
+  const mx=document.getElementById('resBox');
+  mx.innerHTML='<h2 style="color:var(--bad)">💀 Sua máquina foi destruída</h2>'+
+   '<p>O rival era melhor naquela arena. Volte à oficina: mais blindagem, mais canhões com canos livres ou mais pernas fazem diferença.</p>'+
+   '<div class="rowB"><button class="btn go" onclick="retryLevel()">Oficina (ajustar projeto)</button></div>';
+  document.getElementById('big').classList.add('open');
+}
+function retryLevel(){document.getElementById('big').classList.remove('open');mode='build';B=null;document.getElementById('buildView').style.display='block';document.getElementById('battleView').style.display='none';renderBuild();renderSide();setMsg('');}
+function goLevel(i){document.getElementById('big').classList.remove('open');lvl=i;retryLevel();}
+function renderStages(){
+  const st=document.getElementById('stages');st.innerHTML='';
+  LV.forEach((_,i)=>{
+    const b=document.createElement('button');
+    b.className='st';if(i+1>unlock){b.classList.add('lock');b.disabled=true;}
+    if(i===lvl)b.classList.add('on');
+    if(best['l'+(i+1)])b.classList.add('won');
+    b.textContent=i+1;
+    b.addEventListener('click',()=>goLevel(i));
+    st.appendChild(b);
+  });
+  document.getElementById('phN').textContent=lvl+1;
+}
+function setMsg(t,c){const e=document.getElementById('msg');e.textContent=t;e.className='msgline'+(c?' '+c:'');}
+document.addEventListener('keydown',e=>{
+  if(mode!=='battle'||!B||B.turn!=='p1')return;
+  if(e.key===' '){e.preventDefault();playerFire();}
+  else if(e.key==='ArrowUp'||e.key==='w'||e.key==='W'){e.preventDefault();playerMove(-1,0);}
+  else if(e.key==='ArrowDown'||e.key==='s'||e.key==='S'){e.preventDefault();playerMove(1,0);}
+  else if(e.key==='ArrowLeft'||e.key==='a'||e.key==='A'){e.preventDefault();playerMove(0,-1);}
+  else if(e.key==='ArrowRight'||e.key==='d'||e.key==='D'){e.preventDefault();playerMove(0,1);}
+});
+document.getElementById('helpBtn').addEventListener('click',()=>{
+  sfx('click');
+  const mx=document.getElementById('resBox');
+  mx.innerHTML='<h2 style="color:var(--ac2)">Como montar e lutar</h2>'+
+   '<p><b>Construção física:</b> cada peça ocupa 1 célula no chassi 4×3 e precisa encostar na cadeia do núcleo. Canhões só atiram na direção da seta e o <b>cano precisa estar livre</b> (na borda do robô) — gire clicando neles.</p>'+
+   '<p><b>Atributos:</b> núcleo dá vida/energia; bateria aumenta energia; blindagem dá vida; pernas dão movimento por turno; canhões dão dano com recarga; radares aumentam alcance.</p>'+
+   '<p><b>Combate:</b> por turnos. Mova-se (setas/WASD ou setas na tela) e atire com <b>ESPAÇO</b>. Tiro custa energia, tem recarga e exige linha de tiro no eixo do canhão. Recarregue +2 de energia por turno.</p>'+
+   '<p>Vença com mais de 70% de vida para 3 estrelas. O rival também tem pernas, canhões e energia — observe a fase dele e adapte o seu projeto.</p>'+
+   '<div class="rowB"><button class="btn go" onclick="closeHelp()">Entendi</button></div>';
+  document.getElementById('big').classList.add('open');
+});
+function closeHelp(){document.getElementById('big').classList.remove('open');sfx('click');}
+/* inicio */
+(function(){
+  renderStages();
+  resetChassis();
+})();
+</script>
+</body>
+</html>

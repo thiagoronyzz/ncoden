@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jogo 13 · Boss Designer — JogoZ</title>
+<style>
+  :root{--bg:#0b0a14;--panel:#161230;--line:#332b5e;--txt:#ece9ff;--mut:#9890c4;--ac:#ff5ca8;--ac2:#ffd75c;--ok:#5cffa8;--bad:#ff8a80}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;background:radial-gradient(900px 400px at 85% -10%,rgba(255,92,168,.12),transparent 55%),linear-gradient(180deg,var(--bg),#06050d);color:var(--txt);min-height:100vh}
+  button{font-family:inherit;cursor:pointer}
+  .top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(11,10,20,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .top a{color:var(--ac2);text-decoration:none;font-weight:700;font-size:14px;padding:6px 10px;border-radius:8px;display:flex;gap:5px}
+  .top a:hover{background:rgba(255,215,92,.1)}
+  .ttl{font-weight:800}
+  .sp{flex:1}
+  .btn{padding:8px 13px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:13px;font-weight:600;min-height:38px}
+  .btn:hover{border-color:var(--ac)}
+  .btn.go{background:linear-gradient(135deg,#ff5ca8,#b23a86);color:#1a0512;border:0;font-weight:800}
+  .btn.try{background:linear-gradient(135deg,#5cffa8,#1f9e6d);color:#04140c;border:0;font-weight:800}
+  .wrap{max-width:1150px;margin:0 auto;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .panel h3{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+  .cvs{width:100%;max-width:760px;display:block;margin:0 auto;border:1px solid var(--line);border-radius:14px;background:#0e0c1c}
+  .grp{margin-bottom:12px}
+  .grp label{display:block;font-size:12px;color:var(--mut);margin-bottom:6px;letter-spacing:.4px;text-transform:uppercase}
+  .rowBtns{display:flex;gap:6px;flex-wrap:wrap}
+  .pick{padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#1d1840;color:#d7d1f5;font-size:12.5px}
+  .pick.on{outline:2px solid var(--ac);background:#3a2352}
+  .atk{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:7px 10px;margin-bottom:7px;cursor:pointer;font-size:13px;background:#120f28}
+  .atk.on{border-color:var(--ac);background:rgba(255,92,168,.1)}
+  .atk input{accent-color:var(--ac);width:18px;height:18px}
+  .slider{width:100%;accent-color:var(--ac2)}
+  .stats{font-size:12.5px;color:var(--mut);line-height:1.8}
+  .stats b{color:#fff}
+  .msgline{min-height:17px;font-size:13px;margin-top:8px;color:var(--mut)}
+  .msgline.bad{color:var(--bad)}.msgline.good{color:var(--ok)}
+  .hud{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--mut);margin:6px 0}
+  .hud b{color:#fff}
+  .bigmsg{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.88);z-index:90;padding:16px}
+  .bigmsg.open{display:grid}
+  .res{background:linear-gradient(160deg,#1e1738,#120d24);border:1px solid var(--ok);border-radius:18px;max-width:560px;width:100%;padding:24px;text-align:center;max-height:88vh;overflow:auto}
+  .res p{line-height:1.7;font-size:13.5px;color:#ddd6f4;margin:7px 0;text-align:left}
+  .rowB{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+  .dp{display:none;grid-template-columns:repeat(4,54px);gap:6px;justify-content:center;margin:10px auto 0}
+  .dbtn{height:48px;border-radius:10px;border:1px solid var(--line);background:#1d1840;color:#fff;font-size:17px}
+  .hprow{display:flex;gap:5px;margin:4px 0}
+  .hprow span{font-size:17px}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+  @media(pointer:coarse){.dp{display:grid}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="index.html">← JogoZ</a><span class="ttl">13 · Boss Designer</span><span class="sp"></span>
+  <span style="font-size:13px;color:var(--mut)">Melhor nota: <b id="bestT" style="color:var(--ac2)">—</b></span>
+  <button class="btn" id="helpBtn">Manual</button>
+</header>
+<div class="wrap">
+  <main>
+    <div class="panel">
+      <h3>Desenho do chefe</h3>
+      <div id="designView">
+        <div class="grp"><label>Carapaça (aparência e vida)</label><div class="rowBtns" id="corpoSel"></div></div>
+        <div class="grp"><label>Tamanho: <b id="szLb" style="color:#fff">2</b>/3 (vida do chefe e dano do seu tiro)</label>
+          <input class="slider" id="sz" type="range" min="1" max="3" value="2"></div>
+        <div class="grp"><label>Agilidade: <b id="agLb" style="color:#fff">2</b>/4 (ritmo dos ataques e velocidade dos projéteis)</label>
+          <input class="slider" id="ag" type="range" min="1" max="4" value="2"></div>
+        <div class="grp"><label>Ataques (escolha 2 ou 3)</label><div id="atkList"></div></div>
+        <div class="rowB">
+          <button class="btn try" id="testBtn">⚔ Testar o chefe</button>
+          <button class="btn" id="autoBtn">🎲 Projeto aleatório honesto</button>
+        </div>
+        <div class="msgline" id="dmsg"></div>
+      </div>
+      <div id="fightView" style="display:none">
+        <div class="hud"><span>💗 <b id="hpIco"></b></span><span>Chefe: <b id="bossHpT">0</b></span><span>Fase: <b id="phaseT">1</b></span></div>
+        <div id="bossBarWrap" style="height:12px;background:#0e0b1e;border:1px solid #3a3164;border-radius:8px;overflow:hidden;margin-bottom:6px"><i id="bossBar" style="display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff5ca8,#ff8a80)"></i></div>
+        <canvas id="cv" class="cvs" width="760" height="340"></canvas>
+        <div class="hud"><span>◀ ▶ mover · <b>↑/espaço</b> pular · <b>J</b> atirar</span></div>
+        <div class="dp">
+          <button class="dbtn" data-k="L">◀</button>
+          <button class="dbtn" data-k="J">⚔</button>
+          <button class="dbtn" data-k="R">▶</button>
+          <button class="dbtn" data-k="U">⤒</button>
+        </div>
+        <div class="msgline" id="fmsg"></div>
+      </div>
+    </div>
+  </main>
+  <aside>
+    <div class="panel">
+      <h3>Ficha do chefe</h3>
+      <div class="stats" id="ficha"></div>
+      <div style="font-size:12px;color:var(--mut);line-height:1.6;margin-top:6px">O núcleo brilha em <b style="color:var(--ac2)">amarelo</b> nas janelas de vulnerabilidade: seus tiros causam 3× de dano nelas. Após cada fase (1/3 da vida), o chefe acelera.</div>
+    </div>
+    <div class="panel" style="margin-top:12px">
+      <h3>Registro de testes</h3>
+      <div class="stats" id="reg"></div>
+    </div>
+  </aside>
+</div>
+<div class="bigmsg" id="big"><div class="res" id="resBox"></div></div>
+<script>
+"use strict";
+let AC=null;
+function tone(f,d,type,g,when){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+(when||0),o=AC.createOscillator(),v=AC.createGain();o.type=type||'square';o.frequency.value=f;v.gain.value=g||.04;o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d);o.onended=function(){o.disconnect();v.disconnect();};}catch(e){}}
+function sfx(k){try{if(k==='hit')tone(180,.14,'sawtooth',.05);else if(k==='jump')tone(400,.1,'sine',.04);else if(k==='shoot')tone(760,.06,'square',.03);else if(k==='hurt')tone(140,.25,'sawtooth',.06);else if(k==='tell')tone(980,.12,'square',.03);else if(k==='win'){[523,659,784,1046].forEach((f,i)=>tone(f,.14,'square',.05,i*.1));}}catch(e){}}
+document.addEventListener('pointerdown',function(){if(AC&&AC.state==='suspended')AC.resume();},{once:true});
+const PREF='jzP13';
+function load(){try{const v=localStorage.getItem(PREF);return v?JSON.parse(v):null;}catch(e){return null;}}
+function save(){try{localStorage.setItem(PREF,JSON.stringify({best:best}));}catch(e){}}
+let best=null;
+(function(){const s=load();if(s&&s.best)best=s.best;})();
+const BODIES=[
+ {id:'vespa',n:'Vespa-robô',ic:'🐝',hp:8},
+ {id:'golem',n:'Golem de liga',ic:'🗿',hp:12},
+ {id:'mecha',n:'Mecha antigo',ic:'🤖',hp:16}];
+const ATKS=[
+ {id:'tiro',n:'Tiro visado',d:'um projétil reto na sua direção (mova depois do aviso)'},
+ {id:'duplo',n:'Rajada dupla',d:'dois tiros em leque'},
+ {id:'bomba',n:'Bomba orbital',d:'marca o chão onde você está — saia do círculo!'},
+ {id:'onda',n:'Onda de choque',d:'varre o chão — pule!'},
+ {id:'enxame',n:'Enxame zigue-zague',d:'três balas em zigue-zague pelo alto'}];
+let design={body:1,size:2,ag:2,atks:['tiro','duplo']};
+let hero=null,boss=null,bolts=[],projs=[],state='design',raf=0,lastTs=0,keys={},fightLoses=0;
+const W=760,H=340,GROUND=H-38,GRAV=2000;
+function pickBody(i){design.body=i;renderDesign();updateFicha();}
+function setAtk(id){
+  const i=design.atks.indexOf(id);
+  if(i>=0)design.atks.splice(i,1);
+  else{if(design.atks.length>=3)return;design.atks.push(id);}
+  renderDesign();updateFicha();
+}
+function bossMaxHp(){return Math.round(BODIES[design.body].hp*design.size*1.15);}
+function renderDesign(){
+  const cs=document.getElementById('corpoSel');cs.innerHTML='';
+  BODIES.forEach((b,i)=>{
+    const el=document.createElement('button');
+    el.className='pick'+(design.body===i?' on':'');
+    el.textContent=b.ic+' '+b.n;
+    el.addEventListener('click',()=>pickBody(i));
+    cs.appendChild(el);
+  });
+  document.getElementById('szLb').textContent=design.size;
+  document.getElementById('agLb').textContent=design.ag;
+  const al=document.getElementById('atkList');al.innerHTML='';
+  ATKS.forEach(a=>{
+    const d=document.createElement('label');d.className='atk'+(design.atks.indexOf(a.id)>=0?' on':'');
+    d.innerHTML='<input type="checkbox" '+(design.atks.indexOf(a.id)>=0?'checked':'')+'><span><b>'+a.n+'</b><br><small style="color:var(--mut)">'+a.d+'</small></span>';
+    d.querySelector('input').addEventListener('change',()=>setAtk(a.id));
+    al.appendChild(d);
+  });
+  document.getElementById('dmsg').textContent='';
+}
+function updateFicha(){
+  const f=document.getElementById('ficha');
+  f.innerHTML='Vida do chefe: <b>'+bossMaxHp()+'</b><br>Intervalo entre ataques: <b>'+intervalOf().toFixed(2)+'s</b><br>'+
+   'Velocidade dos projéteis: <b>'+(150+50*design.ag)+'</b><br>Ataques: <b>'+design.atks.map(a=>ATKS.find(x=>x.id===a).n).join(', ')+'</b><br>'+
+   'Dano do seu tiro: <b>1</b> (×3 no núcleo vulnerável)';
+}
+function randomProject(){
+  design.body=Math.floor(Math.random()*3);
+  design.size=1+Math.floor(Math.random()*3);
+  design.ag=1+Math.floor(Math.random()*4);
+  const pool=ATKS.map(a=>a.id);design.atks=[];
+  while(design.atks.length<3){design.atks.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);}
+  renderDesign();updateFicha();
+}
+/* ---------------- combate ---------------- */
+function startFight(resetLoses){
+  if(design.atks.length<2){document.getElementById('dmsg').textContent='Escolha ao menos 2 ataques para o chefe.';return;}
+  if(resetLoses!==false)fightLoses=0;
+  document.getElementById('designView').style.display='none';
+  document.getElementById('fightView').style.display='block';
+  document.getElementById('fmsg').textContent='';
+  hero={x:120,y:GROUND,vx:0,vy:0,onGround:true,hp:3,inv:0,fireCd:0};
+  boss={x:W-150,y:150,hp:bossMaxHp(),maxhp:bossMaxHp(),phase:1,atkTimer:1.2,tell:-1,tellType:null,vuln:0,attackN:0,anim:0,hitFlash:0};
+  bolts=[];projs=[];
+  state='fight';
+  logReg('⚔ Teste iniciado (fase 1).');
+  if(!raf)loop();
+  renderHud();
+}
+function intervalOf(){let t=1.05-0.07*design.ag;if(boss.phase>2)t*=.7;else if(boss.phase>1)t*=.84;return Math.max(.5,t);}
+function doAttack(){
+  const id=design.atks[Math.floor(Math.random()*design.atks.length)];
+  boss.tell=0.55;boss.tellType=id;boss.attackN++;
+  sfx('tell');
+}
+function spawnAttack(id){
+  const sp=(150+50*design.ag)*phaseMul();
+  const hx=hero.x,hy=GROUND-24;
+  const ang=Math.atan2(hy-boss.y,hx-boss.x);
+  if(id==='tiro'){
+    projs.push({kind:'bullet',x:boss.x,y:boss.y+6,dx:Math.cos(ang),dy:Math.sin(ang),sp:sp,r:7,hit:false});
+  }else if(id==='duplo'){
+    [[-.18,0],[.18,0]].forEach(o=>projs.push({kind:'bullet',x:boss.x,y:boss.y+6,dx:Math.cos(ang+o[0]),dy:Math.sin(ang+o[0]),sp:sp,r:6,hit:false}));
+  }else if(id==='bomba'){
+    projs.push({kind:'bomb',x:hero.x,y:36,mark:0.95,r:9,falling:false,life:0,hit:false});
+  }else if(id==='onda'){
+    projs.push({kind:'wave',x:boss.x-30,y:GROUND,sp:330,dx:-1,r:16,hit:false});
+  }else if(id==='enxame'){
+    for(let i=0;i<3;i++)projs.push({kind:'zig',x:W-20,y:60+i*90,base:60+i*90,sp:190,t:Math.random()*6,r:6,hit:false});
+  }
+  if(boss.attackN%3===0)boss.vuln=2.6;
+}
+function fireBolt(){
+  if(hero.fireCd>0||state!=='fight')return;
+  hero.fireCd=.38;
+  bolts.push({x:hero.x+22,y:hero.y-26,vx:800,hit:false});
+  sfx('shoot');
+}
+function heroJump(){if(state!=='fight')return;if(hero.onGround){hero.vy=-700;hero.onGround=false;sfx('jump');}}
+function step(dt){
+  if(state!=='fight')return;
+  const dir=(keys['ArrowLeft']||keys['a']||keys['A']?-1:0)+(keys['ArrowRight']||keys['d']||keys['D']?1:0);
+  hero.vx=dir*330;
+  hero.x+=hero.vx*dt;
+  if(hero.x<46)hero.x=46;
+  if(hero.x>W-70)hero.x=W-70;
+  if(!hero.onGround){hero.vy+=GRAV*dt;hero.y+=hero.vy*dt;if(hero.y>=GROUND){hero.y=GROUND;hero.onGround=true;hero.vy=0;}}
+  hero.inv=Math.max(0,hero.inv-dt);
+  hero.fireCd=Math.max(0,hero.fireCd-dt);
+  boss.anim+=dt;
+  boss.y=118+Math.sin(boss.anim*1.5)*48;
+  boss.x=W-150;
+  if(boss.vuln>0)boss.vuln-=dt;
+  boss.hitFlash=Math.max(0,boss.hitFlash-dt);
+  if(boss.tell>=0){
+    boss.tell-=dt;
+    if(boss.tell<0){spawnAttack(boss.tellType);boss.tell=-1;boss.atkTimer=intervalOf();}
+  }else{
+    boss.atkTimer-=dt;
+    if(boss.atkTimer<=0)doAttack();
+  }
+  projs.forEach(p=>{
+    if(p.kind==='bullet'){
+      p.x+=p.dx*p.sp*dt;p.y+=p.dy*p.sp*dt;
+    }else if(p.kind==='zig'){
+      p.t+=dt*3;
+      p.x-=p.sp*0.5*dt;
+      p.y=p.base+Math.sin(p.t)*64;
+    }else if(p.kind==='bomb'){
+      if(!p.falling){
+        p.mark-=dt;
+        if(p.mark<=0)p.falling=true;
+      }else{
+        p.y+=640*dt;
+        if(p.y>=GROUND-10){p.y=GROUND-10;p.life=(p.life||0)+dt;}
+      }
+    }else if(p.kind==='wave'){
+      p.x+=p.dx*p.sp*dt;
+    }
+  });
+  // colisão com o herói
+  projs.forEach(p=>{
+    if(p.hit)return;
+    let cx,cy,cr;
+    if(p.kind==='bullet'){cx=p.x;cy=p.y;cr=p.r+2;}
+    else if(p.kind==='zig'){cx=p.x;cy=p.y;cr=p.r+2;}
+    else if(p.kind==='bomb'&&p.falling&&!p.life){cx=p.x;cy=p.y;cr=24;}
+    else if(p.kind==='bomb'&&p.life){return;}
+    else if(p.kind==='wave'){cx=p.x;cy=GROUND-10;cr=20;}
+    else return;
+    if(Math.hypot(cx-hero.x,cy-(hero.y-22))<cr+10){p.hit=true;hurtHero();}
+  });
+  projs=projs.filter(p=>{
+    if(p.hit)return false;
+    if(p.x<-80||p.x>W+80||p.y<-120||p.y>H+80)return false;
+    if(p.kind==='bomb'&&p.life>0.3)return false;
+    return true;
+  });
+  bolts.forEach(b=>{b.x+=b.vx*dt;});
+  bolts.forEach(b=>{
+    if(b.hit)return;
+    if(Math.hypot(b.x-boss.x,b.y-boss.y)<38){b.hit=true;damageBoss(boss.vuln>0?3:1);}
+  });
+  bolts=bolts.filter(b=>!b.hit&&b.x<W+40);
+  renderHud();
+}
+function phaseMul(){return 1+0.22*(boss.phase-1);}
+function damageBoss(n){
+  boss.hp-=n;boss.hitFlash=.12;sfx('hit');
+  const ph=boss.maxhp/3;
+  const np=boss.hp>ph*2?1:boss.hp>ph?2:3;
+  if(boss.hp>0&&np>boss.phase){boss.phase=np;logReg('⚠ Fase '+np+': o chefe acelerou!');sfx('tell');}
+  if(boss.hp<=0)winFight();
+}
+function hurtHero(){
+  if(hero.inv>0)return;
+  hero.hp--;hero.inv=1.5;sfx('hurt');
+  logReg('💔 Atingido. Vida restante: '+Math.max(0,hero.hp));
+  if(hero.hp<=0)loseFight();
+}
+function renderHud(){
+  const he=document.getElementById('hpIco');if(he)he.textContent='❤️'.repeat(Math.max(0,hero.hp))+'🖤'.repeat(Math.max(0,3-hero.hp));
+  document.getElementById('bossHpT').textContent=Math.max(0,boss.hp);
+  document.getElementById('phaseT').textContent=boss.phase;
+  document.getElementById('bossBar').style.width=Math.max(0,boss.hp/boss.maxhp*100)+'%';
+}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function draw(){
+  const cv=document.getElementById('cv');
+  if(!cv||state!=='fight')return;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#130f28';ctx.fillRect(0,0,W,H);
+  // brilho do chão e linha
+  ctx.fillStyle='#241d47';ctx.fillRect(0,GROUND+4,W,6);
+  ctx.strokeStyle='#3a3164';ctx.beginPath();ctx.moveTo(0,GROUND+2);ctx.lineTo(W,GROUND+2);ctx.stroke();
+  for(let x=0;x<W;x+=44){ctx.fillStyle='#2b2354';ctx.fillRect(x+10,GROUND+12,20,5);}
+  // herói
+  if(hero){
+    ctx.save();
+    if(hero.inv>0&&Math.floor(performance.now()/80)%2)ctx.globalAlpha=.35;
+    ctx.fillStyle='#5cffa8';
+    roundRect(ctx,hero.x-13,hero.y-32,26,32,6);ctx.fill();
+    ctx.fillStyle='#0b2a1c';ctx.beginPath();ctx.arc(hero.x+9,hero.y-26,4,0,7);ctx.fill();
+    ctx.restore();
+  }
+  // chefe
+  if(boss){
+    const col=boss.vuln>0?'#ffe27a':(boss.hitFlash>0?'#ffffff':'#b050a8');
+    ctx.fillStyle=col;ctx.beginPath();ctx.arc(boss.x,boss.y,34,0,7);ctx.fill();
+    ctx.strokeStyle=boss.vuln>0?'#ffd75c':'#6d2f68';ctx.lineWidth=3;ctx.stroke();
+    ctx.font='26px sans-serif';ctx.textAlign='center';
+    ctx.fillText(BODIES[design.body].ic,boss.x,boss.y+10);
+    ctx.fillStyle='#fff';
+    ctx.beginPath();ctx.arc(boss.x-10,boss.y-10,5,0,7);ctx.arc(boss.x+10,boss.y-10,5,0,7);ctx.fill();
+    if(boss.tell>=0){
+      ctx.fillStyle='#ff5ca8';ctx.font='bold 15px sans-serif';
+      ctx.fillText('⚠ '+ATKS.find(a=>a.id===boss.tellType).n.toUpperCase(),boss.x,boss.y-52);
+    }
+  }
+  // aviso de bomba
+  projs.forEach(p=>{if(p.kind==='bomb'&&!p.falling){
+    const ctx2=document.getElementById('cv').getContext('2d');
+    ctx2.strokeStyle='#ff5ca8';ctx2.lineWidth=2;ctx2.setLineDash([5,5]);
+    ctx2.beginPath();ctx2.arc(p.x,GROUND-22,16+(1-p.mark)*34,0,7);ctx2.stroke();ctx2.setLineDash([]);
+  }});
+  // projéteis
+  projs.forEach(p=>{
+    if(p.kind==='bullet'||p.kind==='zig'){
+      ctx.fillStyle='#ff8a80';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();
+      ctx.fillStyle='#ffe3e0';ctx.beginPath();ctx.arc(p.x-2,p.y-2,p.r*.4,0,7);ctx.fill();
+    }else if(p.kind==='bomb'&&p.falling){
+      ctx.fillStyle='#5a2d5e';ctx.beginPath();ctx.arc(p.x,p.y,10,0,7);ctx.fill();
+      ctx.fillStyle='#ffd75c';ctx.beginPath();ctx.arc(p.x,p.y,4,0,7);ctx.fill();
+    }else if(p.kind==='wave'){
+      ctx.fillStyle='rgba(255,138,128,.5)';ctx.beginPath();ctx.ellipse(p.x,p.y-8,30,9,0,0,7);ctx.fill();
+    }
+  });
+  bolts.forEach(b=>{
+    ctx.strokeStyle='#5cffa8';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(b.x-14,b.y);ctx.lineTo(b.x+10,b.y);ctx.stroke();
+  });
+  if(boss&&boss.vuln>0){
+    ctx.fillStyle='rgba(255,215,92,.14)';ctx.beginPath();ctx.arc(boss.x,boss.y,56,0,7);ctx.fill();
+    ctx.fillStyle='#ffd75c';ctx.font='bold 12px sans-serif';ctx.fillText('NÚCLEO VULNERÁVEL — ATIRE!',boss.x,boss.y+64);
+  }
+}
+function loop(ts){
+  const dt=Math.min(.035,(ts-lastTs)/1000||0);
+  lastTs=ts;
+  step(dt);
+  if(state==='fight')draw();
+  raf=requestAnimationFrame(loop);
+}
+function winFight(){
+  state='over';sfx('win');
+  const attempts=fightLoses+1;
+  const hearts=hero.hp;
+  let stars,verdict;
+  if(hearts===3&&attempts===1){stars=3;verdict='Justo e desafiador: limpo na primeira tentativa!';}
+  else if(attempts===1){stars=2;verdict='Quase perfeito: venceu de primeira, mas tomou dano.';}
+  else if(attempts===2){stars=2;verdict='Equilibrado: uma morte para aprender os padrões é razoável.';}
+  else{stars=1;verdict='Difícil demais: morreu '+attempts+' vezes. Reduza a agilidade ou troque ataques.';}
+  if(!best||stars>best.stars)best={stars:stars,body:design.body,size:design.size,ag:design.ag,atks:design.atks.slice()};
+  save();renderBest();
+  logReg('🏆 Vitória em '+attempts+' tentativa(s) com '+hearts+'/3 corações.');
+  const mx=document.getElementById('resBox');
+  mx.innerHTML='<h2 style="color:var(--ok)">🏆 Chefe derrotado!</h2>'+
+   '<p>Vida restante: <b>'+hearts+'/3</b> · Tentativas com este projeto: <b>'+attempts+'</b></p>'+
+   '<p>Avaliação do equilíbrio: <b style="color:var(--ac2)">'+'★'.repeat(stars)+'☆'.repeat(3-stars)+'</b> — '+verdict+'</p>'+
+   '<div class="rowB"><button class="btn try" onclick="closeRes();againFight()">Lutar de novo (mesmo projeto)</button>'+
+   '<button class="btn" onclick="closeRes();toDesign()">Ajustar o projeto</button></div>';
+  document.getElementById('big').classList.add('open');
+}
+function loseFight(){
+  state='over';fightLoses++;sfx('hurt');
+  logReg('💀 Derrota nº '+fightLoses+'.');
+  const mx=document.getElementById('resBox');
+  mx.innerHTML='<h2 style="color:var(--bad)">💀 Você foi destruído pelo próprio chefe</h2>'+
+   '<p>Dicas de balanceamento: reduza a agilidade (mais tempo entre ataques), troque a Onda de choque se ela te acerta sempre, ou aumente o tamanho — mais vida gera mais janelas de núcleo vulnerável para contra-atacar.</p>'+
+   '<div class="rowB"><button class="btn try" onclick="closeRes();againFight()">Tentar de novo</button>'+
+   '<button class="btn" onclick="closeRes();toDesign()">Ajustar projeto</button></div>';
+  document.getElementById('big').classList.add('open');
+}
+function againFight(){startFight(false);}
+function toDesign(){state='design';document.getElementById('fightView').style.display='none';document.getElementById('designView').style.display='block';}
+function closeRes(){document.getElementById('big').classList.remove('open');}
+function logReg(t){const r=document.getElementById('reg');const d=document.createElement('div');d.textContent=t;d.style.cssText='color:#a89fd8;font-size:12px;padding:2px 0';r.appendChild(d);while(r.children.length>30)r.removeChild(r.firstChild);}
+function renderBest(){const t=document.getElementById('bestT');t.textContent=best?('★'.repeat(best.stars)+' · '+BODIES[best.body].ic):'—';}
+document.addEventListener('keydown',e=>{
+  keys[e.key]=true;
+  if(state==='fight'){
+    if(e.key==='ArrowUp'||e.key===' '){e.preventDefault();heroJump();}
+    if(e.key==='j'||e.key==='J'||e.key==='Enter'){e.preventDefault();fireBolt();}
+  }
+});
+document.addEventListener('keyup',e=>{keys[e.key]=false;});
+(function(){
+  renderDesign();updateFicha();renderBest();
+  document.getElementById('sz').addEventListener('input',e=>{design.size=+e.target.value;renderDesign();updateFicha();});
+  document.getElementById('ag').addEventListener('input',e=>{design.ag=+e.target.value;renderDesign();updateFicha();});
+  document.getElementById('testBtn').addEventListener('click',()=>startFight(true));
+  document.getElementById('autoBtn').addEventListener('click',randomProject);
+  document.querySelectorAll('.dbtn[data-k]').forEach(b=>{
+    b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();
+      if(state!=='fight')return;
+      const k=b.dataset.k;
+      if(k==='L'){keys['ArrowLeft']=true;setTimeout(()=>keys['ArrowLeft']=false,130);}
+      else if(k==='R'){keys['ArrowRight']=true;setTimeout(()=>keys['ArrowRight']=false,130);}
+      else if(k==='U')heroJump();
+      else if(k==='J')fireBolt();});
+    b.addEventListener('contextmenu',e=>e.preventDefault());
+  });
+  document.getElementById('helpBtn').addEventListener('click',()=>{
+    const mx=document.getElementById('resBox');
+    mx.innerHTML='<h2 style="color:var(--ac)">Como funciona o Boss Designer</h2>'+
+     '<p><b>1. Projete:</b> carapaça, tamanho (vida), agilidade (ritmo e velocidade) e de 2 a 3 ataques.</p>'+
+     '<p><b>2. Teste:</b> ◀ ▶ ou A/D para andar, ↑/espaço pula (essencial contra a onda), J atira. O chefe avisa (⚠) antes de cada ataque. A bomba desenha o círculo onde vai cair: saia dele.</p>'+
+     '<p><b>3. Fraqueza:</b> a cada 3 ataques o núcleo fica vulnerável por 2,6s — seus tiros causam 3× nessa janela. A cada 1/3 de vida o chefe acelera de fase.</p>'+
+     '<p><b>4. Avaliação:</b> vencer de primeira com 3 corações = 3★ (justo). Duas mortes ainda valem 2★. Mais que isso, o design está cruel — ajuste e re-teste.</p>'+
+     '<div class="rowB"><button class="btn try" onclick="closeRes()">Entendi</button></div>';
+    document.getElementById('big').classList.add('open');
+  });
+})();
+
+</script>
+</body>
+</html>

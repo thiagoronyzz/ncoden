@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jogo 06 · Testemunha 12 — JogoZ</title>
+<style>
+  :root{--bg:#101018;--panel:#181826;--line:#2e2e44;--txt:#eceaf6;--mut:#9793b3;--ac:#c9a25c;--ok:#6adfae;--bad:#ff8a80;--blu:#8ab4ff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;background:radial-gradient(900px 420px at 85% -10%,rgba(201,162,92,.08),transparent 60%),linear-gradient(180deg,var(--bg),#0a0a11);color:var(--txt);min-height:100vh}
+  button{font-family:inherit;cursor:pointer}
+  .top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(16,16,24,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .top a{color:var(--blu);text-decoration:none;font-weight:700;font-size:14px;padding:6px 10px;border-radius:8px;display:flex;gap:5px}
+  .top a:hover{background:rgba(138,180,255,.1)}
+  .ttl{font-weight:800}
+  .sp{flex:1}
+  .btn{padding:7px 13px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:13px;font-weight:600}
+  .btn:hover{border-color:var(--ac)}
+  .btn.pri{background:linear-gradient(135deg,#c9a25c,#7d6330);color:#131006;border:0;font-weight:800}
+  .wrap{max-width:1140px;margin:0 auto;padding:14px;display:grid;grid-template-columns:380px 1fr;gap:14px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .panel h3{font-size:12px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mut);margin-bottom:10px}
+  .wit{display:flex;align-items:center;gap:10px;padding:10px;border-radius:11px;border:1px solid var(--line);background:#141422;margin-bottom:8px;cursor:pointer}
+  .wit:hover{border-color:var(--blu)}
+  .wit.act{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+  .wit .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:#2a2a44;color:#cdd6f5;font-size:15px}
+  .wit b{display:block;font-size:14px}
+  .wit small{color:var(--mut)}
+  .qBtn{display:block;width:100%;text-align:left;margin-bottom:7px;padding:9px 11px;border-radius:10px;border:1px solid var(--line);background:#10101c;color:var(--txt);font-size:13px}
+  .qBtn:hover:not(:disabled){border-color:var(--ac)}
+  .qBtn:disabled{opacity:.35;cursor:default}
+  .qBtn .lk{float:right;font-size:10px;color:var(--bad);letter-spacing:.5px}
+  .tl{font-size:12px;color:var(--mut);margin-bottom:6px}
+  .trans{max-height:46vh;overflow:auto;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+  .speech{max-width:88%;padding:9px 12px;border-radius:12px;font-size:13.5px;line-height:1.55}
+  .speech.you{align-self:flex-end;background:#24407a;color:#dbe6ff;border-bottom-right-radius:3px}
+  .speech.them{align-self:flex-start;background:#232333;border-bottom-left-radius:3px}
+  .speech.them b{color:var(--ac)}
+  .speech .tag{display:inline-block;font-size:10px;margin-top:4px;padding:2px 8px;border-radius:99px;letter-spacing:.6px}
+  .contra{margin-top:10px;padding:10px 12px;border-radius:11px;background:rgba(255,138,128,.09);border:1px solid rgba(255,138,128,.4);font-size:13px;line-height:1.55;color:#ffd0cc}
+  .contra b{color:var(--bad)}
+  .bigmsg{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.84);z-index:90;padding:16px}
+  .bigmsg.open{display:grid}
+  .res{background:linear-gradient(160deg,#1c1c2c,#12121d);border:1px solid var(--ac);border-radius:18px;max-width:560px;width:100%;padding:24px;max-height:88vh;overflow:auto}
+  .res h2{margin-bottom:8px}
+  .res p{line-height:1.65;font-size:13.5px;color:#dcd8ee;margin:7px 0}
+  .res .big{font-size:40px}
+  .rowB{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .radioRow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px;border-radius:10px;border:1px solid var(--line);margin-bottom:6px;background:#13131f}
+  .radioRow b{flex:1;font-size:13px}
+  .radioRow label{font-size:12.5px;display:flex;gap:4px;align-items:center;cursor:pointer;padding:4px 8px;border-radius:8px;border:1px solid transparent}
+  .radioRow label:hover{border-color:var(--line)}
+  .radioRow input{accent-color:var(--ac)}
+  @media(max-width:860px){.wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="index.html">← JogoZ</a><span class="ttl">06 · Testemunha 12</span><span class="sp"></span>
+  <span style="font-size:13px;color:var(--mut)">Caso <b id="caseNo" style="color:#fff">1</b>/4</span>
+  <button class="btn" id="helpBtn">Manual</button>
+  <button class="btn" id="rstBtn">Reiniciar caso</button>
+</header>
+<div class="wrap">
+  <aside>
+    <div class="panel"><h3>Sala de espera</h3><div id="wits"></div></div>
+  </aside>
+  <main>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">Interrogatório <span style="float:right;color:var(--mut)" id="asked">0 perguntas</span></h3>
+      <p id="caseDesc" style="font-size:13.5px;color:#b7b3d4;line-height:1.5;margin-bottom:10px"></p>
+      <div class="tl">Perguntas disponíveis para <b id="curName">—</b> (cada testemunha só responde uma vez por assunto)</div>
+      <div id="qs"></div>
+      <div id="contra"></div>
+      <div class="trans" id="trans"></div>
+      <div class="rowB" style="justify-content:flex-start">
+        <button class="btn pri" id="repBtn">📝 Escrever relatório final</button>
+      </div>
+    </div>
+  </main>
+</div>
+<div class="bigmsg" id="big"><div class="res" id="resBox"></div></div>
+<script>
+"use strict";
+let AC=null;
+function tone(f,d,type,g,when){try{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+(when||0),o=AC.createOscillator(),v=AC.createGain();o.type=type||'square';o.frequency.value=f;v.gain.value=g||.04;o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d);o.onended=function(){o.disconnect();v.disconnect();};}catch(e){}}
+function sfx(k){if(k==='ok'){tone(640,.09,'square',.05);tone(960,.14,'square',.05,.08);}else if(k==='bad')tone(200,.22,'sawtooth',.05);else if(k==='click')tone(470,.04,'square',.03);else if(k==='win'){[523,659,784,1046].forEach((f,i)=>tone(f,.15,'square',.05,i*.11));}else if(k==='ev')tone(330,.1,'sine',.05);}
+document.addEventListener('pointerdown',function(){if(AC&&AC.state==='suspended')AC.resume();},{once:true});
+const PREF='jzP06';
+function load(){try{const v=localStorage.getItem(PREF);return v?JSON.parse(v):null;}catch(e){return null;}}
+function save(){try{localStorage.setItem(PREF,JSON.stringify({played:true,unlock:unlock,best:best}));}catch(e){}}
+let unlock=1,best={};
+(function(){const s=load();if(s){unlock=Math.max(1,s.unlock||1);best=s.best||{};}})();
+let ci=0,W=null,cur=null,asked=0,over=false;
+
+/* ===== cenários =====
+ Cada testemunha: papel real {m: mente, o: omite, v: verdade}.
+ Perguntas: {id,w,perg,resp,fact,lie}
+ fact: rótulo de comparação; lie:true quando a resposta é mentirosa; omitir: true quando esconde.
+ Contradições: quando o mesmo fato recebe respostas incompatíveis.
+*/
+const CASES=[
+{name:'Furto na joalheria Aurora',desc:'Quem levou o relógio de ouro da vitrine? As três testemunhas estavam na loja às 18h40. Duas dizem a verdade; a terceira esconde algo importante.',
+ wits:[
+  {id:'a',n:'Sr. Ferraz',r:'cliente',ava:'F',role:'v',
+   qs:[
+    {id:'a1',perg:'Onde o senhor estava às 18h40?',resp:'Na vitrine dos relógios, escolhendo um presente para minha esposa. Fiquei ali uns dez minutos.',fact:'localFerraz',lie:false,omit:false},
+    {id:'a2',perg:'O senhor viu alguém perto do balcão?',resp:'Sim, a vendedora Sônia e um rapaz de jaqueta azul conversando. Não vi mais ninguém.',fact:'quemNaLoja',lie:false,omit:true},
+    {id:'a3',perg:'Ouviu o alarme tocar?',resp:'Ouvi sim, um alarme agudo. Foi quando notei que o relógio de ouro tinha sumido da vitrine.',fact:'alarme',lie:false,omit:false}]},
+  {id:'b',n:'Sônia Meireles',r:'vendedora',ava:'S',role:'m',
+   qs:[
+    {id:'b1',perg:'Onde você estava às 18h40?',resp:'Atendendo um cliente na vitrine dos relógios — o senhor Ferraz. Ficamos o tempo todo ali.',fact:'localFerraz',lie:true,omit:false},
+    {id:'b2',perg:'Quem mais estava na loja?',resp:'Só eu e o senhor Ferraz. O gerente tinha saído para almoçar.',fact:'quemNaLoja',lie:true,omit:false},
+    {id:'b3',perg:'E o alarme?',resp:'O alarme não tocou. Eu estava do lado e não tocou — o relógio só sumiu depois que o Ferraz foi embora.',fact:'alarme',lie:true,omit:false}]},
+  {id:'c',n:'Genésio',r:'segurança',ava:'G',role:'v',
+   qs:[
+    {id:'c1',perg:'O que o senhor viu pelo monitor?',resp:'O rapaz de jaqueta azul entrou às 18h35 e saiu às 18h42, direto para a rua. O Ferraz ficou até as 19h.',fact:'quemNaLoja',lie:false,omit:false},
+    {id:'c2',perg:'O alarme tocou?',resp:'Tocou, sim — às 18h50, disparado pela porta dos fundos. Quando cheguei, o relógio já não estava na vitrine.',fact:'alarme',lie:false,omit:false},
+    {id:'c3',perg:'A vendedora saiu da loja em algum momento?',resp:'Ela saiu às 18h30 para buscar café e voltou correndo quando ouviu o alarme.',fact:'sonia',lie:false,omit:false}]}],
+ target:{id:'b',why:'Sônia esconde que o rapaz de jaqueta azul era seu cúmplice; ela abriu a vitrine e ele levou o relógio. Ela mente sobre a presença dele e sobre o alarme.'}},
+{name:'Batida no estacionamento',desc:'O carro de Dona Jurema foi danificado às 20h10 no estacionamento do mercado. Uma testemunha mente; outra omitiu que estava no local.',
+ wits:[
+  {id:'a',n:'Miro',r:'manobrista',ava:'M',role:'v',
+   qs:[
+    {id:'a1',perg:'O que você viu às 20h10?',resp:'Eu estava na entrada. Vi uma caminhonete branca saindo de ré da vaga da Jurema bem rápido.',fact:'veiculo',lie:false,omit:false},
+    {id:'a2',perg:'Quem dirigia?',resp:'Não vi o rosto, mas a placa começava com F. Anotei na hora.',fact:'placa',lie:false,omit:false},
+    {id:'a3',perg:'Tinha mais alguém perto?',resp:'A moça do caixa passou com o lixo naquela hora, mas acho que ela não viu nada.',fact:'caixa',lie:false,omit:false}]},
+  {id:'b',n:'Karla',r:'caixa',ava:'K',role:'o',
+   qs:[
+    {id:'b1',perg:'A senhora viu a batida?',resp:'Não vi nada, estava guardando o lixo no contêiner, de costas para o estacionamento.',fact:'caixa',lie:false,omit:true},
+    {id:'b2',perg:'Ouviu o barulho?',resp:'Ouvi um “tum” e um carro acelerando, mas jurei que era lixeiro.',fact:'barulho',lie:false,omit:false},
+    {id:'b3',perg:'Conhece uma caminhonete branca com placa F?',resp:'Todo mundo aqui conhece: é do sogro da Jurema. Ele sempre estaciona na vaga dela.',fact:'placa',lie:false,omit:true}]},
+  {id:'c',n:'Sargento Vidal',r:'policial (chegou depois)',ava:'V',role:'m',
+   qs:[
+    {id:'c1',perg:'O senhor viu o estrago?',resp:'Vi. A lateral toda riscada — isso foi de chave, não de batida de carro.',fact:'dano',lie:true,omit:false},
+    {id:'c2',perg:'Havia marcas de pneu?',resp:'Nenhuma marca de pneu. Quem riscou foi a pé mesmo.',fact:'veiculo',lie:true,omit:false},
+    {id:'c3',perg:'A caminhonete branca foi encontrada?',resp:'Não encontramos caminhonete nenhuma. Essa história de placa com F não se sustenta.',fact:'placa',lie:true,omit:false}]}],
+ target:{id:'c',why:'O sargento Vidal mente: a perícia encontrou tinta branca e marcas de pneu na lateral. Ele tentou abafar porque a caminhonete é do irmão dele. Karla só omitiu que viu o sogro da Jurema na caminhonete.'}},
+{name:'Queda da escada do teatro',desc:'Alguém empurrou o ator Vidal da escada do camarim. Duas testemunhas falam a verdade; a terceira omite o que viu.',
+ wits:[
+  {id:'a',n:'Érico',r:'contra-regra',ava:'E',role:'v',
+   qs:[
+    {id:'a1',perg:'O que você viu?',resp:'O Vidal subia a escada e o Caio descia. Eles se cruzaram no meio e o Vidal caiu.',fact:'cena',lie:false,omit:false},
+    {id:'a2',perg:'Ouviu alguma discussão?',resp:'Ouvi o Caio gritar “não encosta em mim” segundos antes da queda.',fact:'grito',lie:false,omit:false},
+    {id:'a3',perg:'Havia mais alguém perto?',resp:'A figurinista Duda estava no fim do corredor, mas acho que só ouviu os gritos.',fact:'duda',lie:false,omit:false}]},
+  {id:'b',n:'Caio',r:'ator rival',ava:'C',role:'v',
+   qs:[
+    {id:'b1',perg:'O que aconteceu na escada?',resp:'Eu descia e o Vidal subiu tropeçando no próprio figurino. Não encostei nele.',fact:'cena',lie:false,omit:false},
+    {id:'b2',perg:'Você gritou com ele?',resp:'Gritei “cuidado com a capa”! Ele tropeçou na capa e caiu.',fact:'grito',lie:false,omit:false},
+    {id:'b3',perg:'Duda estava perto?',resp:'A Duda? Não, ela estava no palco ensaiando a troca de cenário.',fact:'duda',lie:false,omit:true}]},
+  {id:'c',n:'Duda',r:'figurinista',ava:'D',role:'o',
+   qs:[
+    {id:'c1',perg:'A senhora viu a queda?',resp:'Estava no palco, ensaiando. Só ouvi o baque e os gritos.',fact:'duda',lie:false,omit:true},
+    {id:'c2',perg:'Reconhece o que gritaram?',resp:'Ouvi “não encosta em mim” e depois um baque. Foi tudo muito rápido.',fact:'grito',lie:false,omit:false},
+    {id:'c3',perg:'A capa do Vidal estava diferente?',resp:'Não reparei… ele usa a mesma capa vermelha desde a estreia.',fact:'capa',lie:true,omit:false}]}],
+ target:{id:'c',why:'Duda omitiu que estava perto — e mentiu sobre a capa: ela mesma costurou um elo frouxo na capa de Vidal para que Caio fosse culpado. A capa vermelha foi trocada por uma cópia naquela noite.'}},
+{name:'O bilhete anônimo',desc:'Quem ameaçou a síndica com um bilhete anônimo? As testemunhas são os três moradores que estavam no hall quando o bilhete apareceu.',
+ wits:[
+  {id:'a',n:'Nadir',r:'porteiro',ava:'N',role:'v',
+   qs:[
+    {id:'a1',perg:'Como o bilhete apareceu?',resp:'A síndica abriu a caixa de correio às 8h e o bilhete caiu. Eu estava ao lado, vi.',fact:'como',lie:false,omit:false},
+    {id:'a2',perg:'Quem entregou a carta?',resp:'O carteiro passou às 7h40, como sempre. Deixou um maço na caixa.',fact:'carteiro',lie:false,omit:false},
+    {id:'a3',perg:'O senhor viu alguém mexer na caixa antes?',resp:'O morador do 203, seu Gumercindo, passou pelo hall às 7h30 e ficou perto da caixa. Mas ele é um senhor tão calmo…',fact:'gumer',lie:false,omit:false}]},
+  {id:'b',n:'Gumercindo (203)',r:'morador',ava:'G',role:'m',
+   qs:[
+    {id:'b1',perg:'O senhor esteve perto da caixa?',resp:'Passei pelo hall às 7h30 para pegar o jornal na portaria. Nem olhei para a caixa de correio.',fact:'gumer',lie:true,omit:false},
+    {id:'b2',perg:'O carteiro já tinha passado?',resp:'O carteiro passa às 8h15. Às 7h30 a caixa ainda estava vazia, garanto.',fact:'carteiro',lie:true,omit:false},
+    {id:'b3',perg:'A letra do bilhete parece com a de alguém?',resp:'A síndica diz que parece com a letra do meu irmão. Isso é ridículo, moramos em cidades diferentes.',fact:'irmao',lie:false,omit:true}]},
+  {id:'c',n:'Luzia (1502)',r:'moradora',ava:'L',role:'v',
+   qs:[
+    {id:'c1',perg:'A senhora viu algo?',resp:'Eu descia para o trabalho e vi o Gumercindo ao lado da caixa, com um envelope na mão.',fact:'gumer',lie:false,omit:false},
+    {id:'c2',perg:'E o carteiro?',resp:'O carteiro só passou às 8h15 — eu o encontrei na portaria quando voltava do trabalho à noite? Não… espera, de manhã ele ainda não tinha passado.',fact:'carteiro',lie:false,omit:false},
+    {id:'c3',perg:'Conhece o irmão do Gumercindo?',resp:'O irmão dele mora sim nesta cidade, na rua de trás. Eu já o vi visitando o 203.',fact:'irmao',lie:false,omit:false}]}],
+ target:{id:'b',why:'Gumercindo mente: a câmera do hall o mostra com um envelope na mão às 7h32, antes do carteiro. Ele mesmo deixou o bilhete para prejudicar a síndica na eleição do condomínio — e mentiu que o irmão mora longe.'}}];
+/* estado */
+let state=null;
+function newCase(i){
+  ci=i;const C=CASES[i];cur=C;
+  asked=0;over=false;badTries=0;
+  askedIds=new Set();facts={};
+  document.getElementById('trans').innerHTML='';
+  document.getElementById('contra').innerHTML='';
+  document.getElementById('caseDesc').textContent=C.desc;
+  document.getElementById('caseNo').textContent=i+1;
+  renderWits();selWit(0);renderHud();
+}
+function selWit(i){
+  [...document.getElementById('wits').children].forEach(x=>x.classList.remove('act'));
+  document.getElementById('wits').children[i].classList.add('act');
+  renderQs(i);
+}
+function renderHud(){document.getElementById('asked').textContent=asked+' perguntas';}
+function renderWits(){
+  const b=document.getElementById('wits');b.innerHTML='';
+  cur.wits.forEach((w,i)=>{
+    const d=document.createElement('div');
+    d.className='wit';
+    d.innerHTML='<span class="av">'+w.ava+'</span><div><b>'+w.n+'</b><small>'+w.r+'</small></div>';
+    d.addEventListener('click',()=>{sfx('click');selWit(i);});
+    b.appendChild(d);
+  });
+}
+function renderQs(wi){
+  const w=cur.wits[wi];curW=w;curWi=wi;
+  document.getElementById('curName').textContent=w.n;
+  const box=document.getElementById('qs');box.innerHTML='';
+  w.qs.forEach(q=>{
+    const d=document.createElement('button');
+    d.className='qBtn';
+    d.innerHTML=q.perg+(askedThis(q.id)?' <span class="lk">já perguntado</span>':'');
+    d.disabled=askedThis(q.id);
+    d.addEventListener('click',()=>ask(wi,q));
+    box.appendChild(d);
+  });
+}
+function askedThis(qid){return askedIds.has(qid);}
+let curW=null,curWi=0,askedIds=new Set(),facts={},trans=[];
+function ask(wi,q){
+  if(askedThis(q.id))return;
+  const w=cur.wits[wi];
+  asked++;askedIds.add(q.id);
+  sfx('ev');
+  // pergunta
+  const t=document.getElementById('trans');
+  const you=document.createElement('div');
+  you.className='speech you';you.textContent='Você: '+q.perg;
+  t.appendChild(you);
+  const th=document.createElement('div');
+  th.className='speech them';
+  let tag='',cls='';
+  const tagCls=q.omit?'Omitiu detalhe':q.lie?'Versão duvidosa':'Consistente';
+  th.innerHTML='<b>'+w.n.split(' ')[0]+':</b> '+q.resp+'<br><span class="tag" style="background:'+(q.lie?'rgba(255,138,128,.2);color:#ffb0aa':q.omit?'rgba(201,162,92,.18);color:#e6c48a':'rgba(106,223,174,.16);color:#8fe8c0')+'">'+tagCls+'</span>';
+  t.appendChild(th);
+  t.scrollTop=t.scrollHeight;
+  // cruzamento de fatos
+  if(q.fact){
+    const prev=facts[q.fact];
+    if(prev&&prev.lie!==q.lie&&!q.omit&&!prev.omit){
+      const whoA=w.n, whoB=prev.w;
+      showContra('⚠ Contradição anotada: <b>'+whoA+'</b> e <b>'+whoB+'</b> contam versões incompatíveis sobre o mesmo fato. Alguém está mentindo.');
+    }else if(!prev){
+      facts[q.fact]={lie:q.lie,omit:q.omit,w:w.n,resp:q.resp};
+    }else if(prev.omit&&!q.omit&&!q.lie){
+      showContra('ℹ️ '+(prev.w)+' escondeu isso: <b>'+w.n+'</b> confirma que '+prev.w+' estava presente. Pergunte de novo a '+(prev.w).split(' ')[0]+' sobre o assunto.');
+    }
+  }
+  renderQs(curWi);renderHud();
+}
+function showContra(html){document.getElementById('contra').innerHTML='<div class="contra">'+html+'</div>';sfx('bad');}
+function report(){
+  if(over)return;
+  const C=cur;
+  let html='<h2 style="color:var(--ac)">Relatório final</h2><p>Classifique cada testemunha. Depois confirme — você tem 2 tentativas.</p>';
+  C.wits.forEach((w,i)=>{
+    html+='<div class="radioRow"><b>'+w.n+'</b>'+
+      '<label><input type="radio" name="r'+i+'" value="v">Diz a verdade</label>'+
+      '<label><input type="radio" name="r'+i+'" value="o">Omitiu algo</label>'+
+      '<label><input type="radio" name="r'+i+'" value="m">Mente</label></div>';
+  });
+  html+='<div class="rowB"><button class="btn pri" id="confBtn">Confirmar relatório</button></div>';
+  showModal(html);
+  document.getElementById('confBtn').addEventListener('click',()=>grade());
+}
+function grade(){
+  const picks=[];
+  for(let i=0;i<cur.wits.length;i++){
+    const r=document.querySelector('input[name="r'+i+'"]:checked');
+    if(!r){return;}
+    picks.push(r.value);
+  }
+  const truth=cur.wits.map(w=>w.role);
+  const ok=picks.every((p,i)=>p===truth[i]);
+  sfx(ok?'win':'bad');
+  if(ok){
+    over=true;
+    if(ci+1>=unlock&&ci+1<CASES.length){unlock=ci+2;save();}
+    const st=1; // participou
+    const k='c'+(ci+1);
+    if(!best[k]){best[k]=1;save();}
+    const tgt=cur.target;
+    showModal('<div class="big">✅</div><h2 style="color:var(--ok)">Relatório aceito</h2><p>'+tgt.why+'</p>'+
+      '<div class="rowB">'+(ci+1<CASES.length?'<button class="btn pri" onclick="nextCase()">Próximo caso →</button>':'')+
+      '<button class="btn" onclick="startOver()">Repetir caso</button><button class="btn" onclick="closeBig()">Ler transcrição</button></div>');
+  }else{
+    const triesBad=badTries+1;badTries=triesBad;
+    const detail=picks.map((p,i)=>(p===truth[i]?'ok':'x')).join('');
+    showModal('<div class="big">❌</div><h2 style="color:var(--bad)">Relatório rejeitado</h2><p>Algumas classificações estão erradas. Compare as contradições anotadas no interrogatório e tente de novo. (Tentativa '+triesBad+'/2)</p>'+
+      '<div class="rowB"><button class="btn pri" onclick="closeBig()">Revisar</button></div>');
+    if(triesBad>=2){
+      showModal('<div class="big">🔍</div><h2 style="color:var(--ac)">Hora da verdade</h2><p>O responsável escondido era <b>'+cur.wits.find(w=>w.role!=='v').n+'</b> ('+(cur.wits.find(w=>w.role!=='v').role==='m'?'mente':'omitiu')+').</p><p>'+cur.target.why+'</p>'+
+      '<div class="rowB">'+(ci+1<CASES.length?'<button class="btn pri" onclick="nextCase()">Próximo caso →</button>':'')+'<button class="btn" onclick="startOver()">Repetir caso</button></div>');
+      if(ci+1>=unlock&&ci+1<CASES.length){unlock=ci+2;save();}
+    }
+  }
+}
+let badTries=0;
+function nextCase(){closeBig();badTries=0;newCase(ci+1);}
+function startOver(){closeBig();badTries=0;newCase(ci);}
+function showModal(html){document.getElementById('resBox').innerHTML=html;document.getElementById('big').classList.add('open');}
+function closeBig(){document.getElementById('big').classList.remove('open');}
+document.getElementById('repBtn').addEventListener('click',report);
+document.getElementById('rstBtn').addEventListener('click',startOver);
+function showHelp(){
+  sfx('click');
+  showModal('<h2 style="color:var(--ac)">Manual do interrogador</h2>'+
+  '<p><b>1.</b> Escolha uma testemunha e faça perguntas. Cada assunto só pode ser perguntado uma vez por pessoa.</p>'+
+  '<p><b>2.</b> Compare as respostas: quando duas versões sobre o mesmo fato se contradizem, o sistema anota a <b>contradição</b> — alguém está mentindo.</p>'+
+  '<p><b>3.</b> Testemunhas que <b>omitem</b> não mentem de cara: elas escapam por detalhe. Confrontá-las depois (por meio de outras respostas) revela o que escondem.</p>'+
+  '<p><b>4.</b> Com as pistas na mão, escreva o <b>relatório final</b>: diga quem diz a verdade, quem omitiu e quem mentiu. Você tem 2 tentativas.</p>'+
+  '<div class="rowB"><button class="btn pri" onclick="closeBig()">Entendi</button></div>');
+}
+document.getElementById('helpBtn').addEventListener('click',showHelp);
+newCase(0);
+</script>
+</body>
+</html>

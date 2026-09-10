@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jogo 01 · Leilão de Memórias — JogoZ</title>
+<style>
+  :root{--ac:#c9a35c;--ac2:#e8cfa0;--bg:#120e07;--panel:#1c1509;--line:#3d2f16;--txt:#f3e9d2;--mut:#b09b6e;--ok:#7fcf6a;--bad:#e06c5f;--gold:#ffd166}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,sans-serif;background:radial-gradient(900px 420px at 80% -10%,rgba(201,163,92,.14),transparent 60%),linear-gradient(180deg,var(--bg),#0a0804);color:var(--txt);min-height:100vh}
+  button{font-family:inherit;cursor:pointer}
+  .top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(18,14,7,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+  .top a{color:var(--ac2);text-decoration:none;font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px}
+  .top a:hover{background:rgba(201,163,92,.12)}
+  .ttl{font-size:15px;font-weight:800;letter-spacing:.3px}
+  .sp{flex:1}
+  .tb{background:rgba(201,163,92,.1);border:1px solid var(--line);color:var(--ac2);padding:7px 13px;border-radius:9px;font-size:13px;font-weight:600}
+  .tb:hover{background:rgba(201,163,92,.2)}
+  .wrap{max-width:1200px;margin:0 auto;padding:16px;display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .panel h3{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--mut);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+  .statRow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px dashed #332711;font-size:14px}
+  .statRow:last-child{border-bottom:0}
+  .statRow b{font-size:18px}
+  .mone b{color:var(--gold)} .rep b{color:var(--ac2)} .day b{color:#fff}
+  .bar{height:8px;border-radius:6px;background:#2c2210;overflow:hidden;margin-top:6px}
+  .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#c9a35c,#ffd166);transition:width .3s}
+  .fact{font-size:12.5px;line-height:1.5;padding:7px 9px;border-left:3px solid var(--ac);background:rgba(201,163,92,.06);border-radius:0 8px 8px 0;margin-bottom:7px;color:#d9c9a3}
+  .fact b{color:var(--ac2);font-weight:700}
+  .char{font-size:12.5px;padding:8px 10px;background:#191206;border:1px solid #332711;border-radius:10px;margin-bottom:8px}
+  .char b{color:#ffd9a0;font-size:13px}
+  .char p{color:var(--mut);line-height:1.45;margin-top:3px}
+  details{background:#191206;border:1px solid #332711;border-radius:10px;padding:8px 11px;margin-bottom:8px}
+  details summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--ac2)}
+  .offer{background:#191206;border:1px solid #3d2f16;border-radius:13px;padding:13px;margin-bottom:12px;transition:border-color .15s}
+  .offer:hover{border-color:#6a5226}
+  .offer h4{font-size:16px;color:#fff}
+  .offer .who{font-size:12px;color:var(--mut);margin:3px 0 8px}
+  .offer .who b{color:var(--ac2)}
+  .offer .syn{font-size:13.5px;color:#d9c9a3;line-height:1.55;border-left:3px solid var(--line);padding-left:10px;margin-bottom:10px}
+  .offer .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .price{font-size:16px;font-weight:800;color:var(--gold)}
+  .tagT{font-size:10px;letter-spacing:1px;color:#9a8c6a;text-transform:uppercase}
+  .buy{padding:9px 18px;border:0;border-radius:9px;background:linear-gradient(135deg,#c9a35c,#8a6a2f);color:#120e07;font-weight:800;font-size:14px}
+  .buy:hover{filter:brightness(1.12)} .buy:disabled{filter:grayscale(.7);cursor:not-allowed;opacity:.6}
+  .bancada .memo{background:#221806;border:1px solid #4a3a1c;border-radius:13px;padding:14px;margin-bottom:14px}
+  .memo .mh{display:flex;justify-content:space-between;gap:8px;align-items:start}
+  .memo .mh h4{font-size:15px;color:#fff}
+  .memo .meta{font-size:12px;color:var(--mut);margin:5px 0 9px;line-height:1.5}
+  .memo .meta b{color:var(--ac2)}
+  .memo .txt{font-size:14px;line-height:1.7;color:#efe3c4;background:#171007;border-radius:10px;padding:12px;border:1px solid #332711}
+  .ctx{font-size:12.5px;color:#b7a47c;margin-top:8px;line-height:1.5}
+  .beh{font-size:12.5px;color:#b7a47c;margin-top:4px;font-style:italic}
+  .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .act{padding:9px 14px;border-radius:9px;border:1px solid var(--line);background:#241a0b;color:var(--txt);font-size:13px;font-weight:700}
+  .act:hover{border-color:var(--ac)}
+  .act.good{background:linear-gradient(135deg,#7fcf6a,#3e7a2f);color:#0d1409;border:0}
+  .act.bad{background:linear-gradient(135deg,#e06c5f,#7c2f27);color:#fff;border:0}
+  .act.analy{background:linear-gradient(135deg,#6fb6e0,#2f4f7a);color:#fff;border:0}
+  .act:disabled{opacity:.45;cursor:not-allowed}
+  .laudo{margin-top:10px;background:rgba(111,182,224,.08);border:1px solid #33506e;border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.6;color:#cfe3f5}
+  .laudo b{color:#9fd2f5}
+  .log{max-height:240px;overflow:auto;font-size:12.5px;line-height:1.5}
+  .log div{padding:6px 2px;border-bottom:1px dashed #2c2110;color:#c9b98f}
+  .log .win{color:var(--ok)} .log .loss{color:var(--bad)} .log .inf{color:var(--mut)}
+  .empty{color:var(--mut);font-size:13px;text-align:center;padding:16px}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;place-items:center;z-index:100;padding:16px}
+  .modal.open{display:grid}
+  .mbox{background:#1d160a;border:1px solid var(--ac);border-radius:16px;max-width:560px;width:100%;padding:22px;max-height:86vh;overflow:auto}
+  .mbox h2{color:var(--gold);margin-bottom:10px}
+  .mbox p,.mbox li{font-size:14px;line-height:1.65;color:#e6d9bb;margin-bottom:8px}
+  .mbox b{color:#fff}
+  .close{margin-top:6px;padding:9px 20px;border-radius:9px;background:var(--ac);color:#120e07;font-weight:800;border:0}
+  .bigmsg{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.78);z-index:90;padding:16px}
+  .bigmsg.open{display:grid}
+  .res{background:linear-gradient(160deg,#241a09,#161006);border:1px solid var(--ac);border-radius:18px;max-width:480px;width:100%;padding:26px;text-align:center}
+  .res h2{font-size:24px;margin-bottom:10px}
+  .res .big{font-size:44px}
+  .res p{color:#d9c9a3;line-height:1.6;margin:8px 0;font-size:14px}
+  .res .rowB{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .splash{text-align:center;padding:40px 0 16px;color:var(--mut);font-size:13px}
+  @media(max-width:860px){.wrap{grid-template-columns:1fr;padding:10px}.ttl{display:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="index.html">← JogoZ</a>
+  <span class="ttl">01 · Leilão de Memórias</span>
+  <span class="sp"></span>
+  <button class="tb" id="helpBtn">Como jogar</button>
+  <button class="tb" id="rstBtn">Reiniciar</button>
+</header>
+
+<div class="wrap">
+  <aside>
+    <div class="panel">
+      <h3>Seu escritório</h3>
+      <div class="statRow mone"><span>Moedas</span><b id="money">—</b></div>
+      <div class="statRow rep"><span>Reputação</span><b id="rep">—</b></div>
+      <div class="statRow day"><span>Dia</span><b id="day">— / 10</b></div>
+      <div class="bar"><i id="dayBar"></i></div>
+      <div class="statRow"><span>Objetivo</span><b style="color:var(--gold);font-size:14px" id="goal">640</b></div>
+    </div>
+    <div class="panel" style="margin-top:12px">
+      <h3>Arquivo · boletins verificados</h3>
+      <div id="facts"></div>
+      <details><summary>Fichas dos vendedores</summary><div id="chars"></div></details>
+    </div>
+  </aside>
+
+  <main>
+    <div class="panel">
+      <h3>Memórias à venda hoje <span id="lblDay" style="color:var(--ac2)"></span></h3>
+      <div id="offers"></div>
+    </div>
+    <div class="panel bancada" style="margin-top:12px">
+      <h3>Sua bancada · memórias compradas</h3>
+      <div id="bancada"></div>
+      <div class="row" style="justify-content:flex-end;margin-top:4px">
+        <button class="buy" id="endDay">Encerrar o dia →</button>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:12px">
+      <h3>Livro-caixa · histórico</h3>
+      <div class="log" id="log"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal como jogar -->
+<div class="modal" id="helpM"><div class="mbox">
+  <h2>Como jogar</h2>
+  <p>Você é um <b>memoriógrafo</b>: compra lembranças contadas por estranhos e as revende para colecionadores. O problema: algumas memórias são <b>falsas</b> — inventadas para enganar compradores.</p>
+  <ul style="padding-left:18px">
+    <li>Cada dia chegam <b>memórias</b> com preço, contexto, vendedor e uma sinopse. Você pode comprar até 2 por dia (ou pular).</li>
+    <li>Ao comprar, leia a memória inteira. Compare com os <b>boletins verificados</b> do arquivo e com o que personagens já disseram.</li>
+    <li>Decida: <b>afirmar que é verdadeira</b> (vender como autêntica) ou <b>afirmar que é falsa</b> (vender como curiosidade barata).</li>
+    <li>Verdadeira vendida como autêntica dá <b>lucro</b>. Falsa vendida como autêntica gera multa e derruba sua reputação. Verdadeira vendida como falsa perde dinheiro (você subvalorizou).</li>
+    <li>Dúvidas? Pague o <b>laudo do verificador</b> — ele confronta o relato com o arquivo.</li>
+    <li>Ganhe se chegar ao fim do dia 10 com <b>600 moedas</b>. Perde se falir ou se sua reputação chegar a zero.</li>
+  </ul>
+  <p style="font-style:italic;color:var(--mut)">Pista: preço baixo demais, contexto frágil e comportamento do vendedor ajudam — mas a verdade está sempre nos detalhes do texto.</p>
+  <button class="close" onclick="document.getElementById('helpM').classList.remove('open')">Entendi</button>
+</div></div>
+
+<div class="bigmsg" id="big"><div class="res" id="resBox"></div></div>
+
+<script>
+"use strict";
+/* ===== Audio (Web Audio, sem arquivos) ===== */
+let AC=null;
+function tone(f,d,type,g,when){try{if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();var t=AC.currentTime+(when||0),o=AC.createOscillator(),v=AC.createGain();o.type=type||'square';o.frequency.value=f;v.gain.value=g||.05;o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d);o.onended=function(){o.disconnect();v.disconnect();};}catch(e){}}
+function sfx(kind){ if(kind==='buy')tone(660,.08,'square',.045); else if(kind==='ok'){tone(523,.1,'square',.05);tone(784,.14,'square',.05,.1);}
+ else if(kind==='bad'){tone(220,.18,'sawtooth',.06);tone(174,.22,'sawtooth',.05,.13);}
+ else if(kind==='click')tone(440,.05,'square',.03); else if(kind==='win'){[523,659,784,1046].forEach((f,i)=>tone(f,.16,'square',.05,i*.13));}
+ else if(kind==='lose'){[392,330,262,196].forEach((f,i)=>tone(f,.2,'sawtooth',.05,i*.15));}}
+document.addEventListener('pointerdown',function(){if(AC&&AC.state==='suspended')AC.resume();},{once:true});
+
+/* ===== universo ===== */
+const CHARS=[
+ {id:'eug',nome:'Eugênia Vilar',desc:'76 anos, ex-dona da Pensão das Acácias, viúva de Baltazar. Vive em Valeverde desde criança.'},
+ {id:'aur',nome:'Prof. Aurélio Peçanha',desc:'61 anos, historiador amador e colecionador de diários. Morou em Portalis entre 1917 e 1919.'},
+ {id:'ben',nome:'Benício Lagoa',desc:'24 anos, único tripulante sobrevivente do navio Vento Sul, com sua gata Sotaque.'},
+ {id:'con',nome:'Constança Vale',desc:'43 anos, herdeira e ex-viajante. Após um escândalo em 1920, passou 1921 reclusa. Alérgica grave a cavalos.'},
+ {id:'ner',nome:'Nero Castilho',desc:'50 anos, mecânico. Trabalhou na fábrica Aurora até 1921. Perdeu a mão esquerda em um acidente.'},
+ {id:'oli',nome:'Olívia Brandt',desc:'31 anos, cartógrafa. Explorou o sertão do rio Sereno entre 1918 e 1920.'}
+];
+const VBEH=[
+ {id:'eug',tics:['Fala baixo e com saudade, sem pressa para vender.','Desvia o olhar quando menciona o incêndio.','Parece confusa sobre datas: “foi num ano desses…”.','Mantém as mãos ocupadas, alisando o xale.']},
+ {id:'aur',tics:['Gesticula muito e cita “fontes” que nunca mostra.','Corrige qualquer um que erre o nome do farol.','Fica irritado quando você pede provas.','Fala do diário como se fosse um filho.']},
+ {id:'ben',tics:['Fala rápido e olha para o mar a cada minuto.','Enrola-se ao descrever o que “ouviu dizer”.','Mostra a pata da gata Sotaque como garantia.','Suas mãos tremem ao falar do naufrágio.']},
+ {id:'con',tics:['Responde com elegância, mas evita detalhes.','Menciona títulos e cidades para impressionar.','Ri sem humor quando fala do escândalo.','Ergue o queixo: “minha palavra sempre bastou”.']},
+ {id:'ner',tics:['Fala com a mão direita no bolso, a esquerda escondida.','Explica tudo pelo barulho das máquinas.','Diz “fui eu que vi” com um orgulho suspeito.','Cansa ao falar da fábrica fechada.']},
+ {id:'oli',tics:['Mostra mapas com marcas de dedo.','Não gosta de perguntas sobre 1918–1920.','Diz que “o rio guarda o que a cidade esquece”.','Risca o chão com a bota enquanto fala.']}
+];
+const INIT_FACTS=[
+ 'A Pensão das Acácias incendiou em <b>1915</b> e nunca reabriu.',
+ 'Baltazar Vilar morreu em <b>1908</b>, no cais de Valeverde.',
+ 'O navio <b>Vento Sul</b> naufragou em fevereiro de 1920; só Benício e a gata Sotaque sobreviveram.',
+ 'O prof. Aurélio perdeu a visão do <b>olho esquerdo</b> em 1919.',
+ 'Constança Vale tem <b>alergia grave a cavalos</b> (registro médico).'
+];
+const BOLETINS={
+ 2:['Constança Vale ficou <b>reclusa em Valeverde durante todo 1921</b>.','Tomás, filho de Eugênia, faleceu em Oceânia em <b>1918</b>.'],
+ 3:['O diário de bordo do Vento Sul foi <b>recuperado intacto</b> em meados de 1920.','A fábrica Aurora <b>fechou em julho de 1921</b>.'],
+ 4:['Benício embarcou pela <b>primeira vez em fevereiro de 1920</b>, no Vento Sul.','O farol de Portalis <b>nunca mais acendeu</b> após 1919 e a torre foi fechada.'],
+ 5:['Nero perdeu a mão esquerda em <b>1918</b>, na prensa da Aurora.','Eugênia perdeu <b>dois dedos da mão direita</b> no incêndio de 1915.','Benício mudou-se para longe do porto em <b>1921</b>.'],
+ 6:['O colecionador <b>Marcos Guedes faleceu em março de 1922</b>.'],
+ 7:['O cometa Halley passou em <b>1910</b>, não depois.','Eugênia nunca aprendeu a tocar piano.','O capitão do Vento Sul chamava-se <b>Hélio Vaz</b>.']
+};
+/* Memorias: ch=char id; d=primeiro dia; base=preço base; syn=sinopse; txt=texto completo; truth; corrob=frases do laudo se verdadeira; contra=se falsa */
+const MEMORIES=[
+ {id:'E1',ch:'eug',d:1,base:14,title:'O incêndio e o livro de receitas',truth:true,
+  syn:'Eugênia conta que salvou o livro de receitas da pensão das chamas em 1915.',
+  txt:'Eu estava na cozinha quando o fogo subiu do fogão. Peguei o livro de receitas — com a caligrafia da minha mãe — e o incêndio levou o resto. A pensão das Acácias ardeu em 1915 e eu jurei que aquele livro era o único tesouro que importava.',
+  corrob:['O incêndio da Pensão das Acácias em 1915 consta no arquivo — e Eugênia era a dona.','O relato não contradiz nenhum boletim e o livro foi depois leiloado em 1916, fato registrado.'],
+  ctx:'Do espólio da própria contadora. Papel envelhecido, cheiro de fumaça. Vende como lembrança de “um recomeço”.'},
+ {id:'E2',ch:'eug',d:1,base:22,title:'O relógio de Baltazar',truth:true,
+  syn:'Na memória, o relógio de prata do marido parou exatamente no dia da morte dele.',
+  txt:'Baltazar ganhou aquele relógio de prata de mim no dia do casamento. Quando me avisaram que ele caíra no cais — em 1908 — o relógio estava sobre a cômoda, parado. Nunca mais andou. Guardei os dois: o relógio e a hora em que o mundo dele parou.',
+  corrob:['A morte de Baltazar no cais de Valeverde em 1908 consta no arquivo.','O relógio de prata foi autenticado por ourives em 1909 — coincidência consistente com o relato.'],
+  ctx:'Vendida com o próprio relógio (quebrado). Contexto forte: objeto acompanha a história.',},
+ {id:'E3',ch:'eug',d:5,base:34,title:'O piano da sala',truth:false,
+  syn:'Ela jura que tocou um noturno no piano da pensão em 1917.',
+  txt:'Em 1917, na véspera do aniversário de Tomás, sentei ao piano da sala da pensão e toquei um noturno inteiro, dedilhando com as duas mãos, enquanto ele cantava. A sala estava enfeitada. Foi a última vez que a casa inteira foi feliz.',
+  contra:['O arquivo registra: Eugênia perdeu dois dedos da mão direita no incêndio de 1915 — e o piano foi destruído pelas chamas. Em 1917 não havia piano nem dedos suficientes.','Perguntada, Eugênia não soube dizer o nome do noturno.'],
+  ctx:'“Encontrada” dentro de um caderno de partituras vazio. Sem procedência clara. Vendedora insiste no valor sentimental.',
+  beh:'Fala da música com os olhos marejados — mas não assobia nenhuma melodia.'},
+ {id:'E4',ch:'eug',d:6,base:30,title:'O retorno de Tomás',truth:false,
+  syn:'Ela afirma que o filho voltou de Oceânia em 1920 e morou com ela por dois meses.',
+  txt:'Tomás voltou doente de Oceânia no começo de 1920. Ficou dois meses comigo, curou-se, e partiu de novo “só para se despedir melhor”. Me escreveu cartas até 1921. Um filho não esquece a mãe assim, eu é que não o esqueci nunca.',
+  contra:['O arquivo registra que Tomás faleceu em Oceânia em 1918 — ele não pôde voltar em 1920 nem escrever cartas em 1921.','Não existe registro de passagem de Tomás no porto de Valeverde após 1916.'],
+  ctx:'Contada num café, de memória, sem nenhum objeto que a acompanhe. Preço elevado para um relato tão íntimo.'},
+ {id:'A1',ch:'aur',d:1,base:16,title:'A luz de Portalis',truth:true,
+  syn:'Aurélio lembra de ver o farol de Portalis girando, em 1917, do terraço da pensão do vigia.',
+  txt:'Em 1917 eu morava em Portalis escrevendo a história do distrito. Toda noite subia ao terraço da casa do vigia Ferreira e via a luz do farol varrer o mar — três clarões, pausa, três clarões. Era hipnótico. Anotei o padrão no meu diário, página 12 do caderno cinza.',
+  corrob:['O farol de Portalis funcionou normalmente até 1919 — em 1917 a luz girava, como descrito.','O caderno cinza de Aurélio existe e a página 12 contém o desenho dos clarões.'],
+  ctx:'Memória vendida junto com uma cópia da página 12 do caderno cinza. Detalhe verificável.'},
+ {id:'A2',ch:'aur',d:2,base:26,title:'O cometa no telescópio',truth:false,
+  syn:'Ele conta que avistou um grande cometa pelo telescópio da colina, em abril de 1920, usando o olho esquerdo.',
+  txt:'Em abril de 1920, no topo da colina de Portalis, apontei meu telescópio e avistei um cometa enorme — vi tudo com o olho esquerdo, o que me impressionou, pois o direito estava enfaixado de um velho acidente. Era o cometa Halley. Ninguém mais viu porque todos dormiam.',
+  contra:['O cometa Halley passou em 1910 — não existia cometa visível em abril de 1920.','Aurélio perdeu a visão do olho esquerdo em 1919: é impossível ter “visto tudo com o olho esquerdo” em 1920.'],
+  ctx:'Sem anotações, sem testemunhas, “esquecido” em uma conversa de bar. Detalhe astronômico impressionante demais para ser verdade.'},
+ {id:'A3',ch:'aur',d:3,base:28,title:'O diário do Vento Sul',truth:true,
+  syn:'Aurélio lembra de ter lido, na biblioteca de Valeverde, o diário recuperado do navio naufragado.',
+  txt:'Em setembro de 1920, a biblioteca de Valeverde recebeu o diário de bordo do Vento Sul, recuperado intacto. Passei uma tarde copiando a última anotação do capitão: “vento de través, âncora não segura”. Copiei com minha letra miúda e devolvi o original no mesmo dia.',
+  corrob:['O diário do Vento Sul foi recuperado intacto em meados de 1920 — e a biblioteca registrou a visita do professor em setembro.','A caligrafia da cópia confere com outros documentos de Aurélio.'],
+  ctx:'Vendida com a cópia manuscrita em anexo. Procedência rastreável na biblioteca.'},
+ {id:'A4',ch:'aur',d:7,base:44,title:'A última noite do farol',truth:false,
+  syn:'Ele jura ter subido à torre de Portalis em 1921, quando o vigia Ferreira acendeu a lâmpada só para ele.',
+  txt:'Em 1921 voltei a Portalis para meu livro. O vigia Ferreira — amigo antigo — me deixou subir à torre e, para me agradar, acendeu a grande lâmpada do farol uma última vez. Desenhei a paisagem iluminada. Foi a última noite em que a luz girou, e eu estava lá.',
+  contra:['O farol foi desativado em 1919 e a torre fechada — não havia vigia nem lâmpada acesa em 1921.','Ferreira, o último vigia, morreu em 1919, antes do fechamento da torre.'],
+  ctx:'Relato “heróico” vendido com um desenho a carvão que não corresponde à geografia real de Portalis.'},
+ {id:'B1',ch:'ben',d:1,base:12,title:'Sotaque, a gata da sorte',truth:true,
+  syn:'Benício conta como salvou a gata agarrada a uma tábua depois do naufrágio.',
+  txt:'Quando o Vento Sul afundou, em fevereiro de 1920, eu agarrei uma tábua e me mantive vivo. Na segunda noite, ouvi um miado: era a Sotaque, a gata do navio, em cima de outra tábua. Puxei-a para perto. Ficamos os dois até o resgate. Ela mia até hoje quando conto essa história.',
+  corrob:['O resgate registrou dois sobreviventes: Benício e uma gata ruiva.','A gata Sotaque é conhecida no porto e tem uma cicatriz na orelha direita, como o relato descreve.'],
+  ctx:'O próprio sobrevivente conta, com a gata no colo. Registro do resgate confirma os dois.'},
+ {id:'B2',ch:'ben',d:1,base:18,title:'O capitão que voltou',truth:false,
+  syn:'Benício afirma ter visto o capitão do Vento Sul vendendo relógios em Porto Aldeia, em 1921.',
+  txt:'Em 1921, eu juro, vi o capitão Hélio Vaz no mercado de Porto Aldeia, vendendo relógios de bolso. Ele me viu e sumiu no meio da multidão. Ninguém acreditou em mim, mas era ele — a cicatriz na sobrancelha não mente.',
+  contra:['O arquivo registra que só Benício e a gata sobreviveram ao naufrágio — o capitão Hélio Vaz morreu no mar, corpo nunca encontrado.','Nenhum registro de Hélio Vaz vivo após fevereiro de 1920 em Porto Aldeia ou em qualquer porto.'],
+  ctx:'Relato de “avistamento” sem testemunhas nem objeto. Benício insiste, mas não apresenta nada.'},
+ {id:'B3',ch:'ben',d:4,base:36,title:'O baú do imediato',truth:false,
+  syn:'Ele conta que, em 1918, ajudou o imediato a esconder um baú de ouro no porão do Vento Sul.',
+  txt:'Em 1918, quando eu já era grumete do Vento Sul, o imediato me chamou no porão e me fez ajudar a esconder um baú de ferro cheio de ouro atrás do tanque de água. “Nem o capitão sabe”, disse ele. O baú deve estar no fundo do mar até hoje.',
+  contra:['Benício embarcou pela primeira vez em fevereiro de 1920 — não existia “Benício grumete em 1918”.','A lista de tripulação do Vento Sul de 1918 não contém seu nome.'],
+  ctx:'História de tesouro contada no cais, com gestos largos. A lista de tripulação desmente a data.'},
+ {id:'B4',ch:'ben',d:5,base:20,title:'O apito na madrugada',truth:true,
+  syn:'Benício lembra de ter ouvido, em 1922, um apito igual ao do Vento Sul — e de ter corrido.',
+  txt:'Já morando longe do porto, em 1922, acordei com um apito de navio idêntico ao do Vento Sul. Corri até a janela com o coração na boca. Era outro navio, o Santa Rita, que passava com o apito rouco. Fiquei uma semana sem dormir direito. O mar cobra até de quem escapou.',
+  corrob:['Benício mudou-se para longe do porto em 1921 — o relato situa a cena corretamente em sua nova casa.','O Santa Rita atracava em Valeverde em 1922 com apito rouco, fato registrado no diário do porto.'],
+  ctx:'Contada pelo próprio, com a gata no colo. Sem ganância: ele pede pouco por uma lembrança triste.'},
+ {id:'C1',ch:'con',d:1,base:20,title:'O baile de máscaras',truth:true,
+  syn:'Constança recorda o baile de dezembro de 1920 em que foi fotografada — o escândalo que a trancou em casa.',
+  txt:'No baile de máscaras de dezembro de 1920, alguém me fotografou sem máscara, rindo com um copo na mão. A foto correu a cidade e virou o escândalo. Passei 1921 inteira reclusa em Valeverde, como todos sabem. A memória é minha e a culpa, de quem fotografou.',
+  corrob:['A reclusão de Constança durante todo 1921 consta no arquivo, coerente com o escândalo descrito.','A fotografia do baile existe e foi publicada no jornal local em janeiro de 1921.'],
+  ctx:'Contada com rancor elegante. A foto original a acompanha (manchada de vinho).'},
+ {id:'C2',ch:'con',d:2,base:30,title:'O cavalo de Viena',truth:false,
+  syn:'Ela afirma que comprou um cavalo árabe em Viena, em março de 1921, e o trouxe de navio.',
+  txt:'Em março de 1921, em Viena, me apaixonei por um cavalo árabe e o comprei por uma fortuna. Trouxe-o de navio até o porto de Valeverde e o montei todas as manhãs. Foi o único prazer daquele ano difícil.',
+  contra:['Constança ficou reclusa em Valeverde durante todo 1921 — não viajou a Viena nem trouxe cavalo algum.','Constança tem alergia grave e documentada a cavalos: montar “todas as manhãs” seria impossível.'],
+  ctx:'Sem nota de compra, sem quarentena no porto, sem testemunhas. O registro do porto de 1921 não lista cavalo algum em seu nome.'},
+ {id:'C3',ch:'con',d:6,base:40,title:'O retrato no ateliê de Marcos',truth:false,
+  syn:'Ela jura ter visitado o colecionador Marcos Guedes em 1923 para buscar um retrato a óleo.',
+  txt:'Em 1923, fui ao ateliê de Marcos Guedes buscar o retrato que ele pintara de mim. Conversamos por horas entre cavaletes. Ele estava vivo e lúcido, e me chamou de “a mulher mais pintada do vale”. O retrato está comigo até hoje.',
+  contra:['Marcos Guedes faleceu em março de 1922 — não pôde pintar nem receber ninguém em 1923.','O retrato em questão foi pintado em 1919 (assinatura e data visíveis) e não há registro de visita em 1923.'],
+  ctx:'O retrato existe, mas a data na tela é 1919. A história de 1923 é que é falsa.'},
+ {id:'C4',ch:'con',d:3,base:24,title:'O anel de esmeralda',truth:true,
+  syn:'Constança lembra de ter escondido o anel da mãe no forro de um baú durante a reclusão.',
+  txt:'Durante a reclusão de 1921, com medo de que vendessem as joias para pagar dívidas, escondi o anel de esmeralda da minha mãe no forro do baú de mogno do escritório. Ninguém o encontrou — porque ninguém procurou no forro. Tirei-o de lá só em 1922, quando a poeira baixou.',
+  corrob:['O baú de mogno do escritório existe e o forro foi refeito — vestígio de intervenção.','O inventário de 1922 registra o anel de esmeralda de volta às posses de Constança.'],
+  ctx:'Vendida com o anel (autenticado). Contexto íntimo e verificável pelo inventário.'},
+ {id:'N1',ch:'ner',d:1,base:13,title:'A prensa que quase me levou',truth:true,
+  syn:'Nero conta o acidente de 1918 na prensa da fábrica Aurora e o capataz que o salvou.',
+  txt:'Em 1918, a prensa da Aurora pegou minha mão esquerda e não quis soltar. O capataz Amaro arriscou a própria mão para me puxar. Perdi a mão, mas vivo. Amaro ganhou uma caixa de ferramentas que eu mesmo montei, agradecido.',
+  corrob:['O acidente de 1918 com a prensa consta nos registros da fábrica Aurora.','O capataz Amaro recebeu a caixa de ferramentas em 1918 — presente registrado pelos colegas.'],
+  ctx:'Contada com a manga dobrada, mostrando a prótese. Registro da fábrica confirma.'},
+ {id:'N2',ch:'ner',d:3,base:34,title:'O dueto com Constança',truth:false,
+  syn:'Nero afirma ter tocado piano a quatro mãos com Constança Vale em 1920, na mansão dela.',
+  txt:'Em 1920, fui chamado à mansão de Constança para consertar o piano e ela me convidou para um dueto. Tocamos a quatro mãos a noite inteira — eu, com as duas mãos, no registro grave. Ela disse que eu era “o melhor mecânico-pianista do vale”.',
+  contra:['Nero perdeu a mão esquerda em 1918: um dueto “a quatro mãos” é impossível.','Não há registro de Nero na mansão de Constança em 1920 — o piano dela foi consertado por outro, em 1919.'],
+  ctx:'História de “glória” contada no boteco. A mansão não tem registro algum do mecânico.'},
+ {id:'N3',ch:'ner',d:3,base:22,title:'O dia em que a Aurora fechou',truth:true,
+  syn:'Nero lembra do último dia da fábrica Aurora, em julho de 1921, quando ele apagou as luzes.',
+  txt:'Quando a Aurora fechou, em julho de 1921, fui o último a sair do galpão. Apaguei as luzes uma por uma e deixei a chave na caixa de correio do diretor. Fiquei no portão até o vigia me chamar: “Nero, a fábrica acabou”. Eu respondi: “a fábrica acabou, o mecânico não”.',
+  corrob:['O fechamento da Aurora em julho de 1921 consta no arquivo.','A chave do galpão foi devolvida pelo “mecânico Nero Castilho” — anotado no livro de ocorrências.'],
+  ctx:'Relato simples, com objeto (a chave) que confere com o livro de ocorrências da fábrica.'},
+ {id:'N4',ch:'ner',d:7,base:42,title:'A encomenda do coronel',truth:false,
+  syn:'Ele conta que, em 1922, construiu uma fechadura especial para o coronel Alcides — que lhe pagou em barras de ouro.',
+  txt:'Em 1922, o coronel Alcides me encomendou uma fechadura que “ninguém abrisse”. Construí em segredo na minha oficina e ele pagou em barras de ouro, uma por mês. O coronel morreu levando o segredo — mas eu guardei uma barra, como prova.',
+  contra:['O coronel Alcides morreu em 1919, três anos antes da suposta encomenda.','Nenhuma barra de ouro foi encontrada na oficina de Nero — nem na vistoria da prefeitura em 1923.'],
+  ctx:'“Prova” prometida, nunca apresentada. A data da morte do coronel derruba o relato.'},
+ {id:'O1',ch:'oli',d:1,base:17,title:'O rio que some',truth:true,
+  syn:'Olívia conta como mapeou o rio Sereno e descobriu que ele some sob a terra por um trecho.',
+  txt:'No sertão do rio Sereno, em 1919, encontrei o ponto onde o rio inteiro some para baixo da rocha e reaparece três léguas depois. Marquei no mapa com tinta vermelha. Os vaqueiros riam de mim — até eu voltar com o mapa desenhado na frente deles.',
+  corrob:['O mapa de Olívia, com a marca vermelha no trecho sumido, está arquivado na sociedade geográfica.','Em 1920, uma expedição confirmou o fenômeno descrito.'],
+  ctx:'Vendida com o mapa original, com a marca em tinta vermelha. Rastreável na sociedade geográfica.'},
+ {id:'O2',ch:'oli',d:6,base:38,title:'A cidade de ouro',truth:false,
+  syn:'Ela jura ter encontrado, em 1919, uma cidade coberta de ouro e ter mantido o segredo.',
+  txt:'Em 1919, perdida no sertão, encontrei uma cidade de pedra coberta de ouro, com portas de metal brilhante. Fiquei três dias lá, desenhando tudo. Guardei o segredo porque “o rio guarda o que a cidade esquece”. Hoje vendo a memória do lugar — o mapa, eu não vendo.',
+  contra:['As páginas finais do caderno de Olívia de 1919–1920 estão em branco — não há um único desenho da “cidade de ouro”.','Nenhuma expedição posterior encontrou vestígios de ruínas na região indicada.'],
+  ctx:'Sem mapa, sem desenho, sem amostra. Só uma história bonita — e cadernos em branco.'},
+ {id:'O3',ch:'oli',d:5,base:26,title:'A volta de dezembro',truth:true,
+  syn:'Olívia lembra de ter chegado de volta do sertão em dezembro de 1920, com os cadernos cheios.',
+  txt:'Cheguei de volta a Valeverde em dezembro de 1920, depois de dois anos no sertão. Minha mãe não me reconheceu de barba e queimada de sol. Abri os cadernos na mesa da cozinha e mostrei o rio inteiro — do nascente à foz, nada faltava.',
+  corrob:['A chegada de Olívia em dezembro de 1920 foi registrada no jornal local.','Os cadernos da expedição estão arquivados e completos, do nascente à foz.'],
+  ctx:'Contada pela própria, com os cadernos originais ao lado. O registro do jornal confirma a data.'}
+];
+function byChar(id){return CHARS.find(c=>c.id===id);}
+
+/* ===== estado ===== */
+const PREF='jzP01';
+function load(){try{const v=localStorage.getItem(PREF);if(v)return JSON.parse(v);}catch(e){}return null;}
+function save(){try{const s={played:true,done:state.over==='win',best:Math.max(state.best,Math.round(state.money)),day:state.day};localStorage.setItem(PREF,JSON.stringify(s));}catch(e){}}
+let state=null;
+const GOAL=600;
+function newGame(){
+  state={money:200,rep:100,day:1,best:load()?Math.max(load().best||0,0):0,over:null,used:{},bought:[],log:[],facts:INIT_FACTS.slice(),boughtThisDay:0,win:false};
+}
+function log(msg,cls){state.log.unshift('<div class="'+(cls||'inf')+'">'+msg+'</div>');renderLog();}
+function moneyCls(amt){return amt>=0?'win':'loss';}
+
+/* escolhe 3 memorias disponíveis não usadas */
+function offersFor(day){
+  const pool=MEMORIES.filter(m=>m.d<=day&&!state.used[m.id]);
+  // embaralha
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  return pool.slice(0,3);
+}
+function priceOf(m){return Math.max(10,Math.round(m.base*(1+(state.day-1)*0.11)/5)*5);}
+
+function renderFacts(){document.getElementById('facts').innerHTML=state.facts.map(f=>'<div class="fact">'+f+'</div>').join('');}
+function renderChars(){
+  document.getElementById('chars').innerHTML=CHARS.map(c=>{
+    const v=VBEH.find(x=>x.id===c.id);
+    return '<div class="char"><b>'+c.nome+'</b><p>'+c.desc+'</p><p style="font-style:italic;color:#9a8c6a">“'+v.tics[state.day%v.tics.length]+'”</p></div>';
+  }).join('');
+}
+function renderTop(){
+  document.getElementById('money').textContent=Math.floor(state.money)+' M';
+  document.getElementById('rep').textContent=state.rep;
+  document.getElementById('day').textContent=state.day+' / 10';
+  document.getElementById('dayBar').style.width=(state.day/10*100)+'%';
+  const repEl=document.getElementById('rep');
+  repEl.style.color=state.rep<30?'var(--bad)':'';
+}
+function renderOffers(){
+  const o=document.getElementById('offers');
+  const list=offersFor(state.day);
+  if(!list.length){o.innerHTML='<div class="empty">Nenhuma memória nova disponível hoje.</div>';return;}
+  o.innerHTML=list.map(m=>{
+    const ch=byChar(m.ch);
+    const p=priceOf(m);
+    const can=state.boughtThisDay<2&&state.money>=p;
+    return '<div class="offer"><h4>“'+m.title+'”</h4>'+
+      '<div class="who">Vendida por <b>'+ch.nome+'</b></div>'+
+      '<div class="syn">'+m.syn+'</div>'+
+      '<div class="row"><span><span class="tagT">preço</span> <span class="price">'+p+' M</span></span>'+
+      '<button class="buy" data-i="'+m.id+'"'+(can?'':' disabled')+'>Comprar</button></div></div>';
+  }).join('');
+}
+function renderBancada(){
+  const b=document.getElementById('bancada');
+  if(!state.bought.length){b.innerHTML='<div class="empty">Compre uma memória para examiná-la aqui.</div>';return;}
+  b.innerHTML=state.bought.map((m,idx)=>{
+    const ch=byChar(m.ch);
+    const laudo=m.laudo?('<div class="laudo"><b>📋 Laudo do verificador:</b> '+m.laudo.join('</div><div class="laudo" style="margin-top:4px">')+'</div>'):'';
+    const beh=m.beh||(VBEH.find(v=>v.id===m.ch).tics[(m.id.charCodeAt(1)+state.day)%4]);
+    return '<div class="memo"><div class="mh"><h4>“'+m.title+'”</h4><span class="price">'+priceOf(m)+' M</span></div>'+
+      '<div class="meta">Contada por <b>'+ch.nome+'</b> · '+m.ctx.split('.')[0]+'</div>'+
+      '<div class="txt">'+m.txt+'</div>'+
+      '<div class="ctx"><b>Contexto:</b> '+m.ctx+'</div>'+
+      '<div class="beh">🧑‍🤝‍🧑 Ao contar: '+beh+'</div>'+
+      laudo+
+      '<div class="acts">'+
+        '<button class="act analyze" data-a="'+idx+'"'+(m.laudo||state.money<analyzeCost(m)?' disabled':'')+'>🔍 Verificar com laudo ('+analyzeCost(m)+' M)</button>'+
+        '<button class="act good" data-dec="t" data-idx="'+idx+'">Afirmar que é VERDADEIRA</button>'+
+        '<button class="act bad" data-dec="f" data-idx="'+idx+'">Afirmar que é FALSA</button>'+
+      '</div></div>';
+  }).join('');
+}
+function analyzeCost(m){return Math.max(10,Math.round(priceOf(m)*0.3/5)*5);}
+function renderLog(){document.getElementById('log').innerHTML=state.log.slice(0,40).join('');}
+function renderAll(){renderTop();renderFacts();renderChars();renderOffers();renderBancada();}
+
+/* ===== ações ===== */
+function buy(mid){
+  const m=MEMORIES.find(x=>x.id===mid);
+  const p=priceOf(m);
+  if(!m||state.money<p||state.boughtThisDay>=2)return;
+  state.money-=p; state.used[m.id]=1; state.boughtThisDay++;
+  state.bought.push(Object.assign({},m));
+  log('Comprou <b>“'+m.title+'”</b> por '+p+' M <span class="loss">(−'+p+')</span>','inf');
+  sfx('buy'); renderAll(); save();
+}
+function analyze(idx){
+  const m=state.bought[idx];
+  if(!m||m.laudo)return;
+  const c=analyzeCost(m);
+  if(state.money<c){sfx('bad');return;}
+  state.money-=c;
+  m.laudo=m.truth?['O laudo <b>não encontrou contradições</b> com o arquivo.','<b>Corroboração:</b> '+m.corrob[Math.floor(Math.random()*m.corrob.length)]].concat(m.corrob.length>1?['<b>+</b> '+m.corrob[1]]:[]).slice(0,3)
+                 :['O laudo <b>encontrou contradições</b> com o arquivo.','<b>Problema:</b> '+m.contra[0]].concat(m.contra.length>1?['<b>+</b> '+m.contra[1]]:[]).slice(0,3);
+  log('Pagou '+c+' M pelo laudo de <b>“'+m.title+'”</b>','inf');
+  sfx('click'); renderAll(); save();
+}
+function decide(idx,truth){
+  const m=state.bought[idx];
+  if(!m||m.decided)return;
+  m.decided=truth;
+  state.boughtThisDay=Math.min(state.boughtThisDay,2);
+  const p=priceOf(m);
+  let delta=0,msg='';
+  if(m.truth&&truth){
+    delta=Math.round(p*(1.7+Math.random()*0.5)); state.rep=Math.min(100,state.rep+3);
+    msg='<b>Correto!</b> A memória era verdadeira e rendeu <b class="ok">+'+delta+' M</b> no leilão de autênticas.';
+  } else if(!m.truth&&!truth){
+    delta=Math.round(p*0.3); state.rep=Math.min(100,state.rep+1);
+    msg='<b>Bom olho.</b> A memória era falsa; vendida como curiosidade por <b>+'+delta+' M</b>. Você evitou a multa.';
+  } else if(m.truth&&!truth){
+    delta=Math.round(p*0.3); state.rep=Math.max(0,state.rep-4);
+    msg='<b>Erro.</b> A memória era <b>verdadeira</b> — você a vendeu como curiosidade por meros +'+delta+' M. O colecionador que a comprou de você revendeu-a por uma fortuna.';
+  } else {
+    delta=-Math.round(p*1.1); state.rep=Math.max(0,state.rep-22);
+    msg='<b>Exposto!</b> A memória era <b>falsa</b>. O verificador do leilão a desmascarou: multa de '+(-delta)+' M e sua reputação despencou.';
+  }
+  state.money+=delta;
+  log('<b>“'+m.title+'”</b> → '+(truth?'afirmou VERDADEIRA':'afirmou FALSA')+' · '+msg.replace(/<[^>]+>/g,''),delta>=0?'win':'loss');
+  state.bought[idx]=null; state.bought=state.bought.filter(Boolean);
+  sfx((m.truth===truth&&m.truth)||(!m.truth&&!truth)?'ok':'bad');
+  showRes(m,truth,msg,delta);
+  renderAll(); save();
+  checkEnd();
+}
+function showRes(m,truth,msg,delta){
+  const ok=(m.truth===truth)&&truth||(!m.truth&&!truth);
+  document.getElementById('resBox').innerHTML=
+    '<h2 style="color:'+(ok?'var(--ok)':'var(--bad)')+'">'+(ok?'Venda concluída':'Venda concluída')+'</h2>'+
+    '<div class="big">'+(delta>=0?'+'+delta:'−'+Math.abs(delta))+' M</div>'+
+    '<p>'+msg+'</p>'+
+    '<p>Moedas agora: <b>'+Math.floor(state.money)+'</b> · Reputação: <b>'+state.rep+'</b></p>'+
+    '<div class="rowB"><button class="buy" onclick="document.getElementById(\'big\').classList.remove(\'open\')">Continuar</button></div>';
+  document.getElementById('big').classList.add('open');
+}
+function checkEnd(){
+  if(state.rep<=0){endGame(false,'Sua reputação chegou a zero. Ninguém mais negocia com um memoriógrafo desonesto.','lose');return;}
+  if(state.money<=0){endGame(false,'Falência. Suas moedas acabaram antes da última leiloada.','lose');return;}
+}
+function endDay(){
+  if(state.bought.length){log('Ainda há memórias na bancada — decida o destino delas antes de encerrar o dia.','inf');sfx('bad');return;}
+  if(state.day>=10){endGame(state.money>=GOAL,state.money>=GOAL?'meta alcançada':'meta não alcançada');return;}
+  state.day++; state.boughtThisDay=0;
+  if(BOLETINS[state.day]){BOLETINS[state.day].forEach(f=>state.facts.push(f)); log('📰 <b>Boletim do dia '+state.day+':</b> novas informações verificadas chegaram ao arquivo.','inf');}
+  log('Dia '+state.day+' começou. Novas memórias chegaram.','inf');
+  sfx('click'); renderAll(); save();
+}
+function endGame(win,reason){
+  state.over=win?'win':'lose'; state.win=win;
+  document.getElementById('resBox').innerHTML=
+    '<h2 style="color:'+(win?'var(--ok)':'var(--bad)')+'">'+(win?'🏆 Vitória!':'Fim de jogo')+'</h2>'+
+    '<p>'+reason+'</p>'+
+    '<p>Moedas finais: <b>'+Math.floor(state.money)+'</b> · Reputação: <b>'+state.rep+'</b></p>'+
+    '<p>Meta: '+GOAL+' moedas ao final do dia 10.</p>'+
+    '<div class="rowB"><button class="buy" onclick="resetGame()">Jogar novamente</button>'+
+    '<a class="tb" style="text-decoration:none" href="index.html">← Voltar ao JogoZ</a></div>';
+  document.getElementById('big').classList.add('open');
+  sfx(win?'win':'lose'); save();
+}
+function resetGame(){
+  newGame();
+  document.getElementById('big').classList.remove('open');
+  document.getElementById('helpM').classList.remove('open');
+  renderAll(); sfx('click');
+}
+function init(){
+  const saved=load();
+  newGame();
+  if(saved&&saved.best)state.best=saved.best;
+  log('🧾 Dia 1. Você tem 180 moedas e sua reputação vale 100. Compre, analise e revenda com honestidade.','inf');
+  log('Meta: terminar o dia 10 com pelo menos 640 moedas.','inf');
+  renderAll();
+}
+/* listeners */
+document.getElementById('offers').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-i]'); if(b)buy(b.dataset.i);
+});
+document.getElementById('bancada').addEventListener('click',e=>{
+  const a=e.target.closest('button[data-a]'); if(a){analyze(+a.dataset.a);return;}
+  const d=e.target.closest('button[data-dec]'); if(d)decide(+d.dataset.idx,d.dataset.dec==='t');
+});
+document.getElementById('endDay').addEventListener('click',endDay);
+document.getElementById('rstBtn').addEventListener('click',()=>{sfx('click');resetGame();});
+document.getElementById('helpBtn').addEventListener('click',()=>{sfx('click');document.getElementById('helpM').classList.add('open');});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('big').classList.remove('open');document.getElementById('helpM').classList.remove('open');}});
+init();
+</script>
+</body>
+</html>

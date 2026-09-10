@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>JogoZ — Central de Jogos</title>
+<style>
+  :root{
+    --bg:#0a0c16; --bg2:#10142a; --panel:#141a33; --line:#232b4d;
+    --txt:#e8ecff; --mut:#8a93bd; --acc:#6c8cff; --ok:#37d98c; --warn:#ffb84d;
+    --r:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(108,140,255,.16), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(55,217,140,.10), transparent 55%),
+      linear-gradient(180deg,var(--bg),#070913 100%);
+    color:var(--txt); min-height:100vh;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:0 18px 60px}
+  header{padding:34px 18px 10px}
+  .brand{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+  .logo{
+    width:54px;height:54px;border-radius:16px;flex:0 0 auto;
+    background:linear-gradient(135deg,#6c8cff,#7c5cff 55%,#c05cff);
+    display:grid;place-items:center;font-size:26px;font-weight:800;
+    color:#fff; box-shadow:0 8px 26px rgba(124,92,255,.45); letter-spacing:-1px;
+  }
+  h1{font-size:clamp(30px,5vw,46px); font-weight:800; letter-spacing:-1px; line-height:1}
+  .tag{color:var(--mut); font-size:15px; margin-top:8px; max-width:640px; line-height:1.5}
+  .logo small{font-size:12px}
+  .stats{display:flex; gap:22px; flex-wrap:wrap; margin-top:18px}
+  .stat b{font-size:22px; display:block; color:#fff}
+  .stat span{font-size:12px; color:var(--mut); text-transform:uppercase; letter-spacing:1px}
+  .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:26px 0 14px}
+  .chips{display:flex; gap:8px; flex-wrap:wrap}
+  .chip{
+    border:1px solid var(--line); background:rgba(20,26,51,.7); color:var(--mut);
+    padding:7px 14px; border-radius:999px; cursor:pointer; font-size:13px;
+    transition:all .15s; font-family:inherit;
+  }
+  .chip:hover{color:#fff; border-color:#3a4475}
+  .chip.on{background:linear-gradient(135deg,#6c8cff,#7c5cff); color:#fff; border-color:transparent}
+  .search{
+    margin-left:auto; display:flex; align-items:center; gap:8px;
+    border:1px solid var(--line); background:rgba(20,26,51,.7); border-radius:999px; padding:7px 14px;
+  }
+  .search input{background:none;border:0;outline:0;color:#fff;font:inherit;width:150px}
+  .search input::placeholder{color:var(--mut)}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:16px; margin-top:6px}
+  .card{
+    position:relative; border:1px solid var(--line); border-radius:var(--r);
+    background:linear-gradient(180deg,rgba(24,30,60,.9),rgba(16,20,42,.95));
+    padding:18px 18px 16px; display:flex; flex-direction:column; gap:10px; cursor:pointer;
+    transition:transform .18s, border-color .18s, box-shadow .18s; overflow:hidden; text-decoration:none; color:inherit;
+  }
+  .card:hover{transform:translateY(-4px); border-color:var(--hc,#6c8cff); box-shadow:0 12px 30px rgba(0,0,0,.4), 0 0 0 1px var(--hc,#6c8cff)}
+  .card::before{content:""; position:absolute; inset:0 0 auto 0; height:4px;
+    background:linear-gradient(90deg,var(--gc1,#6c8cff),var(--gc2,#7c5cff))}
+  .card:active{transform:translateY(-1px) scale(.99)}
+  .cardHead{display:flex; align-items:center; justify-content:space-between}
+  .num{
+    width:44px;height:44px;border-radius:12px; display:grid; place-items:center;
+    font-weight:800; font-size:18px; color:#0b0e1a; flex:0 0 auto;
+    background:linear-gradient(135deg,var(--gc1,#6c8cff),var(--gc2,#7c5cff));
+  }
+  .stateDot{font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; letter-spacing:.4px}
+  .stateDot.s0{background:rgba(138,147,189,.14); color:var(--mut)}
+  .stateDot.s1{background:rgba(255,184,77,.15); color:var(--warn)}
+  .stateDot.s2{background:rgba(55,217,140,.15); color:var(--ok)}
+  h2{font-size:18px; letter-spacing:-.2px; line-height:1.25}
+  .desc{color:var(--mut); font-size:13.5px; line-height:1.55; flex:1; min-height:60px}
+  .meta{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:2px}
+  .cat{
+    font-size:11px; font-weight:700; letter-spacing:.6px; text-transform:uppercase;
+    color:var(--cc,#9fb0ff); border:1px solid color-mix(in srgb,var(--cc,#9fb0ff) 40%,transparent);
+    background:color-mix(in srgb,var(--cc,#9fb0ff) 12%,transparent);
+    padding:3px 9px; border-radius:999px;
+  }
+  .dif{display:flex; align-items:center; gap:5px}
+  .dif i{width:7px;height:7px;border-radius:50%;background:#2a3463}
+  .dif i.on{background:var(--warn); box-shadow:0 0 6px rgba(255,184,77,.7)}
+  .dif span{font-size:11px; color:var(--mut); margin-right:2px}
+  .play{
+    margin-top:2px; border:0; border-radius:10px; padding:9px 0; text-align:center; width:100%;
+    font-weight:700; font-size:14px; color:#0b0e1a; cursor:pointer; font-family:inherit;
+    background:linear-gradient(135deg,var(--gc1,#6c8cff),var(--gc2,#7c5cff));
+    transition:filter .15s, transform .1s; text-decoration:none; display:block;
+  }
+  .play:hover{filter:brightness(1.12)}
+  .play:active{transform:scale(.97)}
+  footer{margin-top:44px; text-align:center; color:var(--mut); font-size:13px; line-height:1.7}
+  footer b{color:#c9d2f5}
+  .none{grid-column:1/-1; text-align:center; color:var(--mut); padding:50px 0}
+  .noteSave{margin-top:16px; font-size:12px; color:var(--mut); text-align:right}
+  @media (max-width:640px){
+    .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px}
+    .desc{min-height:0; font-size:12.5px}
+    .num{width:38px;height:38px;font-size:15px}
+    .card{padding:14px 13px 13px}
+    .search{margin-left:0; width:100%}
+    .search input{width:100%}
+    header{padding-top:22px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap" style="padding:0">
+    <div class="brand">
+      <div class="logo">Z</div>
+      <div>
+        <h1>JogoZ</h1>
+        <div class="tag">Uma central com <b style="color:#fff">15 jogos completos</b> em um só lugar.
+        Escolha um jogo, abra e jogue. Progresso e recordes ficam salvos no seu navegador.</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>15</b><span>jogos</span></div>
+      <div class="stat"><b>6</b><span>categorias</span></div>
+      <div class="stat"><b id="stPlayed">0</b><span>jogados</span></div>
+      <div class="stat"><b id="stDone">0</b><span>concluídos</span></div>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <div class="controls">
+    <div class="chips" id="chips"></div>
+    <div class="search">🔎<input id="q" type="search" placeholder="Buscar jogo…" aria-label="Buscar jogo"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="noteSave">💾 O progresso de cada jogo é salvo automaticamente neste dispositivo.</div>
+  <footer>
+    <b>JogoZ</b> · 15 jogos em HTML puro — sem internet, sem servidor, sem banco de dados.<br>
+    HTML5 · CSS3 · JavaScript · Feito para desktop, tablet e celular.
+  </footer>
+</main>
+<script>
+"use strict";
+// Dados dos jogos da plataforma. Cada jogo vive em jogoXX.html (arquivo único e independente).
+const GAMES=[
+ {n:1,name:"Leilão de Memórias",cat:"Investigação",dif:3,
+  desc:"Compre lembranças de estranhos e descubra quais histórias são verdadeiras — antes que seu dinheiro e sua reputação sumam."},
+ {n:2,name:"Arquiteto de Fugas",cat:"Estratégia",dif:3,
+  desc:"Planeje rota por rota a sua fuga: portas trancadas, sensores e saídas. Rápido nem sempre é seguro."},
+ {n:3,name:"Laboratório Caótico",cat:"Criativo",dif:2,
+  desc:"Combine elementos e descubra reações secretas. Uma enciclopédia viva com 181 elementos e 222 receitas para mapear."},
+ {n:4,name:"Ecossistema Artificial",cat:"Simulação",dif:3,
+  desc:"Administre plantas, herbívoros e predadores sob clima instável. Um desequilíbrio e o ecossistema colapsa."},
+ {n:5,name:"Apartamento 307",cat:"Investigação",dif:3,
+  desc:"Investigue um desaparecimento num prédio. Colete pistas, cruze horários e ligue suspeito, local, objeto e evento."},
+ {n:6,name:"Testemunha 12",cat:"Investigação",dif:3,
+  desc:"Interrogue testemunhas que mentem, omitem ou falam a verdade. Encontre as contradições e revele quem se esconde."},
+ {n:7,name:"Ilha Mutante",cat:"Simulação",dif:3,
+  desc:"Evolua uma espécie em uma ilha hostil. Cada clima exige um traço — e toda adaptação tem um preço."},
+ {n:8,name:"Casa de Leilões",cat:"Estratégia",dif:3,
+  desc:"Dê lances contra colecionadores astutos. Raridades dão lucro, falsificações arruínam. Leia os concorrentes."},
+ {n:9,name:"Antiquário",cat:"Estratégia",dif:4,
+  desc:"Compre, restaure e revenda antiguidades. O que parece ouro pode ser lata — e o que parece lixo, um tesouro."},
+ {n:10,name:"Puzzle Temporal",cat:"Puzzle",dif:4,
+  desc:"Cada tentativa fica gravada no tempo. Suas cópias passadas repetem ações — coopere com você mesmo para escapar."},
+ {n:11,name:"Robô Programável",cat:"Puzzle",dif:3,
+  desc:"Programe um robô com comandos, laços e lógica. Encontre a sequência mais eficiente para cada fase."},
+ {n:12,name:"Batalha de Máquinas",cat:"Ação",dif:3,
+  desc:"Monte sua máquina de combate com espaço e energia limitados e enfrente rivais com IA própria na arena."},
+ {n:13,name:"Boss Designer",cat:"Criativo",dif:3,
+  desc:"Projete um chefe — tamanho, ataques, fases, fraquezas — e lute contra ele para provar que é difícil, mas justo."},
+ {n:14,name:"O Jogo que Mente",cat:"Puzzle",dif:4,
+  desc:"Um sistema que afirma regras que nem sempre valem. Teste hipóteses, observe consequências e descubra a verdade."},
+ {n:15,name:"Realidade Fragmentada",cat:"Puzzle",dif:5,
+  desc:"Controle o mesmo herói em três realidades ligadas. O que você faz em uma ecoa nas outras. Descubra as conexões."}
+];
+const CATS=["Investigação","Estratégia","Criativo","Simulação","Puzzle","Ação"];
+const ACC=["#5bd6fd","#5cffa8","#ffd75c","#ff8a5c","#ff5ca8","#a25cff"];
+const PREF="jzP";
+
+// localStorage seguro: nunca deve quebrar o jogo (vazio, bloqueado ou corrompido).
+const ls={
+  get(k,d){try{const v=localStorage.getItem(PREF+k); if(!v) return d; return JSON.parse(v);}catch(e){return d;}},
+  keys(){try{const out=[]; for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i); if(k&&k.indexOf(PREF)===0) out.push(k);} return out;}catch(e){return [];}}
+};
+
+function statusOf(n){
+  const s=ls.get(String(n).padStart(2,"0"),null);
+  if(!s) return 0;                       // 0 = nunca jogado
+  if(s.done) return 2;                   // 2 = concluído
+  return 1;                              // 1 = em andamento
+}
+
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function build(filterCat,query){
+  const grid=document.getElementById("grid");
+  grid.innerHTML="";
+  let played=0, done=0;
+  GAMES.forEach(g=>{
+    const st=statusOf(g.n);
+    if(st===1) played++; if(st===2){played++;done++;}
+  });
+  document.getElementById("stPlayed").textContent=played;
+  document.getElementById("stDone").textContent=done;
+  const list=GAMES.filter(g=>{
+    if(filterCat!=="Todos"&&g.cat!==filterCat) return false;
+    if(query&&(g.name+" "+g.cat+" "+g.desc).toLowerCase().indexOf(query)<0) return false;
+    return true;
+  });
+  if(!list.length){grid.innerHTML='<div class="none">Nenhum jogo encontrado.</div>'; return;}
+  list.forEach(g=>{
+    const acc=ACC[(CATS.indexOf(g.cat)+1)%ACC.length];
+    const card=document.createElement("a");
+    card.className="card"; card.href="jogo"+String(g.n).padStart(2,"0")+".html";
+    card.style.setProperty("--gc1",ACC[g.n%ACC.length]);
+    card.style.setProperty("--gc2",ACC[(g.n+3)%ACC.length]);
+    card.style.setProperty("--cc",acc);
+    const st=statusOf(g.n);
+    const stTxt=["novo","em andamento","concluído"][st];
+    let dots="";
+    for(let i=0;i<5;i++) dots+="<i class='"+(i<g.dif?"on":"")+"'></i>";
+    card.innerHTML=
+      '<div class="cardHead"><div class="num">'+g.n+'</div>'+
+      '<div class="stateDot s'+st+'">● '+stTxt+'</div></div>'+
+      "<h2>"+esc(g.name)+"</h2><p class='desc'>"+esc(g.desc)+"</p>"+
+      '<div class="meta"><span class="cat">'+g.cat+'</span>'+
+      '<span class="dif"><span>dificuldade</span>'+dots+'</span></div>'+
+      '<span class="play">'+(st?'▶ Continuar':'▶ Jogar')+'</span>';
+    grid.appendChild(card);
+  });
+}
+
+(function(){
+  const chips=document.getElementById("chips");
+  ["Todos"].concat(CATS).forEach(c=>{
+    const b=document.createElement("button");
+    b.className="chip"+(c==="Todos"?" on":""); b.textContent=c;
+    b.addEventListener("click",()=>{
+      chips.querySelectorAll(".chip").forEach(x=>x.classList.remove("on"));
+      b.classList.add("on");
+      build(c,document.getElementById("q").value.trim().toLowerCase());
+    });
+    chips.appendChild(b);
+  });
+  let t=null;
+  document.getElementById("q").addEventListener("input",e=>{
+    clearTimeout(t);
+    t=setTimeout(()=>{const on=chips.querySelector(".chip.on"); build(on?on.textContent:"Todos",e.target.value.trim().toLowerCase());},120);
+  });
+  build("Todos","");
+})();
+</script>
+</body>
+</html>
