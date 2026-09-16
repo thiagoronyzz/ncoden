@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jogo — NCODE N</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23181816'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='18' font-weight='bold' text-anchor='middle' fill='%23F4F1EB'%3EN%3C/text%3E%3Ccircle cx='24' cy='9' r='4' fill='%23D94E34'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="masthead">
+  <div class="mast-in">
+    <a class="brand" href="index.html" aria-label="Voltar ao catálogo">
+      <span class="brand-mark">N<em>.</em></span>
+      <span><b>NCODE N</b><small>OFICINA DE JOGOS</small></span>
+    </a>
+    <span class="mast-meta" id="crumbId">// 001</span>
+    <span class="mast-sp"></span>
+    <a class="iconbtn" href="index.html">← CATÁLOGO</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="crumb"><a href="index.html">catálogo</a> / <b id="crumbId2">peça 001</b></div>
+  <div class="play-head">
+    <span class="num" id="playNum">Nº 001</span>
+    <h1 id="playTitle">Carregando…</h1>
+    <span class="sp"></span>
+  </div>
+
+  <div class="play-layout">
+    <section class="stage" aria-label="Palco do jogo">
+      <div class="stage-bar">
+        <span>// BANCADA DE JOGO</span>
+        <span class="live">
+          <span class="pill" id="pillLevel">NV <b>1</b></span>
+          <span class="pill" id="pillTime"></span>
+          <span class="pill" id="pillScore">PTS <b>0</b></span>
+        </span>
+      </div>
+      <div id="stage"><div class="g-msg">Preparando a bancada…</div></div>
+    </section>
+
+    <aside class="side">
+      <div class="panel">
+        <h3>// Como jogar</h3>
+        <div class="pb" id="howBody">…</div>
+      </div>
+      <div class="panel">
+        <h3>// Sua ficha</h3>
+        <div class="pb" id="bestLine">Recorde: <b>0</b></div>
+        <div class="pb" style="padding-top:0">
+          <div class="sidebtns">
+            <button class="btn primary" id="btnRestart">↻ Reiniciar</button>
+            <button class="btn" id="btnRandom">🎲 Aleatório</button>
+            <button class="btn wide" id="btnNext">Próxima peça →</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>// Do mesmo gênero</h3>
+        <div class="pb"><div class="rel-row" id="relRow"></div></div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="site">
+    <span><b>NCODE N</b> · <a href="index.html">VOLTAR AO CATÁLOGO</a></span>
+    <span>DICA: TECLADO + TOQUE FUNCIONAM NA MAIORIA DAS PEÇAS_</span>
+  </footer>
+</main>
+<script src="assets/js/catalog.js"></script>
+<script src="assets/js/shell.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+  try{
+    const t = JSON.parse(localStorage.getItem("ncg_theme")||'"light"');
+    document.documentElement.setAttribute("data-theme", t==="dark"?"dark":"light");
+  }catch(e){}
+  const sync = ()=>{
+    const m=(location.hash||"").match(/(\d{1,3})/);
+    const id=m?String(Math.min(400,Math.max(1,parseInt(m[1],10)))).padStart(3,"0"):"001";
+    document.getElementById("playNum").textContent="Nº "+id;
+    document.getElementById("crumbId2").textContent="peça "+id;
+  };
+  window.addEventListener("hashchange",sync); sync();
+});
+</script>
+</body>
+</html>
