@@ -258,9 +258,12 @@ canvas.g-cv{display:block;width:100%;height:auto;border:1px solid var(--ink);bor
 .g-cell.bad{background:var(--terra);color:#fff;border-color:var(--terra-d)}
 .g-cell.dim{opacity:.35}
 .g-overlay{
-  position:absolute;inset:0;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  position:absolute;inset:0;
+  background:rgba(244,241,235,.92);
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
   display:grid;place-items:center;z-index:20;padding:18px;text-align:center;
 }
+[data-theme="dark"] .g-overlay{background:rgba(18,19,20,.93)}
 .g-ovbox{border:1px solid var(--ink);background:var(--card);border-radius:8px;box-shadow:var(--shadow);
   padding:24px 26px;max-width:420px;width:100%}
 .g-ovbox .k{font-family:var(--font-m);font-size:11px;letter-spacing:2px;color:var(--terra);margin-bottom:6px}
