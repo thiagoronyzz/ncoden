@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/img/logo.svg" alt="NCODE N — Oficina de Jogos" width="340">
+</p>
+
 # NCODE N — Oficina de Jogos
 
 Uma oficina editorial com **400 minijogos originais** jogáveis no navegador.

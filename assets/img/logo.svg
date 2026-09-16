@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 88" role="img" aria-label="NCODE N — Oficina de Jogos">
+  <title>NCODE N — Oficina de Jogos</title>
+  <style>
+    .box{fill:#181816}
+    .frame{fill:none;stroke:#F4F1EB;stroke-opacity:.32;stroke-width:1.5}
+    .n{fill:#F4F1EB}
+    .dot{fill:#D94E34}
+    .wm{fill:#181816;font-family:Fraunces,Georgia,'Times New Roman',serif;font-weight:700;font-size:33px;letter-spacing:-.5px}
+    .acc{fill:#D94E34}
+    .sub{fill:#8A877C;font-family:'Space Mono','Courier New',monospace;font-size:11px;letter-spacing:3.6px}
+    @media (prefers-color-scheme:dark){
+      .box{fill:#C4D645}
+      .frame{stroke:#181816;stroke-opacity:.26}
+      .n{fill:#181816}
+      .dot{fill:#181816}
+      .wm{fill:#EAE6DF}
+      .acc{fill:#E8603F}
+      .sub{fill:#7C7870}
+    }
+  </style>
+  <g transform="translate(8,12)">
+    <rect class="box" x="1" y="1" width="62" height="62" rx="12"/>
+    <rect class="frame" x="7.75" y="7.75" width="48.5" height="48.5" rx="8"/>
+    <rect class="n" x="11" y="18" width="8" height="28"/>
+    <rect class="n" x="35" y="18" width="8" height="28"/>
+    <path class="n" d="M11 18h8l24 28h-8z"/>
+    <circle class="dot" cx="49" cy="41.5" r="4.5"/>
+  </g>
+  <text class="wm" x="84" y="48">NCODE <tspan class="acc">N</tspan></text>
+  <text class="sub" x="85" y="67">OFICINA DE JOGOS</text>
+</svg>

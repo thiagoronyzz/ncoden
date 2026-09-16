@@ -61,7 +61,7 @@ function build(){
       : '<span class="stamp"><span class="dot"></span>novo</span>';
     const best = store.get("best_"+id,0);
     a.innerHTML =
-      '<div class="card-top"><span class="card-idx">Nº <b>'+String(id).padStart(3,"0")+'</b></span>'+stHtml+'</div>'+
+      '<div class="card-top"><span class="card-idx">Nº <b>'+String(id).padStart(3,"0")+'</b></span><span class="card-tools">'+stHtml+'</span></div>'+
       "<h2>"+esc(title)+"</h2>"+
       '<p class="card-desc">'+esc(desc)+"</p>"+
       '<div class="card-foot"><span class="gtag">'+GENRES[genre].e+" "+esc(GENRES[genre].n)+'</span>'+
@@ -78,7 +78,7 @@ function build(){
       f = f.includes(id)?f.filter(x=>x!==id):f.concat([id]);
       store.set("fav",f); build();
     });
-    a.appendChild(fav);
+    a.querySelector(".card-tools").appendChild(fav);
     grid.appendChild(a);
   });
 }
@@ -96,7 +96,8 @@ function stats(){
 function theme(){
   const t = store.get("theme","light");
   document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light");
-  $("#btnTheme").textContent = t==="dark"?"☀ CLARO":"◐ ESCURO";
+  $("#themeIc").textContent = t==="dark"?"☀":"◐";
+  $("#themeLbl").textContent = t==="dark"?"CLARO":"ESCURO";
 }
 document.addEventListener("DOMContentLoaded",()=>{
   buildChips(); build(); stats(); theme();
