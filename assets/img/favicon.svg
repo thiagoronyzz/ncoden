@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>NCODE N</title>
+  <style>
+    .b{fill:#181816}
+    .n{fill:#F4F1EB}
+    .d{fill:#D94E34}
+    @media (prefers-color-scheme:dark){
+      .b{fill:#C4D645}
+      .n{fill:#181816}
+      .d{fill:#181816}
+    }
+  </style>
+  <rect class="b" x="0" y="0" width="64" height="64" rx="13"/>
+  <rect class="n" x="12" y="16" width="9" height="32"/>
+  <rect class="n" x="36" y="16" width="9" height="32"/>
+  <path class="n" d="M12 16h9l24 32h-9z"/>
+  <circle class="d" cx="51" cy="43" r="5"/>
+</svg>
