@@ -3,7 +3,7 @@ GREG(246,{
 init(root,H){
 let over=false,b=[],turn=0;
 const hud=H.hud(root,[["vc","VOCÊ",2],["cp","CPU",2]]);
-const say=H.msg(root,"Você é ⚫! Cerque brancas entre pretas para virar. Cantos valem ouro. Mais peças no fim vence!");
+const say=H.msg(root,"Você é ●! Cerque brancas entre pretas para virar. Cantos valem ouro. Mais peças no fim vence!");
 const o=H.cvs(root,440,440),x=o.x;
 const CS=52,OX=12,OY=12;
 const DIRS=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];

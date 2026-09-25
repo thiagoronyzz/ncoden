@@ -21,7 +21,7 @@ function tap(){
     if(miss>=5){over=true;return H.done({win:false,score:beat*10,title:"Perdeu o pulso!",sub:beat+"/40 tempos. Antecipe a aceleração!"});}
   }
 }
-H.btn(root,"⏱️ TOCAR NO TEMPO!",tap,true);
+H.btn(root,"TOCAR NO TEMPO!",tap,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")tap();});
 H.onTap(o,()=>tap());

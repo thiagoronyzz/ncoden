@@ -20,7 +20,7 @@ function load(){
 }
 function toggle(){pol*=-1;hud.set("md",pol>0?"ATRAIR":"REPELIR");H.sfx("tick");}
 const kb=H.keys();kb.on((c,d)=>{if(d&&c==="Space")toggle();});
-H.btn(root,"🧲 Alternar: atrair / repelir",toggle,false);
+H.btn(root,"Alternar: atrair / repelir",toggle,false);
 function circleRect(cx,cy,r,rc){
   const nx=H.clamp(cx,rc[0],rc[0]+rc[2]),ny=H.clamp(cy,rc[1],rc[1]+rc[3]);
   const dx=cx-nx,dy=cy-ny,d=Math.hypot(dx,dy);
@@ -46,7 +46,7 @@ H.loop(dt=>{
   for(const h of L.holes){
     if(Math.hypot(bx-h[0],by-h[1])<16){
       deaths++;hud.set("qd",deaths);H.sfx("bad");
-      say("🕳️ A bola caiu! De volta ao início.");
+      say("A bola caiu! De volta ao início.");
       bx=L.start[0];by=L.start[1];vx=0;vy=0;
     }
   }
@@ -72,7 +72,7 @@ H.loop(dt=>{
   x.strokeStyle=H.C.ink;x.lineWidth=2;x.stroke();
   x.strokeStyle=pol>0?H.C.ok:H.C.terra;x.setLineDash([4,4]);
   x.beginPath();x.moveTo(bx,by);x.lineTo(ptr.x,ptr.y);x.stroke();x.setLineDash([]);
-  x.font="20px serif";x.fillText(pol>0?"🧲":"🧲",ptr.x-10,ptr.y-14);
+  x.font="20px serif";x.fillText(pol>0?"i:battery":"i:battery",ptr.x-10,ptr.y-14);
   const gr=x.createRadialGradient(bx-3,by-3,1,bx,by,11);
   gr.addColorStop(0,"#fff");gr.addColorStop(1,"#8A877C");
   x.fillStyle=gr;x.beginPath();x.arc(bx,by,10,0,7);x.fill();

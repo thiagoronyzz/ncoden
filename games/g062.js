@@ -38,7 +38,7 @@ H.loop(dt=>{
     x.fillStyle=H.C.ink;x.fillRect(p.x-3,p.gy-12,40,12);x.fillRect(p.x-3,p.gy+p.gap,40,12);
   }
   x.save();x.translate(bx,by);x.rotate(H.clamp(vy/900,-.4,.7));
-  x.font="30px serif";x.fillText("🐤",-15,10);x.restore();
+  x.font="30px serif";x.fillText("i:chick",-15,10);x.restore();
 });
 H.btn(root,"↻ Recomeçar",()=>{if(!over)build();},false);
 }});

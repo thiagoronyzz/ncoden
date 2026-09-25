@@ -33,7 +33,7 @@ function paint(){
   x.fillStyle=H.C.ink;x.font="bold 16px 'Space Mono',monospace";
   x.fillText("◀ "+L,o.W/2-220,120);
   x.fillText(R+" ▶",o.W/2+150,120);
-  if(side.every(s=>s>0)&&L===R){x.fillStyle=H.C.ok;x.font="bold 18px 'Space Mono',monospace";x.fillText("⚖ EQUILÍBRIO!",o.W/2-80,40);}
+  if(side.every(s=>s>0)&&L===R){x.fillStyle=H.C.ok;x.font="bold 18px 'Space Mono',monospace";x.fillText("EQUILÍBRIO!",o.W/2-80,40);}
 }
 let trayBox=null;
 function tray(){

@@ -1,10 +1,10 @@
 /* NCODE N · 128 Barco de Pesca — $120 no cais */
 GREG(128,{
 init(root,H){
-const FISH=[{e:"🐟",v:8},{e:"🐠",v:15},{e:"🦑",v:25}];
+const FISH=[{e:"i:fish",v:8},{e:"i:fish",v:15},{e:"i:octopus",v:25}];
 let over=false,bx=250,dir=0,fish=[],hold=[],cool=0,time=150,net=null;
 const hud=H.hud(root,[["cx","CAIXA","$0/120"],["po","PORÃO","0/10"],["tp","TEMPO",150]]);
-const say=H.msg(root,"<b>←/→ ou A/D</b> (ou toque nas laterais) para navegar. <b>Rede</b> pesca em volta! Venda no cais 🏭 (esquerda).");
+const say=H.msg(root,"<b>←/→ ou A/D</b> (ou toque nas laterais) para navegar. <b>Rede</b> pesca em volta! Venda no cais (esquerda).");
 const o=H.cvs(root,500,360),x=o.x;
 let cash=0;
 const r=H.rng(4);
@@ -15,7 +15,7 @@ kb.on((c,d)=>{
   if(c==="ArrowRight"||c==="KeyD")dir=d?1:(dir===1?0:dir);
 });
 H.onTap(o,(px,py)=>{dir=px<o.W/2?-1:1;H.after(400,()=>dir=0);});
-H.btn(root,"🎣 Lançar rede (3s)",()=>{
+H.btn(root,"Lançar rede (3s)",()=>{
   if(over||cool>0||hold.length>=10)return;
   cool=3;net={x:bx,t:.5};H.sfx("tick");
   fish.forEach(f=>{
@@ -27,7 +27,7 @@ H.btn(root,"🎣 Lançar rede (3s)",()=>{
   });
   hud.set("po",hold.length+"/10");
 },false);
-H.btn(root,"🏭 Vender no cais",()=>{
+H.btn(root,"Vender no cais",()=>{
   if(over||!hold.length)return;
   if(bx>90){H.sfx("bad");say("Navegue até o cais (esquerda)!");return;}
   hold.forEach(k=>cash+=FISH[k].v);
@@ -38,7 +38,7 @@ H.loop(dt=>{
   if(over)return;
   time-=dt;cool-=dt;
   hud.set("tp",Math.max(0,Math.ceil(time)));
-  if(time<=0){over=true;return H.done({win:false,score:cash,title:"Maré baixa!",sub:"$"+cash+"/120. Lulas 🦑 valem $25!"});}
+  if(time<=0){over=true;return H.done({win:false,score:cash,title:"Maré baixa!",sub:"$"+cash+"/120. Lulas valem $25!"});}
   bx=H.clamp(bx+dir*140*dt,30,o.W-30);
   fish.forEach(f=>{
     f.x+=f.v*f.d*dt;
@@ -48,15 +48,15 @@ H.loop(dt=>{
   x.fillStyle="#7fb3d5";x.fillRect(0,0,o.W,120);
   x.fillStyle="#123a4d";x.fillRect(0,120,o.W,o.H-120);
   x.fillStyle="#5b3d20";x.fillRect(0,100,70,20);
-  x.font="26px serif";x.fillText("🏭",8,96);
+  x.font="26px serif";x.fillText("i:factory",8,96);
   x.font="20px serif";
   fish.forEach(f=>x.fillText(FISH[f.k].e,f.x-10,f.y+8));
-  x.font="34px serif";x.fillText("🚤",bx-17,112);
+  x.font="34px serif";x.fillText("i:boat",bx-17,112);
   if(net){
     x.strokeStyle="#fff";x.lineWidth=2;
     x.beginPath();x.arc(net.x,200,90*(1-net.t),0,7);x.stroke();
   }
   x.fillStyle="#fff";x.font="12px 'Space Mono',monospace";
-  x.fillText("porão: "+hold.map(k=>FISH[k].e).join(""),12,o.H-10);
+  x.fillText("porão: "+(hold.map(k=>"$"+FISH[k].v).join(" + ")||"vazio"),12,o.H-10);
 });
 }});

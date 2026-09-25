@@ -2,12 +2,12 @@
 GREG(373,{
 init(root,H){
 const M=[
- ['🎸 Rock clássico',['Rock','Samba','Funk','Jazz'],0],
- ['🥁 Batucada',['Rock','Samba','Pop','Clássica'],1],
- ['🎻 Cordas suaves',['Funk','Rock','Clássica','Rap'],2],
- ['🎤 Refrão pop',['Samba','Pop','Jazz','Blues'],1],
- ['🎺 Sopro alto',['Jazz','Rock','Sertanejo','Eletrônica'],0],
- ['🪗 Sanfona',['Forró','Rock','Pop','Reggae'],0]
+ ['Rock clássico',['Rock','Samba','Funk','Jazz'],0],
+ ['Batucada',['Rock','Samba','Pop','Clássica'],1],
+ ['Cordas suaves',['Funk','Rock','Clássica','Rap'],2],
+ ['Refrão pop',['Samba','Pop','Jazz','Blues'],1],
+ ['Sopro alto',['Jazz','Rock','Sertanejo','Eletrônica'],0],
+ ['Sanfona',['Forró','Rock','Pop','Reggae'],0]
 ];
 let over=false,qi=0,score=0,play=0,t=0;
 const hud=H.hud(root,[['m','MÚSICA','1/6'],['pt','PONTOS',0]]);
@@ -21,19 +21,19 @@ function show(){
  play=3;
  hud.set('m',(qi+1)+'/6');
  const m=M[qi];
- st.innerHTML='🎵 Ouvindo… dica: <b>'+m[0]+'</b>';
+ st.innerHTML='Ouvindo… dica: <b>'+m[0]+'</b>';
  brow.innerHTML='';
  m[1].forEach((opt,i)=>{
   H.btn(brow,opt,()=>{
    if(over)return;
    if(i===m[2]){score+=100;H.sfx('ok');}
-   else{H.sfx('bad');say('❌ Era: '+m[1][m[2]]);}
+   else{H.sfx('bad');say('✕ Era: '+m[1][m[2]]);}
    qi++;hud.set('pt',score);show();
   },false);
  });
 }
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=400,score,title:score>=400?'🎵 Ouvido de ouro!':'🎵 Fim!',sub:score+'/600 pontos.'});}
+H.done({win:score>=400,score,title:score>=400?'Ouvido de ouro!':'Fim!',sub:score+'/600 pontos.'});}
 H.loop(dt=>{
  t+=dt;if(play>0)play-=dt;
  x.fillStyle='#1C1C22';x.fillRect(0,0,460,120);

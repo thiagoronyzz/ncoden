@@ -19,13 +19,13 @@ function paint(){
   if(over||qi>=Q.length)return;
   hud.set("qs",(qi+1)+"/8");
   box.innerHTML="";
-  H.el("div","g-msg","📝 "+Q[qi].s,box);
+  H.el("div","g-msg",""+Q[qi].s,box);
   Q[qi].o.forEach((op,i)=>{
     const b=H.el("button","g-btn ghost",op,box);
     b.addEventListener("click",()=>{
       if(over)return;
-      if(i===Q[qi].a){score+=50;H.score(score);hud.set("pt",score);H.sfx("ok");say("✅ "+Q[qi].h);}
-      else{H.sfx("bad");say("❌ "+Q[qi].h);}
+      if(i===Q[qi].a){score+=50;H.score(score);hud.set("pt",score);H.sfx("ok");say("✔"+Q[qi].h);}
+      else{H.sfx("bad");say("✕"+Q[qi].h);}
       qi++;
       if(qi>=Q.length){
         over=true;

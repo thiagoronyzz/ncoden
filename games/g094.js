@@ -23,18 +23,18 @@ H.loop(()=>{
     x.fillStyle=farms[c]?H.C.ok:"#8A877C";
     x.fillRect(bx+6,o.H-60,cw-12,50);
     x.fillStyle=H.C.ink;x.font="11px 'Space Mono',monospace";
-    x.fillText(farms[c]?"🚜 FAZ":"☠",bx+cw/2-24,o.H-28);
+    x.fillText(farms[c]?"FAZ":"i:skull",bx+cw/2-24,o.H-28);
     x.fillStyle="#c9b98f";
     for(let i=0;i<levees[c];i++)x.fillRect(bx+10,o.H-70-i*16,cw-20,13);
     x.strokeStyle=H.C.ink;x.strokeRect(bx+10,o.H-70-Math.max(0,levees[c])*16+ (levees[c]?16:0),0,0);
     x.fillStyle="#2E6E8A";x.font="bold 13px 'Space Mono',monospace";
-    x.fillText("🌊"+water[c],bx+cw/2-16,30);
+    x.fillText("i:wave"+water[c],bx+cw/2-16,30);
     x.fillStyle=H.C.ink;x.fillText("dique "+levees[c],bx+cw/2-24,48);
   }
   x.fillStyle=H.C.ink3;x.font="11px 'Space Mono',monospace";
   x.fillText("clique na coluna = +1 saco",12,o.H-6);
 });
-H.btn(root,"🌊 Soltar a onda!",()=>{
+H.btn(root,"Soltar a onda!",()=>{
   if(over)return;
   let lost=0;
   for(let c=0;c<5;c++){
@@ -47,6 +47,6 @@ H.btn(root,"🌊 Soltar a onda!",()=>{
   if(wave>5){over=true;return H.done({win:true,score:left*40+60,title:"Vale protegido!",sub:left+"/5 fazendas salvas das 5 cheias."});}
   bags+=3;hud.set("sc",bags);hud.set("on",wave+"/5");
   roll();
-  say(lost?"⚠️ "+lost+" fazenda(s) alagada(s)! +3 sacos para a onda "+wave+".":"✅ Ninguém alagou! +3 sacos para a onda "+wave+".");
+  say(lost?""+lost+" fazenda(s) alagada(s)! +3 sacos para a onda "+wave+".":"✔ Ninguém alagou! +3 sacos para a onda "+wave+".");
 },true);
 }});

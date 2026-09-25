@@ -4,7 +4,7 @@ init(root,H){
 const C=14,R=10,SP=26,X0=70,Y0=30;
 let over=false,pts=[],cons=[],stars=[],got=0,cut=0,total=0;
 const hud=H.hud(root,[["es","ESTRELAS","0/3"],["ct","CORTES","0%"]]);
-const say=H.msg(root,"ARRASTE a tesoura ✂️ pelo tecido para cortar fios! Solte as 3 ⭐ na cesta 🧺 — mas não corte os fios do varão (topo) nem 60% do pano!");
+const say=H.msg(root,"ARRASTE a tesoura pelo tecido para cortar fios! Solte as 3 ★ na cesta — mas não corte os fios do varão (topo) nem 60% do pano!");
 const o=H.cvs(root,500,400),x=o.x;
 function id(c,r){return r*C+c;}
 for(let r=0;r<R;r++)for(let c=0;c<C;c++)
@@ -78,9 +78,9 @@ H.loop(dt=>{
   x.strokeStyle=H.C.ink;x.lineWidth=5;
   x.beginPath();x.moveTo(X0-20,Y0-6);x.lineTo(X0+C*SP,Y0-6);x.stroke();
   x.font="18px serif";
-  stars.forEach(s=>{if(!s.got)x.fillText("⭐",pts[s.p].x-9,pts[s.p].y+6);});
+  stars.forEach(s=>{if(!s.got)x.fillText("★",pts[s.p].x-9,pts[s.p].y+6);});
   x.fillStyle="#8A6A2F";x.fillRect(BASK.x-BASK.w/2,BASK.y,BASK.w,26);
-  x.font="22px serif";x.fillText("🧺",BASK.x-11,BASK.y+22);
-  if(ptr.down){x.font="20px serif";x.fillText("✂️",ptr.x-10,ptr.y+7);}
+  x.font="22px serif";x.fillText("i:basket",BASK.x-11,BASK.y+22);
+  if(ptr.down){x.font="20px serif";x.fillText("i:scissors",ptr.x-10,ptr.y+7);}
 });
 }});

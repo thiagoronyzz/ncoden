@@ -69,5 +69,5 @@ H.loop(dt=>{
     x.fillText("SEGURE ESPAÇO / TOQUE…",20,o.H-48);
   }
 });
-H.btn(root,"🚀 Lançar (força mín.)",()=>{if(state==="ready"){charge=22;launch();}},false);
+H.btn(root,"Lançar (força mín.)",()=>{if(state==="ready"){charge=22;launch();}},false);
 }});

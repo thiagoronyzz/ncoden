@@ -3,9 +3,9 @@ GREG(183,{
 init(root,H){
 let over=false,ball={x:250,y:200,vx:0,vy:0,r:10},objs=[],time=120,ax=0,ay=0;
 const hud=H.hud(root,[["tm","TAMANHO",10],["tp","TEMPO",120],["sc","PONTOS",0]]);
-const say=H.msg(root,"Setas/WASD ou ARRASTE para rolar! Grude nos menores (📎🍒🧸…). Maiores que você te empurram. Chegue a 40!");
+const say=H.msg(root,"Setas/WASD ou ARRASTE para rolar! Grude nos menores (…). Maiores que você te empurram. Chegue a 40!");
 const o=H.cvs(root,500,380),x=o.x;
-const EM=[["📎",4],["🍒",5],["🧸",7],["📕",6],["🎾",8],["👟",10],["🐈",12],["🪑",15],["🚲",18],["🛋️",22],["🚗",26],["🐘",30]];
+const EM=[["",4],["",5],["",7],["",6],["",8],["",10],["",12],["",15],["",18],["",22],["",26],["",30]];
 const r=H.rng(9);
 for(let i=0;i<36;i++){
   const k=Math.floor(r()*Math.min(EM.length,4+Math.floor(i/5)));

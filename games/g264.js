@@ -5,7 +5,7 @@ let over=false,px=30,py=230,tx=px,ty=py,susp=0,t=0,moving=false;
 const OBS=[{x:150,y:110,a:0,sp:.5},{x:320,y:110,a:2,sp:-.4},{x:150,y:360,a:1,sp:.45},{x:320,y:360,a:3,sp:-.5}];
 const CROWD=[{x:120,y:230,r:46},{x:240,y:150,r:40},{x:240,y:320,r:40},{x:360,y:230,r:46}];
 const hud=H.hud(root,[['sp','SUSPEITA','0%']]);
-const say=H.msg(root,'Atravesse até a saída 🚪! Parado ou no meio da multidão (círculos), a suspeita cai. Correndo sob olhares, ela dispara!');
+const say=H.msg(root,'Atravesse até a saída ! Parado ou no meio da multidão (círculos), a suspeita cai. Correndo sob olhares, ela dispara!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
@@ -16,8 +16,8 @@ function inGaze(ob){
  while(df>Math.PI)df-=2*Math.PI;while(df<-Math.PI)df+=2*Math.PI;
  return Math.abs(df)<.5;
 }
-function gameOver(win){over=true;const sc=win?Math.max(100,400-(susp*2|0)):30;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🎭 Mestre do disfarce!',sub:'Ninguém desconfiou.'}:{win:false,score:sc,title:'Descoberto!',sub:'A suspeita chegou a 100%. Misture-se à multidão!'});}
+function gameOver(win){over=true;H.sfx(win?"win":"lose");const sc=win?Math.max(100,400-(susp*2|0)):30;H.score(sc);
+H.done(win?{win:true,score:sc,title:'Mestre do disfarce!',sub:'Ninguém desconfiou.'}:{win:false,score:sc,title:'Descoberto!',sub:'A suspeita chegou a 100%. Misture-se à multidão!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  OBS.forEach(ob=>ob.a+=ob.sp*dt);
@@ -42,7 +42,7 @@ H.loop(dt=>{
   x.fillStyle='#3E7C4F';
   for(let i=0;i<6;i++){const a=i/6*6.28+t*.3;x.beginPath();x.arc(c.x+Math.cos(a)*c.r*.55,c.y+Math.sin(a)*c.r*.55,7,0,7);x.fill();}
  });
- x.fillStyle='#3E7C4F';x.fillRect(414,200,38,60);x.fillStyle='#fff';x.font='22px system-ui';x.textAlign='center';x.fillText('🚪',433,240);
+ x.fillStyle='#3E7C4F';x.fillRect(414,200,38,60);x.fillStyle='#fff';x.font='22px system-ui';x.textAlign='center';x.fillText('i:door',433,240);
  OBS.forEach(ob=>{
   x.fillStyle='rgba(217,78,52,.22)';x.beginPath();x.moveTo(ob.x,ob.y);x.arc(ob.x,ob.y,150,ob.a-.5,ob.a+.5);x.fill();
   x.fillStyle='#181816';x.beginPath();x.arc(ob.x,ob.y,10,0,7);x.fill();

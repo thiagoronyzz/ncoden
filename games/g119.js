@@ -33,8 +33,8 @@ function paint(){
   for(let i=0;i<N*N;i++){
     const d=H.el("button","g-cell"+(dug.has(i)?(surv.includes(i)?" good":""):""),null,board);
     d.style.aspectRatio="1";d.style.fontSize="16px";
-    if(!dug.has(i))d.textContent="🟫";
-    else if(surv.includes(i))d.textContent="🧑‍⚕️";
+    if(!dug.has(i))d.textContent="■";
+    else if(surv.includes(i))d.textContent="";
     else d.textContent=near(i)>0?near(i):"·";
     if(!dug.has(i)){const idx=i;d.addEventListener("click",()=>dig(idx));}
   }
@@ -43,11 +43,11 @@ function dig(i){
   if(over||dug.has(i))return;
   dug.add(i);digs++;
   if(surv.includes(i)){found++;sc+=100;H.score(sc);hud.set("sc",sc);H.sfx("ok");
-    say("🎉 Sobrevivente resgatado! ("+found+"/5)");
+    say("Sobrevivente resgatado! ("+found+"/5)");
     if(found>=NS){over=true;return H.done({win:true,score:sc+(DIGS-digs)*10,title:"Missão cumprida!",sub:"5 vidas salvas com "+(DIGS-digs)+" escavações de sobra."});}
   }else{
     H.sfx("tick");
-    say("📻 Sismógrafo: sobrevivente mais próximo a <b>"+near(i)+" casas</b>.");
+    say("Sismógrafo: sobrevivente mais próximo a <b>"+near(i)+" casas</b>.");
   }
   if(digs>=DIGS){over=true;H.sfx("lose");
     return H.done({win:false,score:sc,title:"Réplicas chegaram…",sub:"Só "+found+"/5 resgatados. Triangule pelos números!"});

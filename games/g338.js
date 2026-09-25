@@ -5,7 +5,7 @@ const N=10,CS=40,OX=30,OY=40;
 let over=false,oil=[],booms=[],t=0,tick=0,time=150;
 oil.push([4,2]);
 const hud=H.hud(root,[['tp','TEMPO',150],['m','MANCHA',1]]);
-const say=H.msg(root,'Toque na água para lançar barreiras 🟡! Cerque a mancha antes que toque a costa (embaixo). Sobreviva 150s!');
+const say=H.msg(root,'Toque na água para lançar barreiras ●! Cerque a mancha antes que toque a costa (embaixo). Sobreviva 150s!');
 const o=H.cvs(root,460,470),x=o.x;
 H.onTap(o,(px,py)=>{
  if(over)return;
@@ -17,7 +17,7 @@ H.onTap(o,(px,py)=>{
  booms.push(k);H.sfx('tick');
 });
 function gameOver(win,why){over=true;const sc=win?400:Math.max(20,150-time|0);H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'🌊 Costa salva!',sub:'Mancha contida!'}:{win:false,score:sc|0,title:'Desastre!',sub:why});}
+H.done(win?{win:true,score:sc|0,title:'Costa salva!',sub:'Mancha contida!'}:{win:false,score:sc|0,title:'Desastre!',sub:why});}
 H.loop(dt=>{
  if(over)return;t+=dt;tick+=dt;time-=dt;
  hud.set('tp',Math.ceil(time));hud.set('m',oil.length);
@@ -48,6 +48,6 @@ H.loop(dt=>{
   x.strokeStyle='rgba(255,255,255,.2)';x.strokeRect(OX+c*CS+.5,OY+r*CS+.5,CS-1,CS-1);
  }
  x.fillStyle='#fff';x.font='bold 14px system-ui';x.textAlign='left';
- x.fillText('⏱️'+Math.ceil(time)+'s · Mancha '+oil.length+' · Barreiras '+booms.length+'/14',14,28);
+ x.fillText('i:gauge'+Math.ceil(time)+'s · Mancha '+oil.length+' · Barreiras '+booms.length+'/14',14,28);
 });
 }});

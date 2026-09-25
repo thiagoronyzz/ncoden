@@ -6,12 +6,12 @@ const WK=[];
 for(let i=0;i<12;i++)WK.push({x:Math.random()*460,y:60+Math.random()*320,vx:(Math.random()<.5?-1:1)*(30+Math.random()*40),tgt:i<5,got:false,ph:Math.random()*7});
 const GD=[{x:100,y:120,a:0},{x:360,y:340,a:2}];
 const hud=H.hud(root,[['w','CARTEIRAS','0/5'],['pr','PROCURADO','0/3']]);
-const say=H.msg(root,'Esbarre nos alvos 💰 para furtar! Se um guarda 👁️ te vir logo após o furto, vira procurado. 5 carteiras vencem!');
+const say=H.msg(root,'Esbarre nos alvos para furtar! Se um guarda te vir logo após o furto, vira procurado. 5 carteiras vencem!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
 function gameOver(win){over=true;const sc=win?Math.max(150,500-(t|0)*3):wallets*60;H.score(sc);
-H.done(win?{win:true,score:sc,title:'💸 Mão leve!',sub:'5 carteiras em '+(t|0)+'s.'}:{win:false,score:sc,title:'Reconhecido!',sub:wallets+'/5 carteiras. Furte longe dos guardas!'});}
+H.done(win?{win:true,score:sc,title:'Mão leve!',sub:'5 carteiras em '+(t|0)+'s.'}:{win:false,score:sc,title:'Reconhecido!',sub:wallets+'/5 carteiras. Furte longe dos guardas!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(heat>0)heat-=dt;
@@ -41,11 +41,11 @@ H.loop(dt=>{
  WK.forEach(w=>{
   x.fillStyle=w.tgt&&!w.got?'#E8A33D':'#8A877C';
   x.beginPath();x.arc(w.x,w.y+Math.sin(w.ph)*2,9,0,7);x.fill();
-  if(w.tgt&&!w.got){x.font='11px system-ui';x.textAlign='center';x.fillText('💰',w.x,w.y-12);}
+  if(w.tgt&&!w.got){x.font='11px system-ui';x.textAlign='center';x.fillText('i:money',w.x,w.y-12);}
  });
  GD.forEach(g=>{
   x.fillStyle='rgba(217,78,52,.25)';x.beginPath();x.moveTo(g.x,g.y);x.arc(g.x,g.y,140,g.a-.5,g.a+.5);x.fill();
-  x.font='18px system-ui';x.textAlign='center';x.fillText('👁️',g.x,g.y+6);
+  x.font='18px system-ui';x.textAlign='center';x.fillText('i:eye',g.x,g.y+6);
  });
  x.fillStyle=heat>0?'#D94E34':'#181816';x.beginPath();x.arc(px,py,10,0,7);x.fill();
  x.strokeStyle='#C4D645';x.lineWidth=2;x.stroke();

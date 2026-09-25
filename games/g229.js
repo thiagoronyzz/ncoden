@@ -5,7 +5,7 @@ const GRID=["C","A","T","O","A","R","E","I","S","O","L","A","M","E","S","A"];
 const DICT=["ATO","SOL","SOLA","MESA","TER","OLEO","REI","LEIA","TIA","OITO","RATO","ERA","ARO","OLA","OLAS","MOLA","MOLAS","SELO","SELOS","TEIA","TEIAS","REAL","ROL","SOM"];
 let over=false,found=[],chain=[],time=150,score=0;
 const hud=H.hud(root,[["pv","PALAVRAS","0/10"],["tp","TEMPO",150],["pt","PONTOS",0]]);
-const say=H.msg(root,"ARRASTE (ou toque em sequência) por letras <b>vizinhas</b> (8 direções, sem repetir)! Solte/toque ✅ para confirmar. 10 palavras!");
+const say=H.msg(root,"ARRASTE (ou toque em sequência) por letras <b>vizinhas</b> (8 direções, sem repetir)! Solte/toque ✔ para confirmar. 10 palavras!");
 const o=H.cvs(root,400,440),x=o.x;
 const CS=88,OX=24,OY=60;
 const ptr=H.ptr(o);
@@ -40,8 +40,8 @@ function seal(){
   chain=[];
 }
 H.onTap(o,(px,py)=>{if(!dragging)addCell(cellAt(px,py));});
-H.btn(root,"✅ Confirmar palavra",()=>{if(!over)seal();},false);
-H.btn(root,"🗑️ Limpar",()=>{chain=[];H.sfx("tick");},false);
+H.btn(root,"✔ Confirmar palavra",()=>{if(!over)seal();},false);
+H.btn(root,"Limpar",()=>{chain=[];H.sfx("tick");},false);
 H.loop(dt=>{
   if(over)return;
   time-=dt;hud.set("tp",Math.max(0,Math.ceil(time)));
@@ -52,8 +52,8 @@ H.loop(dt=>{
   wasDown=ptr.down;
   x.fillStyle="#2E6E8A";x.fillRect(0,0,o.W,o.H);
   x.fillStyle="#fff";x.font="bold 15px 'Space Mono',monospace";
-  x.fillText("🔤 "+chain.map(i=>GRID[i]).join("")+" ("+chain.length+")",20,32);
-  x.fillText("📖 "+found.join(" "),20,o.H-12);
+  x.fillText("i:letters"+chain.map(i=>GRID[i]).join("")+" ("+chain.length+")",20,32);
+  x.fillText("i:book"+found.join(" "),20,o.H-12);
   for(let i=0;i<16;i++){
     const r=(i/4)|0,c=i%4;
     const on=chain.includes(i);

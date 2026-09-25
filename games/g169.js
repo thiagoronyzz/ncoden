@@ -83,7 +83,7 @@ H.loop(dt=>{
       const flips=Math.floor(rot/(Math.PI*2));
       const gain=Math.floor(dist*.8)+flips*80+Math.floor(air*5);
       score+=gain;H.score(score);hud.set("pt",score);hud.set("sc",score);
-      H.sfx("ok");say("💥 "+gain+" pts! ("+flips+" flips, "+Math.floor(dist)+"px)");
+      H.sfx("ok");say(""+gain+" pts! ("+flips+" flips, "+Math.floor(dist)+"px)");
       if(throws>=3){
         over=true;
         if(score>=400)return H.done({win:true,score,title:"Dublê lendário!",sub:score+" pontos em 3 tombos."});

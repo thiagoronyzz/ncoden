@@ -4,7 +4,7 @@ init(root,H){
 const N=8,PEN=[0,7];
 let over=false,turn=1,sheep=[],dog={},wolves=[],fences=new Set(),saved=0,fleft=6;
 const hud=H.hud(root,[["tn","TURNO","1/20"],["sv","SALVAS","0/4"],["lb","LOBOS",2]]);
-const say=H.msg(root,"Clique num destino (até 2 casas) para o 🐕. Ovelhas 🐑 fogem dele — empurre-as ao curral 🏠! 6 cercas: modo <b>cerca</b>.");
+const say=H.msg(root,"Clique num destino (até 2 casas) para mover o <b>cão pastor</b>. As ovelhas fogem dele — empurre-as para dentro do <b>curral</b>! 6 cercas: modo <b>cerca</b>.");
 const o=H.cvs(root,440,440),x=o.x;
 let mode="dog";
 function build(){
@@ -85,15 +85,15 @@ H.loop(()=>{
   x.fillStyle=H.C.ok;x.fillRect(0,0,o.W,o.H);
   for(let r=0;r<N;r++)for(let c=0;c<N;c++){x.strokeStyle="rgba(0,0,0,.12)";x.strokeRect(c*ss,r*ss,ss,ss);}
   x.font=Math.floor(ss*.6)+"px serif";
-  fences.forEach(k=>{const[r,c]=k.split(",").map(Number);x.fillText("🪵",c*ss+4,r*ss+ss-4);});
-  x.fillText("🏠",PEN[1]*ss+4,PEN[0]*ss+ss-4);
-  sheep.forEach(q=>x.fillText("🐑",q.c*ss+4,q.r*ss+ss-4));
-  wolves.forEach(w=>x.fillText("🐺",w.c*ss+4,w.r*ss+ss-4));
-  x.fillText("🐕",dog.c*ss+4,dog.r*ss+ss-4);
+  fences.forEach(k=>{const[r,c]=k.split(",").map(Number);x.fillText("i:log",c*ss+4,r*ss+ss-4);});
+  x.fillText("i:house",PEN[1]*ss+4,PEN[0]*ss+ss-4);
+  sheep.forEach(q=>x.fillText("i:sheep",q.c*ss+4,q.r*ss+ss-4));
+  wolves.forEach(w=>x.fillText("i:dog",w.c*ss+4,w.r*ss+ss-4));
+  x.fillText("i:dog",dog.c*ss+4,dog.r*ss+ss-4);
   x.fillStyle=H.C.ink;x.font="12px 'Space Mono',monospace";
   x.fillText("cercas: "+fleft+" · modo: "+mode,12,18);
 });
 const row=H.el("div","g-row",null,root);
-H.btn(row,"🐕 Mover cão",()=>{mode="dog";H.sfx("tick");},false);
-H.btn(row,"🪵 Plantar cerca",()=>{mode="fence";H.sfx("tick");},false);
+H.btn(row,"Mover cão",()=>{mode="dog";H.sfx("tick");},false);
+H.btn(row,"Plantar cerca",()=>{mode="fence";H.sfx("tick");},false);
 }});

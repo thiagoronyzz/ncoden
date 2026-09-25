@@ -6,8 +6,8 @@ let rivals=[{x:0,sp:0},{x:0,sp:0}];
 const hud=H.hud(root,[['d','DIST','0m'],['pos','POS','3º']]);
 const say=H.msg(root,'Alterne ESQUERDA e DIREITA no ritmo! Repetir o lado quebra o embalo. 200m contra 2 rivais!');
 const o=H.cvs(root,560,300),x=o.x;
-const bL=H.btn(root,'⬅️ ESQUERDA',()=>push(0),false);
-const bR=H.btn(root,'➡️ DIREITA',()=>push(1),false);
+const bL=H.btn(root,'← ESQUERDA',()=>push(0),false);
+const bR=H.btn(root,'→ DIREITA',()=>push(1),false);
 const kb=H.keys();kb.on((c,d)=>{if(!d)return;if(c==='ArrowLeft'||c==='KeyA')push(0);if(c==='ArrowRight'||c==='KeyD')push(1);});
 function push(s){
  if(over)return;
@@ -19,7 +19,7 @@ function gameOver(){
  const win=px>=600&&px>=rivals[0].x&&px>=rivals[1].x;
  const sc=win?Math.max(200,500-(t|0)*8):px|0;
  H.score(sc);
- H.done(win?{win:true,score:sc,title:'🥇 Sprint vencido!',sub:'200m em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Rivais venceram!',sub:'Alterne E-D-E-D sem errar!'});
+ H.done(win?{win:true,score:sc,title:'Sprint vencido!',sub:'200m em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Rivais venceram!',sub:'Alterne E-D-E-D sem errar!'});
 }
 H.loop(dt=>{
  if(over)return;t+=dt;
@@ -34,11 +34,11 @@ H.loop(dt=>{
  for(let i=0;i<3;i++)x.strokeRect(0,60+i*60,560,60);
  const cam=Math.max(0,px-200);
  x.font='28px system-ui';x.textAlign='center';
- x.fillText('🦽',px-cam,105);
- x.fillText('🦽',rivals[0].x-cam,165);
- x.fillText('🦽',rivals[1].x-cam,225);
+ x.fillText('',px-cam,105);
+ x.fillText('',rivals[0].x-cam,165);
+ x.fillText('',rivals[1].x-cam,225);
  x.fillStyle='#fff';x.fillRect(600-cam,60,8,180);
  x.fillStyle=next===0?'#C4D645':'#181816';x.font='bold 16px system-ui';x.textAlign='left';
- x.fillText('Próximo: '+(next===0?'⬅️ ESQUERDA':'DIREITA ➡️')+'  x'+combo,12,40);
+ x.fillText('Próximo: '+(next===0?'← ESQUERDA':'DIREITA →')+'  x'+combo,12,40);
 });
 }});

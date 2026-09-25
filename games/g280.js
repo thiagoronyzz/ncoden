@@ -9,7 +9,7 @@ const o=H.cvs(root,460,360),x=o.x;
 const brow=H.el('div','g-row',null,root);
 H.btn(brow,'◀ −1',()=>turn(-1),false);
 H.btn(brow,'−5 ◀◀',()=>turn(-5),false);
-H.btn(brow,'🔒 Travar número',lock,true);
+H.btn(brow,'Travar número',lock,true);
 H.btn(brow,'▶▶ +5',()=>turn(5),false);
 H.btn(brow,'+1 ▶',()=>turn(1),false);
 function target(){return nums[found];}
@@ -25,11 +25,11 @@ function lock(){
  if(over||found>=3)return;
  if(dial===target()){found++;H.sfx('ok');hud.set('n',found+'/3');
   if(found>=3){gameOver(true);return;}
-  say('✅ Número '+(found)+'/3 travado! Ache o próximo…');
- }else{time-=8;H.sfx('bad');say('❌ Não é esse! −8s. Chegue BEM perto (medidor cheio).');}
+  say('✔ Número '+(found)+'/3 travado! Ache o próximo…');
+ }else{time-=8;H.sfx('bad');say('✕ Não é esse! −8s. Chegue BEM perto (medidor cheio).');}
 }
 function gameOver(win){over=true;const sc=win?300+Math.ceil(time)*3:found*70;H.score(sc);
-H.done(win?{win:true,score:sc,title:'👂 Ouvido de ouro!',sub:'Cofre aberto com '+Math.ceil(time)+'s de folga.'}:{win:false,score:sc,title:'O guarda voltou!',sub:found+'/3 números. Siga o medidor!'});}
+H.done(win?{win:true,score:sc,title:'Ouvido de ouro!',sub:'Cofre aberto com '+Math.ceil(time)+'s de folga.'}:{win:false,score:sc,title:'O guarda voltou!',sub:found+'/3 números. Siga o medidor!'});}
 H.loop(dt=>{
  if(over)return;
  time-=dt;
@@ -52,13 +52,13 @@ H.loop(dt=>{
  x.fillStyle='#fff';x.font='bold 26px system-ui';x.fillText(dial,150,220+70);
  x.fillStyle='#fff';x.font='bold 15px system-ui';x.textAlign='left';
  x.fillText('Números: '+found+'/3',300,80);
- x.fillText('⏱️ '+Math.ceil(time)+'s',300,105);
+ x.fillText('i:gauge'+Math.ceil(time)+'s',300,105);
  x.fillText('SINAL:',300,150);
  for(let i=0;i<10;i++){
   x.fillStyle=i/10<hot?(hot>.85?'#C4D645':'#E8A33D'):'#4A4A44';
   x.fillRect(300+i*15,160,12,40);
  }
- if(hot>.85){x.fillStyle='#C4D645';x.font='bold 16px system-ui';x.fillText('🔊 CLIQUE!',300,230);}
+ if(hot>.85){x.fillStyle='#C4D645';x.font='bold 16px system-ui';x.fillText('CLIQUE!',300,230);}
  x.fillStyle='#8A877C';x.font='12px system-ui';
  x.fillText('Gire e observe o sinal.',300,260);
 });

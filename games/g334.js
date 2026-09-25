@@ -14,7 +14,7 @@ function hop(){
  jump=1;jT=0;H.sfx('tick');
 }
 function gameOver(win){over=true;const sc=win?350+lives*100:pi*30;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🧊 Terra firme!',sub:'Atravessou o degelo!'}:{win:false,score:sc,title:'Água gelada!',sub:'3 quedas. Pule sem hesitar!'});}
+H.done(win?{win:true,score:sc,title:'Terra firme!',sub:'Atravessou o degelo!'}:{win:false,score:sc,title:'Água gelada!',sub:'3 quedas. Pule sem hesitar!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  B.forEach((b,i)=>{if(!b.gone&&i>=pi)b.melt+=dt*(i===pi?6:2.5);if(b.melt>26)b.gone=true;});
@@ -45,6 +45,6 @@ H.loop(dt=>{
  });
  let jx=60+pi*62,jy=B[pi]?B[pi].y:300;
  if(jump&&B[pi+1]){jx=jx+(62)*jT;jy=jy-70*Math.sin(jT*Math.PI);}
- x.font='30px system-ui';x.textAlign='center';x.fillText('🐧',jx,jy-14);
+ x.font='30px system-ui';x.textAlign='center';x.fillText('i:penguin',jx,jy-14);
 });
 }});

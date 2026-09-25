@@ -16,11 +16,11 @@ let over=false,pos=[[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1],[-1,-1,-1,-1]];
 let turn=0,dice=0,phase='roll',mov=[],seq=0,moves=0,rollT=0;
 let caps=[0,0,0,0],fin=[0,0,0,0],msg='Boa sorte! Tire 6 para sair da base.';
 const hud=H.hud(root,[['t','TURNO','Você'],['d','DADO','—'],['casa','EM CASA','0/4'],['cap','CAPTURAS',0]]);
-const say=H.msg(root,'Tire 6 para sair da base! Casas ⭐ são seguras. Capturar e guardar peão dão jogada extra. Guarde os 4 para vencer!');
+const say=H.msg(root,'Tire 6 para sair da base! Casas ★ são seguras. Capturar e guardar peão dão jogada extra. Guarde os 4 para vencer!');
 const o=H.cvs(root,480,480),x=o.x;
 const d2=H.cvs(root,480,84),x2=d2.x;
 const brow=H.el('div','g-row',null,root);
-const rollBtn=H.btn(root,'🎲 Rolar dado',doRoll,true);
+const rollBtn=H.btn(root,'Rolar dado',doRoll,true);
 const Z=[];
 for(let r=0;r<15;r++){Z.push([]);for(let c=0;c<15;c++)Z[r].push('w');}
 TRACK.forEach(rc=>{Z[rc[0]][rc[1]]='t';});
@@ -110,7 +110,7 @@ function applyMove(p,i,d){
   pos[p][i]=to;moves++;
   if(to===57)fin[p]++;
   H.sfx(cap?'ok':'tick');
-  msg=NAME[p]+(from<0?' saiu da base!':' avançou '+(to-from)+' casas'+(to===57?' e GUARDOU o peão!':''))+(cap?' CAPTURA! ⚔️':'');
+  msg=NAME[p]+(from<0?' saiu da base!':' avançou '+(to-from)+' casas'+(to===57?' e GUARDOU o peão!':''))+(cap?' CAPTURA! ':'');
   if(fin[p]===4){gameOver(p,'quatro peões em casa');return;}
   if(moves>600){gameOver(leader(),'limite de lances');return;}
   if(d===6||cap||to===57){
@@ -168,7 +168,7 @@ function gameOver(w,why){
   let prog=0;for(let i=0;i<4;i++)prog+=Math.max(0,pos[0][i]);
   const sc=prog+fin[0]*60+caps[0]*15+(w===0?300:0);
   H.score(sc);
-  H.done(w===0?{win:true,score:sc,title:'🏆 Ludo vencido!',sub:'4 peões em casa · '+caps[0]+' capturas · '+moves+' lances.'}
+  H.done(w===0?{win:true,score:sc,title:'Ludo vencido!',sub:'4 peões em casa · '+caps[0]+' capturas · '+moves+' lances.'}
     :{win:false,score:sc,title:NAME[w]+' venceu!',sub:'Motivo: '+why+' · você guardou '+fin[0]+'/4.'});
 }
 H.onTap(o,(px,py)=>{

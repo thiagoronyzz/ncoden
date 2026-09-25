@@ -54,21 +54,21 @@ function paint(){
   });
   const r2=H.el("div","g-row",null,box);
   if(!drawn){
-    H.btn(r2,"🔄 Trocar (1×)",()=>{
+    H.btn(r2,"↻ Trocar (1×)",()=>{
       if(over)return;
       hand=hand.map((c,i)=>hold[i]?c:deck.pop());
       drawn=true;
       const rk=rank(),pay=PAY[rk][1]*bet;
       bank+=pay;H.score(bank);H.sfx(pay?"ok":"bad");
-      say("🎰 "+PAY[rk][0]+"! "+(pay?" +$"+pay:"nada."));
+      say(""+PAY[rk][0]+"! "+(pay?" +$"+pay:"nada."));
       paint();
       if(bank>=100){over=true;return H.done({win:true,score:bank,title:"Tubarão do poker!",sub:"Banca de $"+bank+"!"});}
       if(bank<bet){over=true;return H.done({win:false,score:bank,title:"Sem fichas!",sub:"Segure pares e draws!"});}
     },true);
   }else{
-    H.btn(r2,"🃏 Nova mão ($5)",()=>{if(!over&&bank>=bet){if(deck.length<12)mk();deal();}},true);
+    H.btn(r2,"Nova mão ($5)",()=>{if(!over&&bank>=bet){if(deck.length<12)mk();deal();}},true);
   }
-  H.el("div","g-msg","💰 "+PAY.slice(0,9).map(p=>p[0]+" $"+p[1]*bet).join(" · "),box);
+  H.el("div","g-msg",""+PAY.slice(0,9).map(p=>p[0]+" $"+p[1]*bet).join(" · "),box);
 }
 mk();deal();
 }});

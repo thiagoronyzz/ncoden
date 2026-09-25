@@ -20,7 +20,7 @@ H.onTap(o,(px,py)=>{
  });
 });
 function gameOver(win){over=true;const sc=quota*60+(win?200:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'💧 Vila salva!',sub:'4 águas puras entregues!'}:{win:false,score:sc,title:'Tempo esgotado!',sub:quota+'/4 águas. Teste, purifique, colete!'});}
+H.done(win?{win:true,score:sc,title:'Vila salva!',sub:'4 águas puras entregues!'}:{win:false,score:sc,title:'Tempo esgotado!',sub:quota+'/4 águas. Teste, purifique, colete!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;time-=dt;
  hud.set('tp',Math.ceil(time));
@@ -30,12 +30,12 @@ H.loop(dt=>{
   x.fillStyle='#8A6A2F';x.fillRect(w.x,w.y,80,60);
   x.fillStyle='#4A2F1B';x.fillRect(w.x+10,w.y+10,60,25);
   x.font='16px system-ui';x.textAlign='center';
-  if(w.pure)x.fillText('✅',w.x+40,w.y+75);
-  else if(!w.tested)x.fillText('❓',w.x+40,w.y+75);
-  else if(w.pois)x.fillText('☠️',w.x+40,w.y+75);
-  else x.fillText('💧',w.x+40,w.y+75);
+  if(w.pure)x.fillText('i:check',w.x+40,w.y+75);
+  else if(!w.tested)x.fillText('i:question',w.x+40,w.y+75);
+  else if(w.pois)x.fillText('i:skull',w.x+40,w.y+75);
+  else x.fillText('i:drop',w.x+40,w.y+75);
  });
  x.fillStyle='#181816';x.font='bold 16px system-ui';x.textAlign='left';
- x.fillText('💧 '+quota+'/4 · ⏱️'+Math.ceil(time)+'s',12,28);
+ x.fillText('i:drop'+quota+'/4 · '+Math.ceil(time)+'s',12,28);
 });
 }});

@@ -6,7 +6,7 @@ const hud=H.hud(root,[["dia","DIA","1/10"],["ants","FORMIGAS",12],["food","COMID
 const say=H.msg(root,"Distribua as formigas entre <b>forragear, guardar e cavar</b>. Sobreviva 10 dias com o túnel pronto!");
 const box=H.el("div","g-col",null,root);
 const logBox=H.el("div","g-msg","A rainha aguarda suas ordens…",root);
-const JOBS=[["f","🌾 Forrageiras"],["g","🛡️ Guardas"],["d","⛏️ Cavadoras"]];
+const JOBS=[["f","Forrageiras"],["g","Guardas"],["d","Cavadoras"]];
 function paint(){
   box.innerHTML="";
   JOBS.forEach(([k,n])=>{
@@ -35,11 +35,11 @@ function nextDay(){
   if(jobs.g<atk){
     const loss=Math.min(ants-1,atk-jobs.g);
     ants-=loss;food=Math.max(0,food-6);
-    msg+="🕷️ Aranha (força "+atk+")! Guardas insuficientes: −"+loss+" formigas. ";
+    msg+="Aranha (força "+atk+")! Guardas insuficientes: −"+loss+" formigas. ";
     H.sfx("bad");
-  }else{msg+="🛡️ Ataque "+atk+" repelido. ";H.sfx("ok");}
+  }else{msg+="Ataque "+atk+" repelido. ";H.sfx("ok");}
   tunnel=Math.min(100,tunnel+jobs.d*8);
-  msg+="⛏️ Túnel em "+tunnel+"%.";
+  msg+="Túnel em "+tunnel+"%.";
   const tot=jobs.f+jobs.g+jobs.d;
   if(tot>ants){jobs.f=Math.min(jobs.f,ants);jobs.g=Math.min(jobs.g,Math.max(0,ants-jobs.f));jobs.d=Math.max(0,ants-jobs.f-jobs.g);}
   hud.set("food",food);hud.set("ants",ants);hud.set("tun",tunnel+"%");
@@ -53,6 +53,6 @@ function nextDay(){
   }
   hud.set("dia",day+"/10");paint();
 }
-H.btn(root,"☀ Avançar dia",nextDay,true);
+H.btn(root,"Avançar dia",nextDay,true);
 paint();
 }});

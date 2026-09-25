@@ -2,8 +2,8 @@
 GREG(182,{
 init(root,H){
 let over=false,blob={x:60,y:300,vx:0,vy:0,r:22,sq:0},squeeze=0,spikes=[];
-const hud=H.hud(root,[["es","PRESSÃO","0%"],["st","STATUS","vá ao 🏁"]]);
-const say=H.msg(root,"ARRASTE a geleca pelo canal até o 🏁! Espremida demais (fino) ou espinho = 💥. Devagar nas fendas!");
+const hud=H.hud(root,[["es","PRESSÃO","0%"],["st","STATUS","vá ao "]]);
+const say=H.msg(root,"ARRASTE a geleca pelo canal até a <b>chegada</b>! Espremer demais (fica fina) ou tocar um espinho = <b>furo</b>. Devagar nas fendas!");
 const o=H.cvs(root,520,400),x=o.x;
 const WALLS=[
   {x:0,y:0,w:520,h:20},{x:0,y:380,w:520,h:20},
@@ -43,12 +43,12 @@ H.loop(dt=>{
   hud.set("es",Math.floor(blob.sq*100)+"%");
   if(blob.sq>0.75){squeeze+=dt;
     if(squeeze>1){over=true;H.sfx("lose");
-      return H.done({win:false,score:0,title:"ESPLODIU! 💥",sub:"Espremeram demais a geleca. Passe devagar!"});
+      return H.done({win:false,score:0,title:"ESPLODIU! ",sub:"Espremeram demais a geleca. Passe devagar!"});
     }
   }else squeeze=Math.max(0,squeeze-dt*2);
   if(spikes.some(s=>Math.hypot(blob.x-s.x,blob.y-s.y)<20)){
     over=true;H.sfx("lose");
-    return H.done({win:false,score:0,title:"ESPETOU! 💥",sub:"Desvie dos espinhos!"});
+    return H.done({win:false,score:0,title:"ESPETOU! ",sub:"Desvie dos espinhos!"});
   }
   if(Math.hypot(blob.x-GOAL.x,blob.y-GOAL.y)<28){
     over=true;H.score(300);
@@ -58,8 +58,8 @@ H.loop(dt=>{
   x.fillStyle="#5b3d20";
   WALLS.forEach(w=>x.fillRect(w.x,w.y,w.w,w.h));
   x.font="20px serif";
-  spikes.forEach(s=>x.fillText("🦔",s.x-10,s.y+7));
-  x.font="30px serif";x.fillText("🏁",GOAL.x-15,GOAL.y+10);
+  spikes.forEach(s=>x.fillText("i:turtle",s.x-10,s.y+7));
+  x.font="30px serif";x.fillText("i:flag",GOAL.x-15,GOAL.y+10);
   const rx=blob.r*(1+blob.sq*.7),ry=blob.r*(1-blob.sq*.55);
   x.fillStyle="rgba(196,214,69,.9)";
   x.beginPath();x.ellipse(blob.x,blob.y,rx,ry,0,0,7);x.fill();
@@ -67,6 +67,6 @@ H.loop(dt=>{
   x.fillStyle=H.C.ink;
   x.beginPath();x.arc(blob.x-6,blob.y-3,2.5,0,7);x.arc(blob.x+6,blob.y-3,2.5,0,7);x.fill();
   if(blob.sq>0.5){x.fillStyle=H.C.terra;x.font="bold 14px 'Space Mono',monospace";
-    x.fillText("⚠ VAI ESTOURAR!",180,30);}
+    x.fillText("VAI ESTOURAR!",180,30);}
 });
 }});

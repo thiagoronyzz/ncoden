@@ -3,7 +3,7 @@ GREG(248,{
 init(root,H){
 let over=false,b=[],turn=0;
 const hud=H.hud(root,[["vz","VEZ","você (X)"]]);
-const say=H.msg(root,"Você é ❌! 4 em linha no tabuleiro 5×5 vence. Empate = nova partida!");
+const say=H.msg(root,"Você é ✕! 4 em linha no tabuleiro 5×5 vence. Empate = nova partida!");
 const board=H.el("div","g-board",null,root);
 board.style.gridTemplateColumns="repeat(5,1fr)";
 board.style.width="min(100%,340px)";
@@ -28,7 +28,7 @@ function findWin(who){
 function paint(){
   board.innerHTML="";
   b.forEach((v,i)=>{
-    const d=H.el("button","g-cell",v===1?"❌":v===2?"⭕":"",board);
+    const d=H.el("button","g-cell",v===1?"✕":v===2?"○":"",board);
     d.style.aspectRatio="1";d.style.fontSize="24px";
     if(!v&&turn===0)d.addEventListener("click",()=>{
       if(over||turn!==0||b[i])return;

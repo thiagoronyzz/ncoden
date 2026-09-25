@@ -18,9 +18,9 @@ function mk(){
 }
 function paint(){
   hud.set("tt",att+"/3");hud.set("rv",revealed+"/52");hud.set("k",kings+"/4");
-  cb.innerHTML="🃏 Carta: <b>"+(cur?RN(cur):"—")+"</b> → "+(cur?(cur===13?"CENTRO 👑":"hora "+cur):"—");
+  cb.innerHTML="Carta: <b>"+(cur?RN(cur):"—")+"</b> → "+(cur?(cur===13?"CENTRO ":"hora "+cur):"—");
 }
-H.btn(root,"🔄 Virar carta",()=>{
+H.btn(root,"↻ Virar carta",()=>{
   if(over||!cur)return;
   revealed++;
   const dest=cur===13?12:cur-1;
@@ -29,7 +29,7 @@ H.btn(root,"🔄 Virar carta",()=>{
     if(kings>=4){
       att++;
       if(att>3){over=true;return H.done({win:false,score:revealed,title:"4 reis!",sub:"3 baralhos sem sorte. Tente de novo!"});}
-      say("👑 4º rei! Tentativa "+att+"/3…");mk();return;
+      say("4º rei! Tentativa "+att+"/3…");mk();return;
     }
     cur=piles[12].length?piles[12].pop():null;
   }else{

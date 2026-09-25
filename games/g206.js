@@ -20,7 +20,7 @@ function ring(){
     if(miss>=3){over=true;return H.done({win:false,score:rung*50,title:"Sino rachado!",sub:rung+"/10. Espere a zona dourada!"});}
   }
 }
-H.btn(root,"🔔 BADALAR!",ring,true);
+H.btn(root,"BADALAR!",ring,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")ring();});
 H.onTap(o,()=>ring());
@@ -47,7 +47,7 @@ H.loop(dt=>{
   x.lineTo(CX+Math.cos(a)*RR,CY+Math.sin(a)*RR);x.stroke();
   x.fillStyle=H.C.ink;
   x.beginPath();x.arc(CX,CY,8,0,7);x.fill();
-  x.font="40px serif";x.fillText("🔔",CX-20,CY+RR+62);
+  x.font="40px serif";x.fillText("i:bell",CX-20,CY+RR+62);
   const d=Math.abs(a-Math.PI*1.5),dd=Math.min(d,Math.PI*2-d);
   if(dd<0.22){x.fillStyle=H.C.ok;x.font="bold 16px 'Space Mono',monospace";x.fillText("AGORA!",CX-34,40);}
 });

@@ -27,7 +27,7 @@ function deal(){
 deal();
 const RN=r=>r===1?"A":r===11?"J":r===12?"Q":r===13?"K":r;
 function cardEl(c,mini){
-  const d=H.el("button","g-card"+(RED(c.s)?" red":""),c.up?RN(c.r)+S[c.s]:"🂠",null);
+  const d=H.el("button","g-card"+(RED(c.s)?" red":""),c.up?RN(c.r)+S[c.s]:"",null);
   d.style.width="46px";d.style.height="62px";d.style.fontSize="15px";
   if(mini){d.style.width="40px";d.style.height="54px";}
   return d;
@@ -64,7 +64,7 @@ function paint(){
   if(over)return;
   box.innerHTML="";
   const top=H.el("div","g-row",null,box);
-  const st=H.el("button","g-card","🂠 ×"+stock.length,top);
+  const st=H.el("button","g-card","×"+stock.length,top);
   st.style.width="46px";st.style.height="62px";
   st.addEventListener("click",()=>{
     if(over)return;
@@ -130,5 +130,5 @@ function dropTab(i){
   H.sfx("tick");paint();checkWin();
 }
 paint();
-H.btn(root,"🔄 Reembaralhar",()=>{if(!over){deal();paint();say("Nova mesa!");}},false);
+H.btn(root,"↻ Reembaralhar",()=>{if(!over){deal();paint();say("Nova mesa!");}},false);
 }});

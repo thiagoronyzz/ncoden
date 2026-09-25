@@ -20,19 +20,19 @@ function paint(){
   hud.set("bc","$"+bank);hud.set("rd",rd);
   box.innerHTML="";
   const dv=hide?"?":val(dh);
-  H.el("div","g-msg","🤖 Dealer ("+dv+"): "+dh.map((c,i)=>hide&&i===1?"🂠":c).join(" "),box);
-  H.el("div","g-msg","🧍 Você ("+val(ph)+"): "+ph.join(" "),box);
+  H.el("div","g-msg","Dealer ("+dv+"): "+dh.map((c,i)=>hide&&i===1?"":c).join(" "),box);
+  H.el("div","g-msg","Você ("+val(ph)+"): "+ph.join(" "),box);
   const row=H.el("div","g-row",null,box);
   if(state==="play"){
-    H.btn(row,"➕ Pedir",()=>{
+    H.btn(row,"Pedir",()=>{
       if(over)return;
       ph.push(deck.pop());H.sfx("tick");
       if(val(ph)>21)finish();
       else paint();
     },true);
-    H.btn(row,"✋ Parar",()=>{if(!over)finish();},false);
+    H.btn(row,"Parar",()=>{if(!over)finish();},false);
   }else{
-    H.btn(row,"🃏 Nova rodada ($10)",()=>{
+    H.btn(row,"Nova rodada ($10)",()=>{
       if(over||bank<10)return;
       bank-=10;rd++;start();
     },true);
@@ -49,9 +49,9 @@ function finish(){
   while(val(dh)<17)dh.push(deck.pop());
   const p=val(ph),d=val(dh);
   let msg="";
-  if(p>21){msg="💥 Estourou! −$10";}
-  else if(d>21){bank+=20;msg="🤖 Dealer estourou! +$10";}
-  else if(p===21&&ph.length===2&&!(d===21&&dh.length===2)){bank+=25;msg="🂡 BLACKJACK! +$15";}
+  if(p>21){msg="Estourou! −$10";}
+  else if(d>21){bank+=20;msg="Dealer estourou! +$10";}
+  else if(p===21&&ph.length===2&&!(d===21&&dh.length===2)){bank+=25;msg="BLACKJACK! +$15";}
   else if(p>d){bank+=20;msg="Você "+p+" × "+d+"! +$10";}
   else if(p<d){msg="Dealer "+d+" × "+p+". −$10";}
   else{bank+=10;msg="Empate — aposta de volta.";}

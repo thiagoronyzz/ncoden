@@ -13,7 +13,7 @@ function spawnCar(){
   cars.push(Object.assign(lane,{wait:0,run:false,col:["#D94E34","#2E6E8A","#E8A33D","#3E7C4F"][d]}));
 }
 function toggle(){if(over)return;ns=!ns;hud.set("fl",ns?"NS":"LO");H.sfx("tick");}
-H.btn(root,"🚦 Alternar verde",toggle,true);
+H.btn(root,"Alternar verde",toggle,true);
 H.onTap(o,(px,py)=>{if(Math.hypot(px-cx,py-cy)<60)toggle();});
 H.loop(dt=>{
   if(over)return;
@@ -26,7 +26,7 @@ H.loop(dt=>{
     c.inZone=inZone;
     if(!green(c.ax)&&nearStop&&!inZone&&!c.run){
       c.wait+=dt;
-      if(c.wait>12){c.run=true;say("🚨 Um carro furou o vermelho!");}
+      if(c.wait>12){c.run=true;say("Um carro furou o vermelho!");}
     }else{
       c.wait=0;
       const ahead=cars.some(k=>k!==c&&k.ax===c.ax&&((c.vy>0&&k.y>c.y&&k.y-c.y<36)||(c.vy<0&&k.y<c.y&&c.y-k.y<36)||(c.vx>0&&k.x>c.x&&k.x-c.x<36)||(c.vx<0&&k.x<c.x&&c.x-k.x<36)));

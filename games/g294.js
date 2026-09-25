@@ -7,13 +7,13 @@ for(let i=0;i<10;i++)CK.push({y:-i*600-400,gx:100+Math.random()*260,got:false});
 const ROCKS=[];
 for(let i=0;i<30;i++)ROCKS.push({x:50+Math.random()*360,y:-i*260-150,hit:false});
 const hud=H.hud(root,[['c','CHECKS','0/10'],['v','VIDAS',3]]);
-const say=H.msg(root,'Passe pelos portões verdes ✅ e desvie das pedras! A correnteza empurra — ⬅️➡️ remam.');
+const say=H.msg(root,'Passe pelos portões verdes ✔ e desvie das pedras! A correnteza empurra — ←→ remam.');
 const o=H.cvs(root,460,520),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{tapS=qx<230?-1:1;tapT=.3;});
 let tapS=0,tapT=0;
 function gameOver(win){over=true;const sc=checks*100+lives*50;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🚣 Corredeira vencida!',sub:'10/10 checks!'}:{win:false,score:sc,title:'Virou o caiaque!',sub:checks+'/10 checks. Desvie das pedras!'});}
+H.done(win?{win:true,score:sc,title:'Corredeira vencida!',sub:'10/10 checks!'}:{win:false,score:sc,title:'Virou o caiaque!',sub:checks+'/10 checks. Desvie das pedras!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(tapT>0)tapT-=dt;else tapS=0;
@@ -50,8 +50,8 @@ H.loop(dt=>{
   if(ry<-20||ry>540)return;
   x.fillStyle=r.hit?'#D94E34':'#5A5A55';x.beginPath();x.arc(r.x,ry,13,0,7);x.fill();
  });
- x.font='30px system-ui';x.textAlign='center';x.fillText('🚣',px,442);
+ x.font='30px system-ui';x.textAlign='center';x.fillText('',px,442);
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('✅ '+checks+'/10  ❤️'.repeat(1)+' '+lives+'  Corrente '+(cur>0?'▶':'◀'),12,26);
+ x.fillText('i:check'+checks+'/10 ♥'.repeat(1)+' '+lives+'  Corrente '+(cur>0?'▶':'◀'),12,26);
 });
 }});

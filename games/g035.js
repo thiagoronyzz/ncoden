@@ -31,8 +31,8 @@ function paint(){
   const cells=board.children;
   for(let r=0;r<n;r++)for(let c=0;c<n;c++){
     const d=cells[r*n+c],k=key(r,c);
-    if(obs.has(k)){d.textContent="🧱";d.disabled=true;d.style.background=H.C.ink;}
-    else if(fill[k]!=null){d.textContent="💎";d.disabled=false;d.classList.add("good");}
+    if(obs.has(k)){d.textContent="";d.disabled=true;d.style.background=H.C.ink;}
+    else if(fill[k]!=null){d.textContent="";d.disabled=false;d.classList.add("good");}
     else{d.textContent="";d.disabled=false;d.classList.remove("good");d.style.background="";}
   }
 }

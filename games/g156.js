@@ -1,7 +1,7 @@
 /* NCODE N · 156 Casa de Chá — 8 infusões no ponto */
 GREG(156,{
 init(root,H){
-const TEA={verde:{e:"🍵",n:"verde",t:[65,75]},preto:{e:"☕",n:"preto",t:[95,100]},erva:{e:"🌿",n:"ervas",t:[80,90]}};
+const TEA={verde:{e:"verde",n:"verde",t:[65,75]},preto:{e:"preto",n:"preto",t:[95,100]},erva:{e:"erva",n:"ervas",t:[80,90]}};
 let over=false,order=null,temp=20,served=0,pat=0,heat=false;
 const hud=H.hud(root,[["ch","CHÁS","0/8"],["tm","CHALEIRA","20°C"],["sc","PONTOS",0]]);
 const say=H.msg(root,"SEGURE <b>aquecer</b> para subir a temperatura (esfria sozinha). <b>Servir</b> com a água na faixa do pedido!");
@@ -13,10 +13,10 @@ function newOrder(){
   order=ks[Math.floor(Math.random()*3)];pat=26;paint();
 }
 function paint(){
-  od.innerHTML="🧾 Pedido: chá "+TEA[order].e+" <b>"+order+"</b> ("+TEA[order].t[0]+"–"+TEA[order].t[1]+"°C) · ⏳"+Math.ceil(pat)+"s";
+  od.innerHTML="Pedido: chá <b>"+TEA[order].n+"</b> ("+TEA[order].t[0]+"–"+TEA[order].t[1]+"°C) · "+Math.ceil(pat)+"s";
 }
 newOrder();
-const hb=H.el("button","g-btn","🔥 SEGURE PARA AQUECER",box);
+const hb=H.el("button","g-btn","SEGURE PARA AQUECER",box);
 hb.addEventListener("pointerdown",e=>{e.preventDefault();heat=true;});
 hb.addEventListener("pointerup",()=>heat=false);
 hb.addEventListener("pointerleave",()=>heat=false);
@@ -40,13 +40,13 @@ H.loop(dt=>{
   x.fillStyle=H.C.ink;x.font="12px 'Space Mono',monospace";
   x.fillText("20°C",30,100);x.fillText("100°C",o.W-60,100);
 });
-H.btn(root,"🍵 Servir chá",()=>{
+H.btn(root,"Servir chá",()=>{
   if(over)return;
   const T=TEA[order].t;
   if(temp>=T[0]&&temp<=T[1]){
     served++;sc+=50+Math.floor(pat);H.score(sc);hud.set("ch",served+"/8");hud.set("sc",sc);H.sfx("ok");
     if(served>=8){over=true;return H.done({win:true,score:sc+100,title:"Mestre de chás!",sub:"8 infusões na temperatura perfeita."});}
-    say("🍵 Servido! Próximo pedido…");newOrder();
-  }else{H.sfx("bad");say("❌ Temperatura errada! Quer "+T[0]+"–"+T[1]+"°C.");}
+    say("Servido! Próximo pedido…");newOrder();
+  }else{H.sfx("bad");say("✕ Temperatura errada! Quer "+T[0]+"–"+T[1]+"°C.");}
 },true);
 }});

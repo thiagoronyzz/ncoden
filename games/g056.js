@@ -3,7 +3,7 @@ GREG(56,{
 init(root,H){
 let over=false,bals=[],sc=0,t=45,spawn=0,esc=0;
 const hud=H.hud(root,[["sc","PONTOS",0],["fg","FUGAS",0],["tp","TEMPO",45]]);
-const say=H.msg(root,"Toque nos balões para estourar (10 pts). <b>Dourado = 50!</b> Preto 💀 tira 20. 10 fugas = fim!");
+const say=H.msg(root,"Toque nos balões para estourar (10 pts). <b>Dourado = 50!</b> Preto tira 20. 10 fugas = fim!");
 const o=H.cvs(root,480,420),x=o.x;
 H.onTap(o,(px,py)=>{
   if(over)return;

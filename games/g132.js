@@ -1,10 +1,10 @@
 /* NCODE N · 132 Lava-Jato — 8 carros, 4 etapas em ordem */
 GREG(132,{
 init(root,H){
-const ST=["🧼 Sabão","🧽 Esfrega","🚿 Enxágue","💨 Seca"];
+const ST=["Sabão","Esfrega","Enxágue","Seca"];
 let over=false,cars=[],served=0,spawn=0;
 const hud=H.hud(root,[["cr","CARROS","0/8"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Carros avançam sozinhos! Clique na <b>etapa certa</b> quando o carro estiver na sua estação (faixas coloridas). Ordem: 🧼→🧽→🚿→💨.");
+const say=H.msg(root,"Carros avançam sozinhos! Clique na <b>etapa certa</b> quando o carro estiver na sua estação (faixas coloridas). Ordem: →→→.");
 const o=H.cvs(root,520,260),x=o.x;
 let sc=0,nid=0;
 const ZW=o.W/4;
@@ -28,7 +28,7 @@ H.loop(dt=>{
     if(need&&c.x>=(c.stage+1)*ZW-40&&c.prog<=0){
       // passou da estação sem fazer: volta? perde a etapa
       cars.splice(i,1);H.sfx("bad");
-      say("🚗 Carro saiu sujo! Clique a etapa quando ele estiver na faixa.");
+      say("Carro saiu sujo! Clique a etapa quando ele estiver na faixa.");
       if(served+cars.length>=9){/* fluxo */}
       continue;
     }

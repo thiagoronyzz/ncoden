@@ -3,7 +3,7 @@ GREG(140,{
 init(root,H){
 let over=false,tanks=[],cash=0,time=180,show=0;
 const hud=H.hud(root,[["cx","CAIXA","$0/150"],["tp","TEMPO",180],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique no tanque para <b>🍤 alimentar</b>, duas vezes rápido para <b>🧹 limpar</b>. Peixes saudáveis atraem público pagante! <b>Show</b> dobra a renda por 15s.");
+const say=H.msg(root,"Clique no tanque para <b> alimentar</b>, duas vezes rápido para <b> limpar</b>. Peixes saudáveis atraem público pagante! <b>Show</b> dobra a renda por 15s.");
 const box=H.el("div","g-col",null,root);
 const trow=H.el("div","g-board",null,box);
 trow.style.gridTemplateColumns="repeat(3,1fr)";
@@ -15,13 +15,13 @@ function paint(){
   tanks.forEach((t,i)=>{
     const b=H.el("button","g-cell"+(t.fish===0?" bad":t.hung<25||t.dirt>75?" hot":" good"),null,trow);
     b.style.minHeight="86px";b.style.fontSize="13px";
-    b.innerHTML="🐠".repeat(t.fish)+"<br>🍤"+Math.floor(t.hung)+" 🧹"+Math.floor(100-t.dirt);
+    b.innerHTML="".repeat(t.fish)+"<br>"+Math.floor(t.hung)+""+Math.floor(100-t.dirt);
     let clicks=0;
     b.addEventListener("click",()=>{
       if(over||t.fish===0)return;
       clicks++;
       H.after(350,()=>{
-        if(clicks>=2){t.dirt=Math.max(0,t.dirt-50);H.sfx("ok");say("🧹 Tanque "+(i+1)+" limpo!");}
+        if(clicks>=2){t.dirt=Math.max(0,t.dirt-50);H.sfx("ok");say("Tanque "+(i+1)+" limpo!");}
         else{t.hung=Math.min(100,t.hung+30);H.sfx("tick");}
         clicks=0;paint();
       });
@@ -29,9 +29,9 @@ function paint(){
   });
 }
 paint();
-H.btn(root,"🎪 Show das focas (dobra renda 15s)",()=>{
+H.btn(root,"Show das focas (dobra renda 15s)",()=>{
   if(over||show>0)return;
-  show=15;H.sfx("ok");say("🎪 SHOW! Renda dobrada!");
+  show=15;H.sfx("ok");say("SHOW! Renda dobrada!");
 },false);
 H.loop(dt=>{
   if(over)return;
@@ -41,7 +41,7 @@ H.loop(dt=>{
     if(t.fish===0)return;
     t.hung-=dt*4;t.dirt+=dt*3;
     if(t.hung<=0||t.dirt>=100){
-      t.fish--;t.hung=70;t.dirt=30;H.sfx("bad");say("🐟 Um peixe não resistiu!");paint();
+      t.fish--;t.hung=70;t.dirt=30;H.sfx("bad");say("Um peixe não resistiu!");paint();
     }
   });
   const health=tanks.reduce((a,t)=>a+t.fish*(t.hung/100)*(1-t.dirt/150),0);

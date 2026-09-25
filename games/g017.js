@@ -31,13 +31,13 @@ function draw(){
     x.fillText((f+1)+"º",60,y+fw/2+5);
     const w=wait.filter(p=>p.f===f);
     x.font="12px 'Space Mono',monospace";
-    w.slice(0,6).forEach((p,i)=>{x.fillStyle=H.C.terra;x.fillText("🧍→"+(p.t+1),140+i*52,y+fw/2+5);});
+    w.slice(0,6).forEach((p,i)=>{x.fillStyle=H.C.terra;x.fillText("→"+(p.t+1),140+i*52,y+fw/2+5);});
     if(stops.includes(f)){x.fillStyle=H.C.ink;x.fillText("◉ parada "+(stops.indexOf(f)+1),400,y+fw/2+5);}
   }
   const ey=floorY(Math.round(el));
   x.fillStyle=H.C.ink;x.fillRect(20,ey,70,fw-4);
   x.fillStyle=H.C.gold;x.font="12px 'Space Mono',monospace";
-  x.fillText("🛗"+aboard.length+"/4",26,ey+fw/2+4);
+  x.fillText("i:elevator"+aboard.length+"/4",26,ey+fw/2+4);
 }
 H.onTap(o,(px,py)=>{
   if(over||busy)return;

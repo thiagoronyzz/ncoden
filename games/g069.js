@@ -4,7 +4,7 @@ init(root,H){
 const GOAL=12;
 let over=false,planets,cur,tgt,proj,sc=0,lives=3;
 const hud=H.hud(root,[["sl","SALTOS","0/12"],["vd","VIDAS",3],["sc","PONTOS",0]]);
-const say=H.msg(root,"<b>Toque/Espaço</b> salta ao planeta 🎯. O tiro vai reto até onde ele <b>está</b> — tempere a órbita!");
+const say=H.msg(root,"<b>Toque/Espaço</b> salta em direção ao <b>planeta apontado</b>. O salto vai reto até onde ele <b>está</b> — tempore a órbita!");
 const o=H.cvs(root,500,440),x=o.x;
 const cx=o.W/2,cy=o.H/2;
 function build(){
@@ -43,7 +43,7 @@ H.loop(dt=>{
     }else if(proj.x<-30||proj.x>o.W+30||proj.y<-30||proj.y>o.H+30){
       proj=null;lives--;hud.set("vd",lives);H.sfx("bad");
       if(lives<=0){over=true;return H.done({win:false,score:sc*25,title:"Deriva espacial!",sub:sc+" saltos antes de se perder. Salte mais cedo!"});}
-      say("🌀 Deriva! Vidas: "+lives+". Mire onde o planeta <b>vai estar</b>.");
+      say("Deriva! Vidas: "+lives+". Mire onde o planeta <b>vai estar</b>.");
     }
   }
   x.fillStyle="#14161c";x.fillRect(0,0,o.W,o.H);
@@ -56,7 +56,7 @@ H.loop(dt=>{
     x.fillStyle=i===cur.p?H.C.wasabi:i===tgt?H.C.terra:"#2E6E8A";
     x.beginPath();x.arc(q.x,q.y,p.pr,0,7);x.fill();
     x.strokeStyle="#fff";x.lineWidth=2;x.stroke();
-    if(i===cur.p){x.fillStyle="#fff";x.font="14px serif";x.fillText("🧑‍🚀",q.x-8,q.y-14);}
+    if(i===cur.p){x.fillStyle="#fff";x.font="14px serif";x.fillText("i:suit",q.x-8,q.y-14);}
     if(i===tgt){x.strokeStyle=H.C.wasabi;x.setLineDash([4,4]);x.beginPath();x.arc(q.x,q.y,p.pr+7,0,7);x.stroke();x.setLineDash([]);}
   });
   if(proj){

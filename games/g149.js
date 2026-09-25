@@ -1,26 +1,26 @@
 /* NCODE N · 149 Fábrica de Velas — 10 velas aromáticas */
 GREG(149,{
 init(root,H){
-const SC=["🪻 lavanda","🍋 limão","🌹 rosa"];
+const SC=["lavanda","limão","rosa"];
 let over=false,queue=[],melt=null,pour=0,served=0,nid=0,spawn=1,want=0;
 const hud=H.hud(root,[["vl","VELAS","0/10"],["sc","PONTOS",0]]);
-const say=H.msg(root,"1️⃣ <b>Derreter</b> cera (4s). 2️⃣ Pingue a <b>essência do pedido</b>. 3️⃣ SEGURE <b>verter</b> até a linha. 4️⃣ <b>Embalar</b>!");
+const say=H.msg(root,"1⃣ <b>Derreter</b> cera (4s). 2⃣ Pingue a <b>essência do pedido</b>. 3⃣ SEGURE <b>verter</b> até a linha. 4⃣ <b>Embalar</b>!");
 const box=H.el("div","g-col",null,root);
 const qbox=H.el("div","g-msg","",box);
 let hold=false,level=0,scent=null;
 function paint(){
-  qbox.innerHTML=queue.length?("🧾 Pedido: vela "+SC[queue[0]]):"sem pedidos…";
+  qbox.innerHTML=queue.length?("Pedido: vela "+SC[queue[0]]):"sem pedidos…";
 }
-H.btn(root,"🫕 Derreter cera (4s)",()=>{
+H.btn(root,"Derreter cera (4s)",()=>{
   if(over||melt||pour)return;
-  melt=4;H.sfx("tick");say("🫕 Derretendo…");
+  melt=4;H.sfx("tick");say("Derretendo…");
 },false);
 const srow=H.el("div","g-row",null,root);
 SC.forEach((s,i)=>{
   H.btn(srow,s,()=>{
     if(over||!melt||melt>0||scent!=null)return;
     if(!queue.length||queue[0]!==i){H.sfx("bad");say("Essência errada! O pedido é "+(queue.length?SC[queue[0]]:"?"));return;}
-    scent=i;H.sfx("ok");say("💧 Essência certa! Agora VERTEJA até a linha.");
+    scent=i;H.sfx("ok");say("Essência certa! Agora VERTEJA até a linha.");
   },false);
 });
 const vb=H.el("button","g-btn","SEGURE PARA VERTER",root);
@@ -46,12 +46,12 @@ H.loop(dt=>{
   x.fillStyle=H.C.ink;x.font="12px 'Space Mono',monospace";
   x.fillText(melt>0?"derretendo "+Math.ceil(melt)+"s":melt===0?"cera pronta ✓":"derreta a cera",140,165);
 });
-H.btn(root,"🎁 Embalar vela",()=>{
+H.btn(root,"Embalar vela",()=>{
   if(over||melt!==0||scent==null)return;
-  if(level<65||level>78){H.sfx("bad");say("❌ Nível errado! Verteja até a LINHA VERDE. (revertendo)");level=0;return;}
+  if(level<65||level>78){H.sfx("bad");say("✕ Nível errado! Verteja até a LINHA VERDE. (revertendo)");level=0;return;}
   queue.shift();served++;H.score(served*30);hud.set("vl",served+"/10");H.sfx("ok");
   melt=null;scent=null;level=0;hold=false;paint();
   if(served>=10){over=true;return H.done({win:true,score:400,title:"Velas perfumadas!",sub:"10 velas derretidas, aromatizadas e embaladas."});}
-  say("🕯️ Vela embalada! Próxima…");
+  say("Vela embalada! Próxima…");
 },true);
 }});

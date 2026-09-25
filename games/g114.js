@@ -1,7 +1,7 @@
 /* NCODE N · 114 Feira Livre — compre barato, venda caro */
 GREG(114,{
 init(root,H){
-const PROD=[{n:"🍎 Maçã",p:5},{n:"🧀 Queijo",p:12},{n:"🍯 Mel",p:20}];
+const PROD=[{n:"Maçã",p:5},{n:"Queijo",p:12},{n:"Mel",p:20}];
 let over=false,day=1,cash=50,stock=[0,0,0],prices=[];
 const hud=H.hud(root,[["dd","DIA","1/5"],["cx","CAIXA","$50"],["mt","META","$120"]]);
 const say=H.msg(root,"Preços mudam todo dia e o estoque <b>apodrece 30%</b> à noite. Termine o dia 5 com $120+!");
@@ -31,7 +31,7 @@ function paint(){
   });
   const tot=cash+stock[0]*prices[0]+stock[1]*prices[1]+stock[2]*prices[2];
   H.el("div","g-msg","Patrimônio estimado: <b>$"+tot+"</b>",box);
-  const nx=H.el("button","g-btn","🌙 Fechar o dia "+day,true?box:box);
+  const nx=H.el("button","g-btn","Fechar o dia "+day,true?box:box);
   nx.addEventListener("click",()=>{
     if(over)return;
     stock=stock.map(s=>Math.floor(s*0.7));
@@ -44,7 +44,7 @@ function paint(){
       return H.done({win:false,score:final,title:"Banca no vermelho…",sub:"$"+final+" (meta $120). Compre na baixa!"});
     }
     roll();H.sfx("tick");
-    say("☀️ Dia "+day+": novos preços! Estoque murchou 30%.");
+    say("Dia "+day+": novos preços! Estoque murchou 30%.");
     paint();
   });
 }

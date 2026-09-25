@@ -18,7 +18,7 @@ const box=H.el("div","g-col",null,root);
 function paint(){
   hud.set("qs",(qi+1)+"/8");
   box.innerHTML="";
-  H.el("div","g-msg","📝 "+Q[qi].s,box);
+  H.el("div","g-msg",""+Q[qi].s,box);
   Q[qi].o.forEach((op,i)=>{
     const b=H.el("button","g-btn ghost",op,box);
     b.addEventListener("click",()=>{

@@ -4,13 +4,13 @@ init(root,H){
 let over=false,px=230,py=400,tx=px,ty=py,t=0,samples=0,lives=3,warn=null;
 const VENTS=[{x:120,y:140},{x:230,y:100},{x:340,y:140}];
 const hud=H.hud(root,[['a','AMOSTRAS','0/5'],['v','VIDAS',3]]);
-const say=H.msg(root,'Fique perto das fumarolas 💨 para coletar (2s cada)! Círculo vermelho = erupção chegando — SAIA! 5 amostras!');
+const say=H.msg(root,'Fique perto das fumarolas para coletar (2s cada)! Círculo vermelho = erupção chegando — SAIA! 5 amostras!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
 let collect=0;
 function gameOver(win){over=true;const sc=samples*70+(win?200:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🌋 Pesquisa completa!',sub:'5 amostras de gás!'}:{win:false,score:sc,title:'Queimou!',sub:samples+'/5 amostras. Fuja do vermelho!'});}
+H.done(win?{win:true,score:sc,title:'Pesquisa completa!',sub:'5 amostras de gás!'}:{win:false,score:sc,title:'Queimou!',sub:samples+'/5 amostras. Fuja do vermelho!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const sp=150*dt;
@@ -41,7 +41,7 @@ H.loop(dt=>{
  x.fillStyle='#B23A24';x.beginPath();x.ellipse(230,110,100,40,0,0,7);x.fill();
  VENTS.forEach(v=>{
   x.font='26px system-ui';x.textAlign='center';
-  x.fillText('💨',v.x,v.y+Math.sin(t*3)*4);
+  x.fillText('i:smoke',v.x,v.y+Math.sin(t*3)*4);
  });
  if(warn){
   x.strokeStyle='#D94E34';x.lineWidth=4;

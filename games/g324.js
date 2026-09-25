@@ -6,7 +6,7 @@ let over=false,pc=0,pr=9,water=100,t=0,cd=0;
 const FIRE=[];
 for(let i=0;i<14;i++)FIRE.push({c:1+((Math.random()*8)|0),r:1+((Math.random()*8)|0)});
 const hud=H.hud(root,[['a','ÁGUA','100%']]);
-const say=H.msg(root,'Chegue à zona segura 🟩! Fogo 🔥 queima — apague com água (entre na casa com água). Sem água no fogo = dano!');
+const say=H.msg(root,'Chegue à zona segura ■! Fogo queima — apague com água (entre na casa com água). Sem água no fogo = dano!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys();kb.on((c,d)=>{if(!d)return;
  if(c==='ArrowLeft'||c==='KeyA')step(-1,0);else if(c==='ArrowRight'||c==='KeyD')step(1,0);
@@ -26,7 +26,7 @@ function step(dc,dr){
  if(pc===9&&pr===0){gameOver(true);return;}
 }
 function gameOver(win){over=true;const sc=win?300+Math.ceil(water)*2+hp:pc*10+(9-pr)*10;H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'🧑‍🚒 Atravessou o incêndio!',sub:'Chegou à zona segura!'}:{win:false,score:sc|0,title:'Cercado!',sub:'Apague o fogo com água antes!'});}
+H.done(win?{win:true,score:sc|0,title:'Atravessou o incêndio!',sub:'Chegou à zona segura!'}:{win:false,score:sc|0,title:'Cercado!',sub:'Apague o fogo com água antes!'});}
 H.onTap(o,(px,py)=>{
  const c=Math.floor((px-OX)/CS),r=Math.floor((py-OY)/CS);
  if(Math.abs(c-pc)+Math.abs(r-pr)===1)step(c-pc,r-pr);
@@ -44,8 +44,8 @@ H.loop(dt=>{
  }
  x.fillStyle='#C4D645';x.fillRect(OX+9*CS,OY+0*CS,CS,CS);
  x.font='22px system-ui';x.textAlign='center';
- FIRE.forEach(f=>x.fillText(Math.sin(t*8+f.c)>0?'🔥':'🧨',OX+f.c*CS+22,OY+f.r*CS+32));
- x.fillText('🟩',OX+9*CS+22,OY+0*CS+32);
+ FIRE.forEach(f=>x.fillText(Math.sin(t*8+f.c)>0?'i:flame':'i:candy',OX+f.c*CS+22,OY+f.r*CS+32));
+ x.fillText('■',OX+9*CS+22,OY+0*CS+32);
  x.fillStyle='#181816';x.beginPath();x.arc(OX+pc*CS+22,OY+pr*CS+22,13,0,7);x.fill();
  x.fillStyle='#7FB3C8';x.beginPath();x.arc(OX+pc*CS+22,OY+pr*CS+22,5,0,7);x.fill();
 });

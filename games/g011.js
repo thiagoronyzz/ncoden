@@ -8,7 +8,7 @@ const LV=[
 ];
 let lv=0,over=false,running=false;
 const hud=H.hud(root,[["nv","NÍVEL",1],["dm","DOMINÓS",0],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique no vazio para <b>plantar</b> dominós (clique num plantado para <b>girar</b>). A queda começa na base 🏁.");
+const say=H.msg(root,"Clique no vazio para <b>plantar</b> dominós (clique num plantado para <b>girar</b>). A queda começa na base .");
 const o=H.cvs(root,520,340),x=o.x;
 let doms=[];
 function base(){return{x:40,y:300,a:0,fall:0,ft:0};}
@@ -56,7 +56,7 @@ H.loop(dt=>{
     x.fillStyle=H.C.ink;x.beginPath();x.arc(0,-10,2,0,7);x.arc(0,-20,2,0,7);x.fill();
     x.restore();
   }
-  x.font="20px serif";x.fillText("🏁",22,308);
+  x.font="20px serif";x.fillText("i:flag",22,308);
 });
 function win(){
   if(over)return;running=false;
@@ -65,7 +65,7 @@ function win(){
   lv++;say("Nível "+(lv+1)+": paredes no caminho da queda.");H.after(700,reset);
 }
 const row=H.el("div","g-row",null,root);
-H.btn(row,"👆 Derrubar o primeiro",()=>{if(!over&&!running){running=true;doms[0].fall=1;H.sfx("pop");}},true);
+H.btn(row,"↑ Derrubar o primeiro",()=>{if(!over&&!running){running=true;doms[0].fall=1;H.sfx("pop");}},true);
 H.btn(row,"↻ Limpar",()=>{if(!over)reset();},false);
 reset();
 }});

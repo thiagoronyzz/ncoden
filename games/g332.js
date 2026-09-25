@@ -9,7 +9,7 @@ const st=H.el('div','g-msg','',box);
 const brow=H.el('div','g-row',null,box);
 function status(){
  hud.set('m',mat);hud.set('o',wave+'/5');hud.set('c',Math.max(0,hp|0));
- st.innerHTML='☀️ Onda '+wave+'/5 · 🧱 '+mat+' material<br>Setores: 🛡️ '+shield.join(' · ')+' · Colônia '+hp.toFixed(0)+'%';
+ st.innerHTML='Onda '+wave+'/5 · '+mat+' material<br>Setores: '+shield.join(' · ')+' · Colônia '+hp.toFixed(0)+'%';
  paintBtns();
 }
 function paintBtns(){
@@ -27,14 +27,14 @@ H.every(4000,()=>{
  wave++;
  mat+=6;
  const hit=(Math.random()*3)|0,str=15+wave*8;
- if(shield[hit]>0){shield[hit]--;say('🛡️ Setor '+(hit+1)+' absorveu a onda!');H.sfx('ok');}
- else{hp-=str;say('☢️ Setor '+(hit+1)+' atingido! −'+str+'!');H.sfx('bad');}
+ if(shield[hit]>0){shield[hit]--;say('Setor '+(hit+1)+' absorveu a onda!');H.sfx('ok');}
+ else{hp-=str;say('Setor '+(hit+1)+' atingido! −'+str+'!');H.sfx('bad');}
  status();
  if(hp<=0){gameOver(false);return;}
  if(wave>=5){gameOver(true);return;}
 });
 function gameOver(win){over=true;brow.innerHTML='';
  const sc=win?Math.ceil(hp)*4:wave*40;H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'☀️ Colônia protegida!',sub:'Sobreviveu às 5 ondas!'}:{win:false,score:sc|0,title:'Colônia irradiada!',sub:'Distribua escudos em todos os setores!'});}
+H.done(win?{win:true,score:sc|0,title:'Colônia protegida!',sub:'Sobreviveu às 5 ondas!'}:{win:false,score:sc|0,title:'Colônia irradiada!',sub:'Distribua escudos em todos os setores!'});}
 status();
 }});

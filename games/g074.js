@@ -21,7 +21,7 @@ H.onTap(o,(px,py)=>{
     if(Math.hypot(b.x-px,b.y-py)<30&&b.y>ZY-110&&b.vy>0){
       toss(b);sc++;H.score(sc*10);hud.set("sc",sc*10);hud.set("ct",sc+"/"+GOAL);H.sfx("pop");
       if(sc>=GOAL){over=true;return H.done({win:true,score:sc*10+150,title:"Malabarista!",sub:GOAL+" pegadas sem deixar cair."});}
-      if(sc%10===0&&balls.length<4){const nb={};toss(nb);balls.push(nb);say("➕ Mais uma bola no ar! ("+balls.length+")");}
+      if(sc%10===0&&balls.length<4){const nb={};toss(nb);balls.push(nb);say("Mais uma bola no ar! ("+balls.length+")");}
       return;
     }
   }
@@ -43,7 +43,7 @@ H.loop(dt=>{
   x.strokeStyle=H.C.ok;x.setLineDash([6,5]);
   x.beginPath();x.moveTo(0,ZY-110);x.lineTo(o.W,ZY-110);x.stroke();x.setLineDash([]);
   x.fillStyle=H.C.ok;x.font="11px 'Space Mono',monospace";x.fillText("ZONA DE PEGADA",12,ZY-116);
-  x.font="34px serif";x.fillText("🤹",o.W/2-17,o.H-24);
+  x.font="34px serif";x.fillText("i:juggle",o.W/2-17,o.H-24);
   const cols=[H.C.terra,H.C.gold,"#2E6E8A",H.C.ok];
   balls.forEach((b,i)=>{
     x.fillStyle=cols[i%4];x.beginPath();x.arc(b.x,b.y,14,0,7);x.fill();

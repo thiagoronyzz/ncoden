@@ -48,11 +48,11 @@ function edgeSupport(c){
   if(has(T0,B1)&&has(T0,B0)&&has(B0,B1))s+=0.5;
   return s;
 }
-H.btn(root,"🚗 Testar com o carrinho",()=>{
+H.btn(root,"Testar com o carrinho",()=>{
   if(over||testing)return;
   testing=true;
   cart={c:0,x:nodes[nid(0,0)].x,y:150,fall:0};
-  H.sfx("tick");say("🚗 Lá vai…");
+  H.sfx("tick");say("Lá vai…");
 },true);
 H.loop(dt=>{
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
@@ -76,7 +76,7 @@ H.loop(dt=>{
       cart.fall+=dt;cart.y+=220*dt*cart.fall;
       if(cart.y>330){
         cart=null;testing=false;
-        say("💥 A ponte quebrou! Reforce o vão (triângulos!) e teste de novo. Orçamento intacto.");
+        say("A ponte quebrou! Reforce o vão (triângulos!) e teste de novo. Orçamento intacto.");
       }
     }else{
       cart.x+=70*dt;
@@ -103,14 +103,14 @@ H.loop(dt=>{
             if(cols2.includes(s.a)&&cols2.includes(s.b))s.broke=true;
           });
           cart.fall=0.01;H.sfx("bad");
-          say("⚠️ Vão "+(ci+1)+": suporte "+sup.toFixed(1)+" < carga "+LV[lv].wt+"!");
+          say("Vão "+(ci+1)+": suporte "+sup.toFixed(1)+" < carga "+LV[lv].wt+"!");
         }
       }
     }
   }
   if(cart){
     x.font="26px serif";
-    x.fillText("🛒",cart.x-13,cart.y+8);
+    x.fillText("i:cart",cart.x-13,cart.y+8);
   }
 });
 }});

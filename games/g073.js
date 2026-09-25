@@ -27,7 +27,7 @@ H.loop(dt=>{
     if(p.spin<=0){
       lives--;hud.set("vd",lives);H.sfx("lose");p.spin=65;
       if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Louça quebrada!",sub:"3 pratos no chão. Gire os mais lentos primeiro!"});}
-      say("💥 Prato caiu! Vidas: "+lives);
+      say("Prato caiu! Vidas: "+lives);
     }
   }
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);

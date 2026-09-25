@@ -14,8 +14,8 @@ const cur=H.el("div","g-msg","",box);
 const fd=H.el("div","g-msg","",box);
 function paint(){
   hud.set("al",SETS[si].w);
-  cur.innerHTML="⌨️ "+(buf||"_");
-  fd.innerHTML="📖 "+(found.join(" · ")||"—");
+  cur.innerHTML=""+(buf||"_");
+  fd.innerHTML=""+(found.join(" · ")||"—");
 }
 function feed(ch){
   if(over)return;
@@ -46,9 +46,9 @@ kb.on((c,d)=>{if(!d||over)return;
   });
 });
 const row=H.el("div","g-row",null,box);
-H.btn(row,"⌫",back,false);
-H.btn(row,"✅ Rima!",ok,true);
-H.btn(row,"🎯 Trocar alvo",()=>{if(!over){si=(si+1)%SETS.length;paint();H.sfx("tick");}},false);
+H.btn(row,"",back,false);
+H.btn(row,"✔ Rima!",ok,true);
+H.btn(row,"Trocar alvo",()=>{if(!over){si=(si+1)%SETS.length;paint();H.sfx("tick");}},false);
 paint();
 H.loop(dt=>{
   if(over)return;

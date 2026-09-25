@@ -6,7 +6,7 @@ const BOOST=[{x:230,y:225,r:22},{x:80,y:230,r:22}];
 let over=false,px=230,py=360,a=-Math.PI/2,v=0,lap=0,chk=0,t=0,boost=0;
 let ax=230,ay=330,ai=0,alap=0;
 const hud=H.hud(root,[['v','VOLTA','1/3'],['tp','TEMPO','0.0'],['pos','POS','1º']]);
-const say=H.msg(root,'3 voltas! Passe pelos ⚡ para turbo. Grama diminui. Vença o kart azul! Setas ou toque nos lados.');
+const say=H.msg(root,'3 voltas! Passe pelos para turbo. Grama diminui. Vença o kart azul! Setas ou toque nos lados.');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{steer=qx<230?-1:1;setTimeout2();});
@@ -16,7 +16,7 @@ function onTrack(x2,y2){
  return x2>40&&x2<420&&y2>30&&y2<430&&!(x2>130&&x2<330&&y2>120&&y2<340);
 }
 function gameOver(win){over=true;const sc=win?Math.max(200,600-(t|0)*5):100+lap*60;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🏁 Vitória no kart!',sub:'3 voltas em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Azul venceu!',sub:'Use os turbos ⚡ nas retas!'});}
+H.done(win?{win:true,score:sc,title:'Vitória no kart!',sub:'3 voltas em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Azul venceu!',sub:'Use os turbos nas retas!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(sT>0)sT-=dt;else steer=0;
@@ -45,7 +45,7 @@ H.loop(dt=>{
  x.fillStyle='#8A877C';x.fillRect(40,30,380,400);
  x.fillStyle='#3E7C4F';x.fillRect(130,120,200,220);
  x.strokeStyle='#FAF7F0';x.lineWidth=3;x.strokeRect(40,30,380,400);x.strokeRect(130,120,200,220);
- BOOST.forEach(b=>{x.fillStyle='#C4D645';x.beginPath();x.arc(b.x,b.y,b.r,0,7);x.fill();x.fillStyle='#181816';x.font='20px system-ui';x.textAlign='center';x.fillText('⚡',b.x,b.y+7);});
+ BOOST.forEach(b=>{x.fillStyle='#C4D645';x.beginPath();x.arc(b.x,b.y,b.r,0,7);x.fill();x.fillStyle='#181816';x.font='20px system-ui';x.textAlign='center';x.fillText('i:bolt',b.x,b.y+7);});
  x.fillStyle='#fff';x.fillRect(210,392,40,8);
  WP.forEach((q,i)=>{if(i===chk){x.strokeStyle='#C4D645';x.lineWidth=3;x.beginPath();x.arc(q[0],q[1],18+4*Math.sin(t*6),0,7);x.stroke();}});
  [[ax,ay,'#2E6E8A',0],[px,py,'#D94E34',a]].forEach(k=>{

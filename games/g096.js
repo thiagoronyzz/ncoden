@@ -35,12 +35,12 @@ H.loop(()=>{
     x.fillRect(c*ss+1,r*ss+1,ss-2,ss-2);
   }
   x.font=Math.floor(ss*.55)+"px serif";
-  put.forEach(p=>x.fillText("🗼",p[1]*ss+6,p[0]*ss+ss-6));
+  put.forEach(p=>x.fillText("i:tower",p[1]*ss+6,p[0]*ss+ss-6));
   const unlit=S.lanes.filter(l=>!put.some(p=>Math.abs(p[0]-l[0])+Math.abs(p[1]-l[1])<=R)).length;
   x.fillStyle="#fff";x.font="12px 'Space Mono',monospace";
   x.fillText("rotas no escuro: "+unlit,12,20);
 });
-H.btn(root,"💡 Verificar iluminação",()=>{
+H.btn(root,"Verificar iluminação",()=>{
   if(over)return;
   const S=SC[sc2];
   const unlit=S.lanes.filter(l=>!put.some(p=>Math.abs(p[0]-l[0])+Math.abs(p[1]-l[1])<=R));

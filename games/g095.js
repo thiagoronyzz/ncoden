@@ -66,7 +66,7 @@ function simulate(){
         if(sc2>=SC.length){over=true;return H.done({win:true,score:sc+100,title:"Coluna aniquilada!",sub:"Todos os tanques destruídos nos 2 cenários."});}
         say("Cenário limpo! Próximo: mais tanques.");H.after(700,build);
       }else{
-        H.sfx("bad");say("❌ "+alive.filter(Boolean).length+" tanque(s) chegou(aram) à base! Reposicione as minas.");
+        H.sfx("bad");say("✕"+alive.filter(Boolean).length+" tanque(s) chegou(aram) à base! Reposicione as minas.");
         running=false;
       }
     }
@@ -85,19 +85,19 @@ function drawSim(t,alive){
     });
     if(alive[i]&&t<tk.path.length){
       const[r,c]=tk.path[t];
-      x.font=Math.floor(s*.6)+"px serif";x.fillText("🛡️",c*s+6,r*s+s-8);
+      x.font=Math.floor(s*.6)+"px serif";x.fillText("i:shield",c*s+6,r*s+s-8);
     }else if(!alive[i]){
-      x.font="18px serif";x.fillText("💥",10+i*30,o.H-10);
+      x.font="18px serif";x.fillText("i:burst",10+i*30,o.H-10);
     }
   });
   x.font="14px serif";
   mines.forEach(k=>{
     const[r,c]=k.split(",").map(Number);
-    x.fillText("⚫",c*s+10,r*s+s-10);
+    x.fillText("●",c*s+10,r*s+s-10);
   });
 }
 H.loop(()=>{
-  if(running)return;
+  if(running||over)return;
   const S=SC[sc2],n=S.n,s=cell();
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   for(let r=0;r<n;r++)for(let c=0;c<n;c++){
@@ -112,13 +112,13 @@ H.loop(()=>{
       x.fillText(j,p[1]*s+5,p[0]*s+14);
     });
     const e=tk.path[tk.path.length-1];
-    x.font="16px serif";x.fillText("🏁",e[1]*s+8,e[0]*s+s-8);
+    x.font="16px serif";x.fillText("i:flag",e[1]*s+8,e[0]*s+s-8);
   });
   x.font="16px serif";
   mines.forEach(k=>{
     const[r,c]=k.split(",").map(Number);
-    x.fillText("💣",c*s+8,r*s+s-8);
+    x.fillText("i:bomb",c*s+8,r*s+s-8);
   });
 });
-H.btn(root,"💥 Iniciar simulação",simulate,true);
+H.btn(root,"Iniciar simulação",simulate,true);
 }});

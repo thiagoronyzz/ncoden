@@ -12,9 +12,9 @@ function show(){
  if(qi>=10){gameOver();return;}
  time=5;
  hud.set('p',(qi+1)+'/10');
- qz.innerHTML='<span style="font-size:30px"><b>'+Q[qi]+'</b></span><br>⏱️ 5s!';
+ qz.innerHTML='<span style="font-size:30px"><b>'+Q[qi]+'</b></span><br> 5s!';
  brow.innerHTML='';
- H.btn(brow,'🔥 RESPONDI!',()=>{
+ H.btn(brow,'RESPONDI!',()=>{
   if(over)return;
   streak++;best=Math.max(best,streak);H.sfx('ok');
   hud.set('sq',streak);qi++;show();
@@ -23,10 +23,10 @@ function show(){
 H.every(1000,()=>{
  if(over||qi>=10)return;
  time--;
- if(time<=0){streak=0;H.sfx('bad');hud.set('sq',0);qi++;say('⏰ Lento! Sequência zerada.');show();return;}
- qz.innerHTML='<span style="font-size:30px"><b>'+Q[qi]+'</b></span><br>⏱️ '+time+'s!';
+ if(time<=0){streak=0;H.sfx('bad');hud.set('sq',0);qi++;say('Lento! Sequência zerada.');show();return;}
+ qz.innerHTML='<span style="font-size:30px"><b>'+Q[qi]+'</b></span><br> '+time+'s!';
 });
 function gameOver(){over=true;brow.innerHTML='';H.score(best*50);
-H.done({win:best>=7,score:best*50,title:best>=7?'🔥 Imparável!':'🔥 Fim!',sub:'Melhor sequência: '+best+'/10.'});}
+H.done({win:best>=7,score:best*50,title:best>=7?'Imparável!':'Fim!',sub:'Melhor sequência: '+best+'/10.'});}
 show();
 }});

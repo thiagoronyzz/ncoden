@@ -1,7 +1,7 @@
 /* NCODE N · 105 Correio Maluco — 20 encomendas, 3 destinos */
 GREG(105,{
 init(root,H){
-const BINS=[{e:"🔴",n:"NORTE"},{e:"🟢",n:"SUL"},{e:"🔵",n:"LESTE"}];
+const BINS=[{e:"○",n:"NORTE"},{e:"●",n:"SUL"},{e:"○",n:"LESTE"}];
 let over=false,pkgs=[],spawn=0,sent=0,err=0,total=20,sel=null;
 const hud=H.hud(root,[["ev","ENVIADAS","0/20"],["er","ERROS","0/3"],["sc","PONTOS",0]]);
 const say=H.msg(root,"Clique na encomenda e depois no <b>destino certo</b> (cor do selo). Não deixe cair da esteira!");
@@ -17,7 +17,7 @@ BINS.forEach((b,i)=>{
       if(p.b===i){sent++;sc+=25;H.score(sc);hud.set("sc",sc);H.sfx("ok");
         hud.set("ev",sent+"/"+total);
         if(sent>=total){over=true;return H.done({win:true,score:sc+100,title:"Correspondência em dia!",sub:"20 encomendas nos destinos certos."});}
-      }else{err++;H.sfx("bad");hud.set("er",err+"/3");say("❌ Destino errado! ("+err+"/3)");
+      }else{err++;H.sfx("bad");hud.set("er",err+"/3");say("✕ Destino errado! ("+err+"/3)");
         if(err>=3){over=true;return H.done({win:false,score:sc,title:"Caos postal!",sub:"3 erros. Confira a cor do selo!"});}}
       pkgs=pkgs.filter(k=>k.id!==sel);
     }
@@ -37,7 +37,7 @@ H.loop(dt=>{
     pkgs[i].x+=sp*dt;
     if(pkgs[i].x>o.W+20){
       pkgs.splice(i,1);err++;H.sfx("bad");hud.set("er",err+"/3");
-      say("📦 Caiu da esteira! ("+err+"/3)");
+      say("Caiu da esteira! ("+err+"/3)");
       if(err>=3){over=true;return H.done({win:false,score:sc,title:"Caos postal!",sub:"3 falhas. Despache mais rápido!"});}
     }
   }

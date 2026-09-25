@@ -13,18 +13,18 @@ function show(){
  if(round>=5){gameOver();return;}
  phase='act';time=60;
  hud.set('r',(round+1)+'/5');
- wd.innerHTML='🎭 ATUE:<br><span style="font-size:42px"><b>'+words[round]+'</b></span><br>⏱️ <span id="t">60</span>s';
+ wd.innerHTML='ATUE:<br><span style="font-size:42px"><b>'+words[round]+'</b></span><br> <span id="t">60</span>s';
  brow.innerHTML='';
- H.btn(brow,'✅ Adivinharam!',()=>{score+=100+Math.ceil(time);round++;H.sfx('ok');hud.set('pt',score);show();},true);
- H.btn(brow,'⏭️ Pular (−20)',()=>{score=Math.max(0,score-20);round++;H.sfx('bad');hud.set('pt',score);show();},false);
+ H.btn(brow,'✔ Adivinharam!',()=>{score+=100+Math.ceil(time);round++;H.sfx('ok');hud.set('pt',score);show();},true);
+ H.btn(brow,'Pular (−20)',()=>{score=Math.max(0,score-20);round++;H.sfx('bad');hud.set('pt',score);show();},false);
 }
 H.every(1000,()=>{
  if(over||phase!=='act')return;
  time--;
- wd.innerHTML='🎭 ATUE:<br><span style="font-size:42px"><b>'+words[round]+'</b></span><br>⏱️ '+Math.ceil(time)+'s';
+ wd.innerHTML='ATUE:<br><span style="font-size:42px"><b>'+words[round]+'</b></span><br> '+Math.ceil(time)+'s';
  if(time<=0){round++;show();}
 });
 function gameOver(){over=true;H.score(score);
-H.done({win:score>=300,score,title:score>=300?'🎭 Show de mímica!':'🎭 Fim do jogo!',sub:score+' pontos em 5 rodadas.'});}
+H.done({win:score>=300,score,title:score>=300?'Show de mímica!':'Fim do jogo!',sub:score+' pontos em 5 rodadas.'});}
 show();
 }});

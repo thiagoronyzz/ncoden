@@ -1,10 +1,10 @@
 /* NCODE N · 235 Uno Style — zere a mão primeiro! */
 GREG(235,{
 init(root,H){
-const COL=["🟥","🟩","🟦","🟨"];
+const COL=["■","■","■","■"];
 let over=false,deck=[],disc=[],hands=[[],[],[]],turn=0,color=0,dir=1,drawStack=0,skipNext=false;
 const hud=H.hud(root,[["vc","SUAS",7],["a1","CPU1",7],["a2","CPU2",7]]);
-const say=H.msg(root,"Combine <b>cor, número ou símbolo</b>! ⏭️ pula · +2 acumula · 🌈 troca a cor (clique na cor). Zere antes das CPUs!");
+const say=H.msg(root,"Combine <b>cor, número ou símbolo</b>! pula · +2 acumula · troca a cor (clique na cor). Zere antes das CPUs!");
 const box=H.el("div","g-col",null,root);
 const tp=H.el("div","g-msg","",box);
 const hd=H.el("div","g-row",null,box);
@@ -17,7 +17,7 @@ function mk(){
   for(let i=0;i<4;i++)deck.push({c:-1,s:"wild"});
   for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=deck[i];deck[i]=deck[j];deck[j]=t;}
 }
-function nm(card){return card.s?(card.s==="skip"?"⏭️":card.s==="d2"?"+2":"🌈"):card.n;}
+function nm(card){return card.s?(card.s==="skip"?"":card.s==="d2"?"+2":""):card.n;}
 function playable(card){
   const t=disc[disc.length-1];
   if(card.s==="wild")return true;
@@ -44,11 +44,11 @@ function paint(){
   if(over)return;
   hud.set("vc",hands[0].length);hud.set("a1",hands[1].length);hud.set("a2",hands[2].length);
   const t=disc[disc.length-1];
-  tp.innerHTML="🎴 Mesa: "+(t.c>=0?COL[t.c]:"🌈")+" <b>"+nm(t)+"</b> · cor: "+COL[color]+(drawStack?" · +"+drawStack:"")+(turn===0?" · <b>SUA VEZ</b>":" · CPU"+turn+"…");
+  tp.innerHTML="Mesa: "+(t.c>=0?COL[t.c]:"")+" <b>"+nm(t)+"</b> · cor: "+COL[color]+(drawStack?" · +"+drawStack:"")+(turn===0?" · <b>SUA VEZ</b>":" · CPU"+turn+"…");
   hd.innerHTML="";
   hands[0].forEach((card,i)=>{
     const ok=turn===0&&playable(card);
-    const b=H.el("button","g-card"+(ok?" hot":""),(card.c>=0?COL[card.c]:"🌈")+nm(card),hd);
+    const b=H.el("button","g-card"+(ok?" hot":""),(card.c>=0?COL[card.c]:"")+nm(card),hd);
     b.style.width="56px";b.style.height="76px";b.style.fontSize="16px";
     if(ok)b.addEventListener("click",()=>play(i));
   });
@@ -60,7 +60,7 @@ function play(i){
   disc.push(card);
   H.sfx("tick");
   if(card.s==="wild"){
-    say("🌈 Escolha a cor!");
+    say("Escolha a cor!");
     const row=H.el("div","g-row",null,box);
     COL.forEach((cc,ci)=>{
       H.btn(row,cc,()=>{color=ci;row.remove();afterPlay(card,0);},false);
@@ -113,7 +113,7 @@ function ai(){
   afterPlay(card,turn);
 }
 start();
-H.btn(root,"➕ Comprar",()=>{
+H.btn(root,"Comprar",()=>{
   if(over||turn!==0)return;
   draw(hands[0],1);H.sfx("tick");
   turn=1;paint();H.after(800,ai);

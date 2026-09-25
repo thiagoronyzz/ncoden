@@ -2,7 +2,7 @@
 GREG(26,{
 init(root,H){
 const OUT=[["U","D"],["L","R"],["U","R"],["D","L"]];
-const GL=["↕","↔","⌜","⌞"];
+const GL=["↕","↔","",""];
 const LV=[
  {n:5,src:{r:2,c:-1,d:"R"},prism:[{r:2,c:2,rot:1}],tgt:[[0,2],[4,2]]},
  {n:5,src:{r:4,c:-1,d:"R"},prism:[{r:4,c:2,rot:1},{r:1,c:2,rot:0}],tgt:[[3,2],[1,0]]},
@@ -75,6 +75,6 @@ function fire(){
     lv++;say("Nível "+(lv+1)+": mais prismas, mais alvos.");H.after(700,build);
   }else say("Iluminados <b>"+n2+"/"+L.tgt.length+"</b>. Gire os prismas e dispare de novo.");
 }
-H.btn(root,"🔆 Disparar laser",fire,true);
+H.btn(root,"Disparar laser",fire,true);
 build();
 }});

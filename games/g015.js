@@ -34,7 +34,7 @@ function drop(){
   mx/=m;
   const bsup=stack[0];
   if(mx<bsup.x-bsup.w/2||mx>bsup.x+bsup.w/2){
-    say("⚠️ O centro de massa saiu da base — <b>TOMBANDO</b>!");
+    say("O centro de massa saiu da base — <b>TOMBANDO</b>!");
     falling=stack.map((p,i)=>({x:p.x,y:p.y,w:p.w,h:p.h,vy:-60-i*10,vx:(mx<260?-1:1)*(60+i*22),rot:0}));
     stack=[];
     lives--;hud.set("lf",lives);H.sfx("lose");

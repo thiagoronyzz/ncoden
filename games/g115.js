@@ -4,14 +4,14 @@ init(root,H){
 const N=8;
 let over=false,taxi={r:7,c:0},fuel=60,cash=0,pax=null,dest=null,time=150;
 const hud=H.hud(root,[["cx","CAIXA","$0/100"],["cb","COMBUSTÍVEL",60],["tp","TEMPO",150]]);
-const say=H.msg(root,"Setas / WASD ou clique em célula vizinha. Embarque 🧍 e entregue no 🏁. ⛽ reabastece!");
+const say=H.msg(root,"Setas / WASD ou clique numa célula vizinha. Embarque o passageiro e leve-o ao destino. O <b>posto</b> reabastece o tanque!");
 const o=H.cvs(root,440,440),x=o.x;
 const GAS={r:0,c:7};
 function freeCell(){return{r:Math.floor(Math.random()*N),c:Math.floor(Math.random()*N)};}
 function newPax(){
   let a=freeCell(),b=freeCell();
   pax=a;dest=b;
-  say("🧍 Passageiro em ("+(a.r+1)+","+(a.c+1)+") → 🏁 ("+(b.r+1)+","+(b.c+1)+")");
+  say("Passageiro em ("+(a.r+1)+","+(a.c+1)+") → ("+(b.r+1)+","+(b.c+1)+")");
 }
 newPax();
 function move(dr,dc){
@@ -20,15 +20,15 @@ function move(dr,dc){
   if(nr<0||nr>=N||nc<0||nc>=N)return;
   taxi={r:nr,c:nc};fuel--;H.sfx("tick");
   hud.set("cb",Math.max(0,fuel));
-  if(taxi.r===GAS.r&&taxi.c===GAS.c){fuel=60;hud.set("cb",60);H.sfx("ok");say("⛽ Tanque cheio!");}
-  if(pax&&taxi.r===pax.r&&taxi.c===pax.c){pax="in";H.sfx("ok");say("🧍 A bordo! Leve ao 🏁 ("+(dest.r+1)+","+(dest.c+1)+")");}
+  if(taxi.r===GAS.r&&taxi.c===GAS.c){fuel=60;hud.set("cb",60);H.sfx("ok");say("Tanque cheio!");}
+  if(pax&&taxi.r===pax.r&&taxi.c===pax.c){pax="in";H.sfx("ok");say("A bordo! Leve ao ("+(dest.r+1)+","+(dest.c+1)+")");}
   else if(pax==="in"&&taxi.r===dest.r&&taxi.c===dest.c){
     cash+=25;H.score(cash);hud.set("cx","$"+cash+"/100");H.sfx("ok");
     if(cash>=100){over=true;return H.done({win:true,score:cash+fuel,title:"Taxista do mês!",sub:"$100 com "+fuel+" de gasolina sobrando."});}
     newPax();
   }
   if(fuel<=0){over=true;H.sfx("lose");
-    return H.done({win:false,score:cash,title:"Pane seca!",sub:"$"+cash+". Reabasteça no ⛽ (canto superior direito)!"});
+    return H.done({win:false,score:cash,title:"Pane seca!",sub:"$"+cash+". Reabasteça no (canto superior direito)!"});
   }
 }
 const kb=H.keys();
@@ -55,9 +55,9 @@ H.loop(dt=>{
     x.strokeStyle=H.C.cement;x.strokeRect(c*ss,r*ss,ss,ss);
   }
   x.font=Math.floor(ss*.6)+"px serif";
-  x.fillText("⛽",GAS.c*ss+6,GAS.r*ss+ss-6);
-  if(pax&&pax!=="in")x.fillText("🧍",pax.c*ss+6,pax.r*ss+ss-6);
-  if(dest&&(pax==="in"||pax))x.fillText("🏁",dest.c*ss+6,dest.r*ss+ss-6);
-  x.fillText("🚕",taxi.c*ss+6,taxi.r*ss+ss-6);
+  x.fillText("i:barrel",GAS.c*ss+6,GAS.r*ss+ss-6);
+  if(pax&&pax!=="in")x.fillText("i:person",pax.c*ss+6,pax.r*ss+ss-6);
+  if(dest&&(pax==="in"||pax))x.fillText("i:flag",dest.c*ss+6,dest.r*ss+ss-6);
+  x.fillText("i:car",taxi.c*ss+6,taxi.r*ss+ss-6);
 });
 }});

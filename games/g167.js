@@ -8,7 +8,7 @@ const LV=[
 ];
 let lv=0,over=false,grid=[],bag={},selP="H",anim=null;
 const hud=H.hud(root,[["nv","NÍVEL","1/2"],["pc","PEÇA","H"]]);
-const say=H.msg(root,"Escolha a peça e clique no grid para colocar (clique de novo para tirar). H=reto · D=descida(+vel) · U=subida(−vel) · V=queda. Leve a bolinha à 🏁!");
+const say=H.msg(root,"Escolha a peça e clique no grid para colocar (clique de novo para tirar). H=reto · D=descida(+vel) · U=subida(−vel) · V=queda. Leve a bolinha à !");
 const o=H.cvs(root,COLS*T+20,ROWS*T+20),x=o.x;
 const OX=10,OY=10;
 function build(){
@@ -61,7 +61,7 @@ function sim(){
   }
   return{ok:false,why:"Loop infinito!",path};
 }
-H.btn(root,"🔴 Soltar bolinha",()=>{
+H.btn(root,"○ Soltar bolinha",()=>{
   if(over||anim)return;
   const res=sim();
   anim={path:res.path,i:0,ok:res.ok,why:res.why};
@@ -84,8 +84,8 @@ H.loop(dt=>{
     if(p==="DROP"){x.strokeStyle="#7A6A53";x.beginPath();x.moveTo(X+T/2,Y+4);x.lineTo(X+T/2,Y+T-4);x.stroke();}
   }
   x.font="24px serif";
-  x.fillText("🚀",OX+L.start[1]*T+14,OY+L.start[0]*T+40);
-  x.fillText("🏁",OX+L.goal[1]*T+14,OY+L.goal[0]*T+40);
+  x.fillText("i:rocket",OX+L.start[1]*T+14,OY+L.start[0]*T+40);
+  x.fillText("i:flag",OX+L.goal[1]*T+14,OY+L.goal[0]*T+40);
   if(anim){
     acc+=dt;
     if(acc>0.22){acc=0;anim.i++;}
@@ -101,7 +101,7 @@ H.loop(dt=>{
         lv++;
         if(lv>=LV.length){over=true;return H.done({win:true,score:400,title:"Engenheiro de pistas!",sub:"2 circuitos até a bandeira."});}
         say("Nível 1 OK! Agora um desnível maior…");build();
-      }else{H.sfx("bad");say("❌ "+why);}
+      }else{H.sfx("bad");say("✕"+why);}
     }
   }
 });

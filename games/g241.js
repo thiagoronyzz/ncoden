@@ -37,7 +37,7 @@ function paint(){
   box.innerHTML="";
   hud.set("vc",pts[0]+" (+"+roundPts[0]+")");
   hud.set("cp",pts.slice(1).join("/"));
-  H.el("div","g-msg","🎴 Mesa: "+(table.map(t=>RN(t.c.r)+S[t.c.s]).join(" ")||"—")+(turn===0?" · <b>SUA VEZ</b>":" · CPU"+turn+"…"),box);
+  H.el("div","g-msg","Mesa: "+(table.map(t=>RN(t.c.r)+S[t.c.s]).join(" ")||"—")+(turn===0?" · <b>SUA VEZ</b>":" · CPU"+turn+"…"),box);
   const hd=H.el("div","g-row",null,box);
   hands[0].forEach((c,i)=>{
     const ok=turn===0&&canPlay(0,c);
@@ -110,7 +110,7 @@ function endRound(){
   const mi=roundPts.findIndex(v=>v===26);
   if(mi>=0){
     roundPts=roundPts.map(()=>26);roundPts[mi]=0;
-    say("🌙 "+(mi===0?"VOCÊ":"CPU"+mi)+" FEZ A LUA! Todos +26 (menos "+(mi===0?"você":"ele")+")!");
+    say(""+(mi===0?"VOCÊ":"CPU"+mi)+" FEZ A LUA! Todos +26 (menos "+(mi===0?"você":"ele")+")!");
   }
   pts=pts.map((v,i)=>v+roundPts[i]);
   round++;

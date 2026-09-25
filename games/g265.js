@@ -8,11 +8,11 @@ const GD=[
  {x:370,y:170,pr:0,ph:5,st:'sleep',stT:0}
 ];
 const hud=H.hud(root,[['v','VIDAS',3],['k','CHAVES','0/3'],['tp','TEMPO',120]]);
-const say=H.msg(root,'Toque no guarda para furtar a chave! Quando aparecer ❗ele vai se mexer — NÃO toque durante o ★ movimento!');
+const say=H.msg(root,'Toque no guarda para furtar a chave! Quando aparecer !ele vai se mexer — NÃO toque durante o ★ movimento!');
 const o=H.cvs(root,460,360),x=o.x;
 function status(){hud.set('v',lives);hud.set('k',keys+'/3');hud.set('tp',Math.ceil(time));}
 function gameOver(win){over=true;const sc=win?300+lives*80+Math.ceil(time)*2:keys*60;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🔑 Ladrão silencioso!',sub:'3 chaves furtadas.'}:{win:false,score:sc,title:'Acordaram!',sub:keys+'/3 chaves. Espere o sono profundo!'});}
+H.done(win?{win:true,score:sc,title:'Ladrão silencioso!',sub:'3 chaves furtadas.'}:{win:false,score:sc,title:'Acordaram!',sub:keys+'/3 chaves. Espere o sono profundo!'});}
 H.onTap(o,(px,py)=>{
  if(over)return;
  GD.forEach(g=>{
@@ -34,20 +34,20 @@ H.loop(dt=>{
  status();
  x.fillStyle='#23232B';x.fillRect(0,0,460,360);
  x.fillStyle='#fff';x.font='bold 16px system-ui';x.textAlign='center';
- x.fillText('💤 Dormitório dos guardas 💤',230,34);
+ x.fillText('Dormitório dos guardas ',230,34);
  GD.forEach(g=>{
   const sh=g.st==='stir'?Math.sin(t*30)*3:0;
   x.fillStyle=g.done?'#3E7C4F':'#2E6E8A';
   x.beginPath();x.arc(g.x+sh,g.y,40,0,7);x.fill();
   x.strokeStyle='#000';x.lineWidth=2;x.stroke();
   x.font='30px system-ui';
-  x.fillText(g.done?'🔑':g.st==='sleep'?'😴':g.st==='warn'?'❗':'★',g.x+sh,g.y+11);
+  x.fillText(g.done?'i:key':g.st==='sleep'?'i:sleep':g.st==='warn'?'!':'★',g.x+sh,g.y+11);
   x.fillStyle='#000';x.fillRect(g.x-40,g.y+50,80,10);
   x.fillStyle='#E8A33D';x.fillRect(g.x-40,g.y+50,80*Math.min(1,g.pr/100),10);
   if(!g.done){x.fillStyle='#fff';x.font='11px system-ui';x.fillText(g.st==='sleep'?'sono profundo…':g.st==='warn'?'vai se mexer!':'QUIETO!',g.x,g.y+74);}
  });
  x.fillStyle='#fff';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('⏱️ '+Math.ceil(time)+'s   🔑 '+keys+'/3   ❤️ '+lives,14,344);
+ x.fillText('i:gauge'+Math.ceil(time)+'s '+keys+'/3 ♥ '+lives,14,344);
 });
 status();
 }});

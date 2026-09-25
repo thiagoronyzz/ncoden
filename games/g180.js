@@ -5,7 +5,7 @@ const N=20,SEG=24,ANCH={x:110,y:80},POST={x:300,y:250,r:26},TGT={x:420,y:300,r:2
 const WALL={x:350,y:0,w:16,h:190};
 let over=false,pts=[],tries=5,drag=false,thrown=false,rest=0,firstTouch=true;
 const hud=H.hud(root,[["tt","TENTATIVAS",5],["st","STATUS","arraste a bola"]]);
-const say=H.msg(root,"ARRASTE a bola da corrente e SOLTE para balançar! Enrole no poste e toque a 🎯 (o muro bloqueia o caminho direto).");
+const say=H.msg(root,"ARRASTE a bola da corrente e SOLTE para balançar! Enrole no poste e toque no <b>alvo</b> (o muro bloqueia o caminho direto).");
 const o=H.cvs(root,520,380),x=o.x;
 function reset(){
   pts=[];
@@ -83,7 +83,7 @@ H.loop(dt=>{
   x.strokeStyle=H.C.ink;x.lineWidth=3;x.stroke();
   x.strokeStyle=H.C.terra;x.lineWidth=2;
   x.beginPath();x.arc(TGT.x,TGT.y,TGT.r,0,7);x.stroke();
-  x.font="22px serif";x.fillText("🎯",TGT.x-11,TGT.y+8);
+  x.font="22px serif";x.fillText("i:target",TGT.x-11,TGT.y+8);
   x.strokeStyle=H.C.ink;x.lineWidth=3;
   x.beginPath();x.moveTo(pts[0].x,pts[0].y);
   pts.forEach(p=>x.lineTo(p.x,p.y));x.stroke();

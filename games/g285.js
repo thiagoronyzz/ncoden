@@ -5,7 +5,7 @@ const OBS=[];
 for(let i=0;i<10;i++)OBS.push({x:300+i*330,h:30+Math.random()*55});
 let over=false,px=60,bal=0,dabs=0,t=0,v=0;
 const hud=H.hud(root,[['p','PÉS NO CHÃO','0/5'],['d','DIST','0%']]);
-const say=H.msg(root,'Chegue ao fim! A moto balança sozinha — ⬅️➡️ equilibram. Balanço no limite = pé no chão (5 = fim). ⬆️ acelera!');
+const say=H.msg(root,'Chegue ao fim! A moto balança sozinha — ←→ equilibram. Balanço no limite = pé no chão (5 = fim). ↑ acelera!');
 const o=H.cvs(root,560,360),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 function bump(x2){
@@ -14,7 +14,7 @@ function bump(x2){
  return h;
 }
 function gameOver(win){over=true;const sc=win?Math.max(200,600-(t|0)*5-dabs*40):(px/3600*150|0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🏍️ Trial limpo!',sub:dabs+' pés em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Cheio de pés!',sub:'5 apoios. Antecipe o balanço!'});}
+H.done(win?{win:true,score:sc,title:'Trial limpo!',sub:dabs+' pés em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Cheio de pés!',sub:'5 apoios. Antecipe o balanço!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const up=dn.ArrowUp||dn.KeyW,L=dn.ArrowLeft||dn.KeyA,R=dn.ArrowRight||dn.KeyD;
@@ -33,12 +33,12 @@ H.loop(dt=>{
  x.lineTo(560,360);x.fill();
  OBS.forEach(ob=>{
   const ox=ob.x-cam;
-  if(ox>-40&&ox<600){x.fillStyle='#5A4A33';x.fillRect(ox-8,300-ob.h-14,16,14);x.font='20px system-ui';x.textAlign='center';x.fillText('🪵',ox,300-ob.h);}
+  if(ox>-40&&ox<600){x.fillStyle='#5A4A33';x.fillRect(ox-8,300-ob.h-14,16,14);x.font='20px system-ui';x.textAlign='center';x.fillText('i:log',ox,300-ob.h);}
  });
- x.font='26px system-ui';x.textAlign='center';x.fillText('🏁',3600-cam,270);
+ x.font='26px system-ui';x.textAlign='center';x.fillText('i:flag',3600-cam,270);
  const py=300-bump(px);
  x.save();x.translate(120,py-16);x.rotate(bal/300);
- x.font='30px system-ui';x.fillText('🏍️',0,10);x.restore();
+ x.font='30px system-ui';x.fillText('i:moto',0,10);x.restore();
  x.fillStyle='#181816';x.fillRect(180,20,200,16);
  x.fillStyle='#3E7C4F';x.fillRect(270,20,20,16);
  x.fillStyle=Math.abs(bal)>70?'#D94E34':'#E8A33D';

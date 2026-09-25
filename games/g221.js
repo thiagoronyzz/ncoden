@@ -17,7 +17,7 @@ function build(){
   paint();
 }
 function paint(){
-  bl.innerHTML="🔤 "+(built.map(b=>b.l).join("")||"_");
+  bl.innerHTML=""+(built.map(b=>b.l).join("")||"_");
   rk.innerHTML="";
   rack.forEach(r=>{
     const b=H.el("button","g-btn"+(r.used?"":" ghost"),r.l,rk);
@@ -31,11 +31,11 @@ function paint(){
 }
 build();
 const row=H.el("div","g-row",null,box);
-H.btn(row,"↩️ Desfazer",()=>{
+H.btn(row,"↩ Desfazer",()=>{
   if(over||!built.length)return;
   const r=built.pop();r.used=false;H.sfx("tick");paint();
 },false);
-H.btn(row,"✅ É palíndromo?",()=>{
+H.btn(row,"✔ É palíndromo?",()=>{
   if(over)return;
   const w=built.map(b=>b.l).join("");
   const ok=w.length===rack.length&&w===w.split("").reverse().join("");
@@ -44,6 +44,6 @@ H.btn(row,"✅ É palíndromo?",()=>{
     ri++;
     if(ri>=ROUNDS.length){over=true;return H.done({win:true,score:score+100,title:"Espelho verbal!",sub:"3 palíndromos perfeitos."});}
     say("Palíndromo! Próximo: "+ROUNDS[ri].length+" letras…");build();
-  }else{H.sfx("bad");say("❌ Não espelha! Leia de trás pra frente.");}
+  }else{H.sfx("bad");say("✕ Não espelha! Leia de trás pra frente.");}
 },true);
 }});

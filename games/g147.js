@@ -1,7 +1,7 @@
 /* NCODE N · 147 Alfaiataria — 5 ternos sob medida */
 GREG(147,{
 init(root,H){
-const STEPS=["📏 Medir","✂️ Cortar","🪡 Costurar"];
+const STEPS=["Medir","Cortar","Costurar"];
 let over=false,order=1,step=0,pos=0,dir=1,zone={a:40,b:60},fails=0;
 const hud=H.hud(root,[["tr","TERNOS","0/5"],["et","ETAPA","Medir"],["sc","PONTOS",0]]);
 const say=H.msg(root,"O marcador corre! Clique em <b>AGORA!</b> com ele na <b>faixa verde</b> para concluir cada etapa (medir → cortar → costurar).");
@@ -28,7 +28,7 @@ H.loop(dt=>{
   x.font="12px 'Space Mono',monospace";
   x.fillText("erros: "+fails+"/5",30,140);
 });
-H.btn(root,"🎯 AGORA!",()=>{
+H.btn(root,"AGORA!",()=>{
   if(over)return;
   if(pos>=zone.a&&pos<=zone.b){
     sc+=20;H.score(sc);hud.set("sc",sc);H.sfx("ok");
@@ -36,12 +36,12 @@ H.btn(root,"🎯 AGORA!",()=>{
     if(step>=3){
       step=0;order++;hud.set("tr",(order-1)+"/5");
       if(order>5){over=true;return H.done({win:true,score:sc+100,title:"Alfaiate renomado!",sub:"5 ternos sob medida, ponto perfeito."});}
-      say("🤵 Terno pronto! Próximo cliente…");
+      say("Terno pronto! Próximo cliente…");
     }
     hud.set("et",STEPS[step].split(" ")[1]);
     newZone();
   }else{
-    fails++;H.sfx("bad");say("❌ Fora da faixa! ("+fails+"/5)");
+    fails++;H.sfx("bad");say("✕ Fora da faixa! ("+fails+"/5)");
     if(fails>=5){over=true;return H.done({win:false,score:sc,title:"Tecido rasgado!",sub:"5 erros. Acerte a faixa verde!"});}
     newZone();
   }

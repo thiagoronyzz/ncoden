@@ -30,7 +30,7 @@ H.loop(dt=>{
     }
     if(d<PR+8){mets.splice(i,1);lives--;hud.set("vd",lives);H.sfx("lose");
       if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Planeta em chamas!",sub:blocked+" bloqueios antes do impacto final."});}
-      say("☄️ Impacto! Vidas: "+lives);
+      say("Impacto! Vidas: "+lives);
     }
   }
   x.fillStyle="#14161c";x.fillRect(0,0,o.W,o.H);

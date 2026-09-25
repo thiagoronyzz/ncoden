@@ -21,8 +21,8 @@ const qe=H.el("div","g-msg","",box);
 const cur=H.el("div","g-msg","",box);
 function paint(){
   hud.set("qs",(qi+1)+"/8");
-  qe.innerHTML="🔢 <b>"+Q[qi].q+"</b> = ?";
-  cur.innerHTML="⌨️ "+(buf||"_");
+  qe.innerHTML="<b>"+Q[qi].q+"</b> = ?";
+  cur.innerHTML=""+(buf||"_");
 }
 paint();
 const kb=H.keys();
@@ -37,8 +37,8 @@ const nrow=H.el("div","g-row",null,box);
   b.addEventListener("click",()=>{if(!over){buf+=n;H.sfx("tick");paint();}});
 });
 const row=H.el("div","g-row",null,box);
-H.btn(row,"⌫",()=>{buf=buf.slice(0,-1);paint();},false);
-H.btn(row,"✅ Responder",ok,true);
+H.btn(row,"APAGAR",()=>{if(over)return;buf=buf.slice(0,-1);paint();},false);
+H.btn(row,"✔ Responder",ok,true);
 function ok(){
   if(over||!buf)return;
   if(parseInt(buf,10)===Q[qi].a()){

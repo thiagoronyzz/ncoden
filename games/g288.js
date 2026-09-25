@@ -6,7 +6,7 @@ let rivals=[{x:0,sp:0},{x:0,sp:0}];
 const hud=H.hud(root,[['d','DIST','0m'],['st','FÔLEGO','100%'],['pos','POS','3º']]);
 const say=H.msg(root,'Toque GALOPAR no ritmo (~3 por segundo)! Ritmo certo = velocidade; descompasso cansa. 400m contra 2 rivais!');
 const o=H.cvs(root,560,320),x=o.x;
-H.btn(root,'🐎 GALOPAR (toque no ritmo!)',gallop,true);
+H.btn(root,'GALOPAR (toque no ritmo!)',gallop,true);
 function gallop(){
  if(over)return;
  const now=t,gap=now-last;last=now;
@@ -19,7 +19,7 @@ function gameOver(){
  const win=px>=400&&px>=r;
  const sc=win?Math.max(200,600-(t|0)*6):px|0;
  H.score(sc);
- H.done(win?{win:true,score:sc,title:'🏇 Foto-finish sua!',sub:'400m em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Rivais venceram!',sub:'Mantenha o ritmo sem esgotar o fôlego!'});
+ H.done(win?{win:true,score:sc,title:'Foto-finish sua!',sub:'400m em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Rivais venceram!',sub:'Mantenha o ritmo sem esgotar o fôlego!'});
 }
 H.loop(dt=>{
  if(over)return;t+=dt;
@@ -36,9 +36,9 @@ H.loop(dt=>{
  for(let i=0;i<3;i++)x.fillRect(0,70+i*70,560,44);
  const cam=Math.max(0,px-200);
  x.font='30px system-ui';x.textAlign='center';
- x.fillText('🏇',px-cam,105);
- x.fillText('🐎',rivals[0].x-cam,175);
- x.fillText('🐎',rivals[1].x-cam,245);
+ x.fillText('i:horse',px-cam,105);
+ x.fillText('i:horse',rivals[0].x-cam,175);
+ x.fillText('i:horse',rivals[1].x-cam,245);
  x.fillStyle='#fff';x.fillRect(1200-cam,60,8,200);
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
  x.fillText('Fôlego',12,30);

@@ -3,15 +3,15 @@ GREG(255,{
 init(root,H){
 const TW=58,TH=68,OX=30,OY=26;
 const DOTPOS={1:[[0,0]],2:[[-1,-1],[1,1]],3:[[-1,-1],[0,0],[1,1]],4:[[-1,-1],[1,-1],[-1,1],[1,1]],5:[[-1,-1],[1,-1],[0,0],[-1,1],[1,1]],6:[[-1,-1],[1,-1],[-1,0],[1,0],[-1,1],[1,1]],7:[[-1,-1],[1,-1],[0,-1],[-1,0],[1,0],[-1,1],[1,1]],8:[[-1,-1],[1,-1],[0,-1],[-1,0],[1,0],[0,1],[-1,1],[1,1]],9:[[-1,-1],[0,-1],[1,-1],[-1,0],[0,0],[1,0],[-1,1],[0,1],[1,1]]};
-const CHN='一二三四五六七八九',HON='東南西北白發中',FLW='🌸🌺🌻🌷';
+const CHN='一二三四五六七八九',HON='東南西北白發中',FLW='';
 let over=false,tiles=[],sel=null,pairs=38,moves=0,streak=0,score=0,time=0;
 let shuffles=3,hints=3,hintPair=null,hintT=0,msg='Toque em duas peças LIVRES iguais!';
 const hud=H.hud(root,[['par','PARES',38],['tmp','TEMPO','0:00'],['pts','PONTOS',0],['eb','EMB×DICA','3×3']]);
 const say=H.msg(root,'Peça livre = topo vazio + um lado aberto! Combine os 38 pares. Sem jogadas? Embaralhe (3×) ou peça dica (3×).');
 const o=H.cvs(root,530,470),x=o.x;
 const brow=H.el('div','g-row',null,root);
-H.btn(brow,'🔀 Embaralhar',doShuffle,false);
-H.btn(brow,'💡 Dica',doHint,false);
+H.btn(brow,'Embaralhar',doShuffle,false);
+H.btn(brow,'Dica',doHint,false);
 function fmtT(s){return ((s/60)|0)+':'+String((s|0)%60).padStart(2,'0');}
 function status(){hud.set('par',pairs);hud.set('tmp',fmtT(time));hud.set('pts',score);hud.set('eb',shuffles+'×'+hints);say(msg);}
 function deal(){
@@ -69,7 +69,7 @@ function gameOver(win){
   over=true;
   const bonus=win?Math.max(0,600-(time|0))*2:0;
   score+=bonus;H.score(score);
-  H.done(win?{win:true,score,title:'🏆 Mahjong limpo!',sub:'38 pares · '+moves+' jogadas · '+fmtT(time)+' · bônus '+bonus+'.'}
+  H.done(win?{win:true,score,title:'Mahjong limpo!',sub:'38 pares · '+moves+' jogadas · '+fmtT(time)+' · bônus '+bonus+'.'}
     :{win:false,score,title:'Sem jogadas!',sub:pairs+' pares restantes · tente embaralhar antes de travar.'});
 }
 H.onTap(o,(px,py)=>{
@@ -88,7 +88,7 @@ H.onTap(o,(px,py)=>{
     sel.gone=true;hit.gone=true;sel=null;pairs--;moves++;
     streak++;score+=10+streak*2;hintPair=null;
     H.sfx('ok');
-    msg=pairs?streak>2?'🔥 Sequência x'+streak+'! +'+(10+streak*2):'Par removido! +'+(10+streak*2):'Último par!';
+    msg=pairs?streak>2?'Sequência x'+streak+'! +'+(10+streak*2):'Par removido! +'+(10+streak*2):'Último par!';
     status();
     if(!pairs){gameOver(true);return;}
     if(!findPair()){

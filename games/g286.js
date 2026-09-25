@@ -8,7 +8,7 @@ const say=H.msg(root,'Faça manobras antes do tempo! Repetir a mesma vale metade
 const o=H.cvs(root,460,320),x=o.x;
 const brow=H.el('div','g-row',null,root);
 TRICKS.forEach((tr,i)=>{
- H.btn(brow,'🛹 '+tr[0]+' ('+tr[1]+')',()=>{
+ H.btn(brow,''+tr[0]+' ('+tr[1]+')',()=>{
   if(over||air<=0)return;
   let pts=tr[1];
   if(i===last){rep++;pts=Math.max(10,pts>>rep);}else{rep=0;}
@@ -17,12 +17,12 @@ TRICKS.forEach((tr,i)=>{
   hud.set('pt',score);
  },false);
 });
-H.btn(root,'⬆️ PULAR (rampa)',()=>{
+H.btn(root,'↑ PULAR (rampa)',()=>{
  if(over||air>0)return;
  air=1.1;H.sfx('tick');
 },true);
 function gameOver(){over=true;const win=score>=1500;H.score(score);
-H.done(win?{win:true,score,title:'🛹 Lenda do park!',sub:score+' pontos!'}:{win:false,score,title:'Fim do tempo!',sub:score+'/1500 pontos. Varie as manobras!'});}
+H.done(win?{win:true,score,title:'Lenda do park!',sub:score+' pontos!'}:{win:false,score,title:'Fim do tempo!',sub:score+'/1500 pontos. Varie as manobras!'});}
 H.loop(dt=>{
  if(over)return;
  time-=dt;if(air>0)air-=dt;if(trickT>0)trickT-=dt;
@@ -35,9 +35,9 @@ H.loop(dt=>{
  x.beginPath();x.moveTo(320,240);x.lineTo(380,160);x.lineTo(400,160);x.lineTo(400,240);x.fill();
  const py=air>0?190-air*90:232;
  x.font='34px system-ui';x.textAlign='center';
- x.fillText('🛹',230+(air>0?Math.sin(air*9)*20:0),py);
+ x.fillText('i:skate',230+(air>0?Math.sin(air*9)*20:0),py);
  if(trickT>0){x.fillStyle='#181816';x.font='bold 20px system-ui';x.fillText(trick,230,80);}
  x.fillStyle='#181816';x.font='bold 17px system-ui';x.textAlign='left';
- x.fillText(score+' pts · ⏱️'+Math.ceil(time)+'s · meta 1500',12,28);
+ x.fillText(score+' pts · '+Math.ceil(time)+'s · meta 1500',12,28);
 });
 }});

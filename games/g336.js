@@ -11,15 +11,15 @@ let risk=0;
 function status(){
  const on=gen.some(g=>g)&&fuel>0;
  hud.set('e',on?'ON':'OFF');hud.set('cb',Math.max(0,fuel|0));hud.set('tp',Math.ceil(time));
- st.innerHTML='🏥 Energia: '+(on?'🟢 ON':'🔴 OFF')+' · ⛽ '+fuel.toFixed(0)+'<br>G1 '+(gen[0]?'ligado':'desligado')+' · G2 '+(gen[1]?'ligado':'desligado')+' · Risco '+risk.toFixed(0)+'%';
+ st.innerHTML='Energia: '+(on?'● ON':'○ OFF')+' · '+fuel.toFixed(0)+'<br>G1 '+(gen[0]?'ligado':'desligado')+' · G2 '+(gen[1]?'ligado':'desligado')+' · Risco '+risk.toFixed(0)+'%';
  paintBtns();
 }
 function paintBtns(){
  brow.innerHTML='';
  if(over)return;
- H.btn(brow,'🔌 Alternar G1',()=>{gen[0]=!gen[0];H.sfx('tick');status();},false);
- H.btn(brow,'🔌 Alternar G2',()=>{gen[1]=!gen[1];H.sfx('tick');status();},false);
- H.btn(brow,'⛽ Abastecer (+20)',()=>{fuel=Math.min(100,fuel+20);H.sfx('tick');status();},true);
+ H.btn(brow,'Alternar G1',()=>{gen[0]=!gen[0];H.sfx('tick');status();},false);
+ H.btn(brow,'Alternar G2',()=>{gen[1]=!gen[1];H.sfx('tick');status();},false);
+ H.btn(brow,'Abastecer (+20)',()=>{fuel=Math.min(100,fuel+20);H.sfx('tick');status();},true);
 }
 H.every(500,()=>{
  if(over)return;
@@ -33,6 +33,6 @@ H.every(500,()=>{
 });
 function gameOver(win){over=true;brow.innerHTML='';
  const sc=win?400+Math.ceil(fuel)*2:uptime|0;H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'🏥 Plantão cumprido!',sub:'Energia mantida!'}:{win:false,score:sc|0,title:'Apagão crítico!',sub:'Ligue ao menos 1 gerador com combustível!'});}
+H.done(win?{win:true,score:sc|0,title:'Plantão cumprido!',sub:'Energia mantida!'}:{win:false,score:sc|0,title:'Apagão crítico!',sub:'Ligue ao menos 1 gerador com combustível!'});}
 status();
 }});

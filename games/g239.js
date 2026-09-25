@@ -44,7 +44,7 @@ function paint(){
   if(over)return;
   hud.set("vc",ph.length);hud.set("cp",ch.length);hud.set("mn",stock.length);
   const t=disc[disc.length-1];
-  tp.innerHTML="🎴 Descarte: <b>"+RN(t.r)+S[t.s]+"</b> · "+(drew?"clique numa carta para descartar":"compre do monte ou descarte");
+  tp.innerHTML="Descarte: <b>"+RN(t.r)+S[t.s]+"</b> · "+(drew?"clique numa carta para descartar":"compre do monte ou descarte");
   hd.innerHTML="";
   ph.forEach((c,i)=>{
     const b=H.el("button","g-card",RN(c.r)+S[c.s],hd);
@@ -53,12 +53,12 @@ function paint(){
   });
   if(!drew){
     const r2=H.el("div","g-row",null,box);
-    H.btn(r2,"🎲 Comprar do monte",()=>{
+    H.btn(r2,"Comprar do monte",()=>{
       if(over||drew)return;
       if(!stock.length)reshuffle();
       ph.push(stock.pop());drew=true;H.sfx("tick");paint();
     },true);
-    H.btn(r2,"♻️ Pegar "+RN(t.r)+S[t.s],()=>{
+    H.btn(r2,"Pegar "+RN(t.r)+S[t.s],()=>{
       if(over||drew)return;
       ph.push(disc.pop());drew=true;H.sfx("tick");paint();
     },false);

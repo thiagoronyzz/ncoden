@@ -30,10 +30,10 @@ function move(i){
   let s=pits[i];pits[i]=0;let p=i;
   while(s>0){p=(p+1)%14;if(p===13)continue;pits[p]++;s--;}
   H.sfx("tick");
-  if(p===6){paint();say("🎁 Jogue de novo!");return;}
+  if(p===6){paint();say("Jogue de novo!");return;}
   if(p<6&&pits[p]===1&&pits[12-p]>0){
     pits[6]+=pits[12-p]+1;pits[12-p]=0;pits[p]=0;
-    say("💰 Captura!");
+    say("Captura!");
   }
   if(checkEnd())return;
   turn=1;paint();say("CPU pensando…");

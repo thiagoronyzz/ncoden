@@ -30,7 +30,7 @@ function paint(){
   if(over)return;
   hud.set("vc",hands[0].length);hud.set("a1",hands[1].length);hud.set("a2",hands[2].length);
   const t=disc[disc.length-1];
-  tp.innerHTML="🎴 Mesa: <b>"+RN(t.r)+S[t.s]+"</b> · naipe: "+S[suit]+(turn===0?" · <b>SUA VEZ</b>":" · CPU"+turn+"…");
+  tp.innerHTML="Mesa: <b>"+RN(t.r)+S[t.s]+"</b> · naipe: "+S[suit]+(turn===0?" · <b>SUA VEZ</b>":" · CPU"+turn+"…");
   hd.innerHTML="";
   hands[0].forEach((c,i)=>{
     const ok=turn===0&&playable(c);
@@ -39,14 +39,14 @@ function paint(){
     if(ok)b.addEventListener("click",()=>play(0,i));
   });
   if(turn===0){
-    const b=H.el("button","g-btn ghost","➕ Comprar",box);
+    const b=H.el("button","g-btn ghost","Comprar",box);
     b.addEventListener("click",()=>{
       if(over||turn!==0)return;
       draw(hands[0],1);H.sfx("tick");
       if(hands[0].filter(playable).length===0&&stock.length){paint();say("Comprou… ainda sem jogada? Compre de novo ou passe.");}
       paint();
     });
-    const p=H.el("button","g-btn ghost","⏭️ Passar",box);
+    const p=H.el("button","g-btn ghost","Passar",box);
     p.addEventListener("click",()=>{
       if(over||turn!==0)return;
       turn=1;paint();H.after(700,ai);
@@ -60,7 +60,7 @@ function play(who,i){
   disc.push(c);
   if(c.r===8){
     if(who===0){
-      say("🃏 8! Escolha o naipe:");
+      say("8! Escolha o naipe:");
       const row=H.el("div","g-row",null,box);
       S.forEach((ss,si)=>{
         H.btn(row,ss,()=>{suit=si;row.remove();after(who);},false);

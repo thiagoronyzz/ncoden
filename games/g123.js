@@ -1,10 +1,10 @@
 /* NCODE N · 123 Hotel de Pets — 15 vontades atendidas */
 GREG(123,{
 init(root,H){
-const PETS=["🐶","🐱","🐰","🦜"],NEED={eat:"🍖",walk:"🦮",play:"🧸"};
+const PETS=["cachorro","gato","coelho","papagaio"],NEED={eat:"comer",walk:"passear",play:"brincar"};
 let over=false,pets=[],served=0,lost=0,spawn=1,time=150;
 const hud=H.hud(root,[["at","ATENDIDOS","0/15"],["er","IGNORADOS","0/4"],["tp","TEMPO",150]]);
-const say=H.msg(root,"Clique no pet e depois na <b>ação pedida</b> (🍖🦮🧸). Vontade vencida = pet triste!");
+const say=H.msg(root,"Clique no pet e depois na <b>ação pedida</b> (). Vontade vencida = pet triste!");
 const prow=H.el("div","g-board",null,root);
 prow.style.gridTemplateColumns="repeat(2,1fr)";
 prow.style.width="min(100%,320px)";
@@ -17,7 +17,7 @@ function paint(){
   pets.forEach((p,i)=>{
     const b=H.el("button","g-cell"+(sel===i?" sel":""),null,prow);
     b.style.minHeight="78px";b.style.fontSize="15px";
-    b.innerHTML=p.e+"<br>"+(p.need?NEED[p.need]+" "+Math.ceil(p.t)+"s":"😌 ok");
+    b.innerHTML="<b>"+p.e+"</b><br>"+(p.need?NEED[p.need]+" "+Math.ceil(p.t)+"s":"ok");
     b.addEventListener("click",()=>{sel=i;H.sfx("tick");paint();});
   });
 }

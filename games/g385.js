@@ -7,16 +7,16 @@ const say=H.msg(root,'Segure ANDAR para atravessar! A ponte ABRE de tempos em te
 let cross=0;
 const o=H.cvs(root,560,340),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
-const wb=H.btn(root,'🚶 Segurar = ANDAR',()=>{},true);
+const wb=H.btn(root,'Segurar = ANDAR',()=>{},true);
 wb.addEventListener('pointerdown',()=>{dn.walk=true;});
 wb.addEventListener('pointerup',()=>{dn.walk=false;});
 function gameOver(w){over=true;win=w;H.score(cross*150);
-H.done({win:w,score:cross*150,title:w?'🌉 Travessias completas!':'🌉 Caiu no fosso!',sub:cross+'/3 travessias.'});}
+H.done({win:w,score:cross*150,title:w?'Travessias completas!':'Caiu no fosso!',sub:cross+'/3 travessias.'});}
 H.loop(dt=>{
  if(over)return;t+=dt;cyc+=dt;
  const ph=cyc%10;
  state=ph<5?'closed':ph<6?'warn':'open';
- hud.set('e',state==='closed'?'FECHADA ✅':state==='warn'?'FECHANDO! ⚠️':'ABERTA ❌');
+ hud.set('e',state==='closed'?'FECHADA ✔':state==='warn'?'FECHANDO! ':'ABERTA ✕');
  if(dn.walk||dn.Space||dn.ArrowRight)px+=130*dt;
  px=H.clamp(px,40,520);
  if(state==='open'&&px>120&&px<460){gameOver(false);return;}
@@ -30,8 +30,8 @@ H.loop(dt=>{
   x.save();x.translate(100,170);x.rotate(-1.1);x.fillStyle='#5A4A33';x.fillRect(0,0,180,16);x.restore();
   x.save();x.translate(460,170);x.rotate(1.1+Math.PI);x.fillStyle='#5A4A33';x.fillRect(0,0,180,16);x.restore();
  }
- x.font='28px system-ui';x.textAlign='center';x.fillText('🚶',px,162);
+ x.font='28px system-ui';x.textAlign='center';x.fillText('i:walk',px,162);
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('Travessias '+cross+'/3 · '+(state==='closed'?'✅ CORRA!':state==='warn'?'⚠️ VOLTE OU CORRA!':'❌ ABERTA'),12,28);
+ x.fillText('Travessias '+cross+'/3 · '+(state==='closed'?'✔ CORRA!':state==='warn'?'VOLTE OU CORRA!':'✕ ABERTA'),12,28);
 });
 }});

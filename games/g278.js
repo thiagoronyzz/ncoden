@@ -32,9 +32,9 @@ function press(i){
  status();
 }
 function gameOver(win){over=true;const sc=win?400+(100-det)*2:floor*80;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🛗 Acesso liberado!',sub:'Andar restrito alcançado.'}:{win:false,score:sc,title:'Rastreado!',sub:'O sistema te detectou no andar '+floor+'.'});}
+H.done(win?{win:true,score:sc,title:'Acesso liberado!',sub:'Andar restrito alcançado.'}:{win:false,score:sc,title:'Rastreado!',sub:'O sistema te detectou no andar '+floor+'.'});}
 COLS.forEach((c,i)=>{
- const b=H.el('button','g-card','⬛',brow);
+ const b=H.el('button','g-card','■',brow);
  b.style.width='100px';b.style.height='70px';b.style.fontSize='30px';b.style.background='#222';
  b.addEventListener('click',()=>press(i));
  b.dataset.i=i;
@@ -44,7 +44,7 @@ function paintBtns(){
   const i=+b.dataset.i;
   const lit=phase==='show'&&show<seq.length&&seq[show]===i&&showT<.5;
   b.style.background=lit?COLS[i]:'#222';
-  b.innerHTML=lit?'🔆':'⬛';
+  b.innerHTML=lit?'■':'□';
  });
 }
 H.loop(dt=>{
@@ -62,7 +62,7 @@ H.loop(dt=>{
   x.fillStyle=f===floor?'#C4D645':'#8A877C';
   x.beginPath();x.arc(190,y,16,0,7);x.fill();
   x.fillStyle='#181816';x.font='bold 14px system-ui';x.textAlign='center';
-  x.fillText(f===3?'💰':f,190,y+5);
+  x.fillText(f===3?'i:money':f,190,y+5);
  }
  x.fillStyle='#D94E34';x.font='bold 15px system-ui';x.textAlign='left';
  x.fillText('Andar '+floor+'/3',330,60);

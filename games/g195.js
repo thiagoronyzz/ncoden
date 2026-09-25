@@ -1,7 +1,7 @@
 /* NCODE N · 195 Beat Box — copie 3 batidas! */
 GREG(195,{
 init(root,H){
-const ROWS=[["🥁 kick",90],["👏 snare",280],["🎩 hat",520]];
+const ROWS=[["kick",90],["snare",280],["hat",520]];
 const TARGETS=[
   [[1,0,0,0,1,0,0,0],[0,0,1,0,0,0,1,0],[1,1,1,1,1,1,1,1]],
   [[1,0,1,0,1,0,0,0],[0,0,0,0,1,0,0,0],[0,1,0,1,0,1,0,1]],
@@ -26,19 +26,19 @@ function paint(){
       b.style.minWidth="34px";b.style.padding="4px";
       b.addEventListener("click",()=>{if(!over){grid[r][s]=grid[r][s]?0:1;H.sfx("tick");paint();}});
     }
-    H.el("div","g-chip","🎯 "+TARGETS[rd][r].map(v=>v?"●":"·").join(""),row);
+    H.el("div","g-chip",""+TARGETS[rd][r].map(v=>v?"●":"·").join(""),row);
   });
 }
 newRound();
-H.btn(root,"▶️/⏸️ loop",()=>{playing=!playing;H.sfx("tick");},false);
-H.btn(root,"✅ Conferir batida",()=>{
+H.btn(root,"▶/ loop",()=>{playing=!playing;H.sfx("tick");},false);
+H.btn(root,"✔ Conferir batida",()=>{
   if(over)return;
   const ok=grid.every((row,r)=>row.every((v,s)=>v===TARGETS[rd][r][s]));
   if(ok){
     H.sfx("ok");rd++;
     if(rd>=3){over=true;return H.done({win:true,score:300,title:"Beatmaker!",sub:"3 batidas copiadas nota a nota."});}
     say("Batida "+rd+" pronta! Próxima…");newRound();
-  }else{H.sfx("bad");say("❌ Diferente do alvo! Compare ● por ●.");}
+  }else{H.sfx("bad");say("✕ Diferente do alvo! Compare ● por ●.");}
 },true);
 H.loop(dt=>{
   if(over||!playing)return;

@@ -1,7 +1,7 @@
 /* NCODE N · 191 Roda de Tambores — 24 batidas no ponto! */
 GREG(191,{
 init(root,H){
-const DR=[{e:"🥁",k:"A",f:110},{e:"🪘",k:"S",f:180},{e:"🥁",k:"D",f:260}];
+const DR=[{e:"i:drum",k:"A",f:110},{e:"i:drum",k:"S",f:180},{e:"i:drum",k:"D",f:260}];
 let over=false,t=0,beats=[],score=0,done=0;
 const hud=H.hud(root,[["bt","BATIDAS","0/24"],["pt","PONTOS",0]]);
 const say=H.msg(root,"Toque o tambor (clique ou A/S/D) quando o <b>círculo fechar</b>! 24 batidas, precisa de 70%.");

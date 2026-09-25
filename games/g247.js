@@ -3,7 +3,7 @@ GREG(247,{
 init(root,H){
 let over=false,b=[],turn=0;
 const hud=H.hud(root,[["vz","VEZ","você"]]);
-const say=H.msg(root,"Você é 🔴! Clique na coluna para soltar. Alinhe 4 (linha, coluna ou diagonal) antes da CPU 🟡!");
+const say=H.msg(root,"Você é ○! Clique na coluna para soltar. Alinhe 4 (linha, coluna ou diagonal) antes da CPU ●!");
 const o=H.cvs(root,460,420),x=o.x;
 const CS=60,OX=20,OY=40;
 function mk(){b=[];for(let r=0;r<6;r++){b.push([]);for(let c=0;c<7;c++)b[r].push(0);}turn=0;}

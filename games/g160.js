@@ -1,7 +1,7 @@
 /* NCODE N · 160 Barraca de Pipoca — 15 saquinhos no carnaval */
 GREG(160,{
 init(root,H){
-const SEA=["🧂 sal","🧀 queijo","🍫 chocolate"];
+const SEA=["sal","queijo","chocolate"];
 let over=false,orders=[],pop=0,ready=0,served=0,lost=0,spawn=1,time=160,nid=0;
 const hud=H.hud(root,[["pp","SAQUINHOS","0/15"],["ml","PRONTA",0],["tp","TEMPO",160]]);
 const say=H.msg(root,"<b>Estourar</b> (5s) rende 5 porções. Clique no pedido com o <b>tempero certo</b> para ensacar e entregar!");
@@ -11,7 +11,7 @@ function paint(){
   hud.set("pp",served+"/15");hud.set("ml",ready+(pop>0?" (+"+Math.ceil(pop)+"s)":""));
   lbox.innerHTML="";
   orders.forEach(o=>{
-    const b=H.el("button","g-chip","🍿 "+SEA[o.s]+" ⏳"+Math.ceil(o.p),lbox);
+    const b=H.el("button","g-chip",""+SEA[o.s]+""+Math.ceil(o.p),lbox);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>act(o.id));
   });
@@ -29,7 +29,7 @@ function act(id){
   if(served>=15){over=true;return H.done({win:true,score:400,title:"Pipoqueiro rei!",sub:"15 saquinhos no carnaval lotado."});}
 }
 paint();
-H.btn(root,"🍿 Estourar (5s → 5 porções)",()=>{
+H.btn(root,"Estourar (5s → 5 porções)",()=>{
   if(over||pop>0||ready>=10)return;
   pop=5;H.sfx("tick");paint();
 },false);

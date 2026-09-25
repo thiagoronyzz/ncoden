@@ -9,7 +9,7 @@ let placed=[];
 const hud=H.hud(root,[['lv','ANDAR','0/8'],['ct','CARTAS',0],['es','ESTABILIDADE',100],['rc','RECORDE',0]]);
 const say=H.msg(root,'Cada andar = 2 cartas inclinadas + 1 teto! Trave o marcador no centro verde. Cuidado com o vento! Chegue ao 8º andar.');
 const o=H.cvs(root,480,540),x=o.x;
-H.btn(root,'🂠 Soltar carta (Espaço)',drop,true);
+H.btn(root,'Soltar carta (Espaço)',drop,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==='Space')drop();});
 function sched(fn,ms){const t=seq;H.after(ms,()=>{if(t!==seq||over)return;fn();});}
@@ -19,7 +19,7 @@ function drop(){
   if(over||fall)return;
   const m=marker(),a=Math.abs(m);
   const wgt=1+level*.14;
-  if(a<.12){perfects++;score+=25;stab=Math.min(100,stab+1);msg='✨ PERFEITO! +25';H.sfx('ok');}
+  if(a<.12){perfects++;score+=25;stab=Math.min(100,stab+1);msg='PERFEITO! +25';H.sfx('ok');}
   else{stab-=(4+16*a)*wgt;score+=10;msg=a<.4?'Boa! (+10)':'Torto! ('+(a<.7?'instável':'PERIGO')+')';H.sfx(a<.4?'tick':'bad');}
   placed.push({lvl:level,slot,off:m});
   cards++;slot++;
@@ -27,7 +27,7 @@ function drop(){
   if(slot>=3){
     slot=0;level++;score+=50;
     gust=(Math.random()*2-1)*(0.6+level*0.18);gustT=3;
-    msg+=' — 🏰 '+level+'º andar! Rajada '+(gust>0?'▶':'◀')+'!';
+    msg+=' — '+level+'º andar! Rajada '+(gust>0?'▶':'◀')+'!';
     H.sfx('ok');
     if(level>=WINLVL){gameOver(true);return;}
   }
@@ -37,14 +37,14 @@ function drop(){
 function startFall(){
   if(fall)return;
   fall=1;fallT=0;fallDir=ang>=0?1:-1;
-  msg='🌪️ ESTÁ CAINDO!';
+  msg='ESTÁ CAINDO!';
   H.sfx('bad');
 }
 function gameOver(win){
   over=true;seq++;
   if(score>best)best=score;
   H.score(score);
-  H.done(win?{win:true,score,title:'🏰 Castelo pronto!',sub:'8 andares · '+cards+' cartas · '+perfects+' perfeitas · recorde '+best+'.'}
+  H.done(win?{win:true,score,title:'Castelo pronto!',sub:'8 andares · '+cards+' cartas · '+perfects+' perfeitas · recorde '+best+'.'}
     :{win:false,score,title:'Desmoronou!',sub:level+' andares · '+cards+' cartas · recorde '+best+' · mire o verde!'});
 }
 function rcard(px,py,w,h,rot,roof){
@@ -84,7 +84,7 @@ H.loop(dt=>{
   x.fillStyle=H.C.ink2;x.font='bold 15px system-ui';
   const wa=Math.abs(wind);
   x.fillText('Vento: '+(wa<.25?'calmo ~':(wind>0?'▶':'◀').repeat(Math.min(3,1+(wa|0)))+' '+wa.toFixed(1)),14,28);
-  if(gustT>0){x.fillStyle='#B23A24';x.fillText('🌪️ RAJADA!',330,28);}
+  if(gustT>0){x.fillStyle='#B23A24';x.fillText('RAJADA!',330,28);}
   // torre
   x.save();x.translate(CX,BASEY+54);x.rotate(fall?0:ang);
   if(fall)x.rotate((fallT*fallDir*1.2));

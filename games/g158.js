@@ -1,7 +1,7 @@
 /* NCODE N · 158 Ramen Shop — 8 tigelas fumegantes */
 GREG(158,{
 init(root,H){
-const TOP=["🥚","🍖","🌿"];
+const TOP=["ovo","carne","alga"];
 let over=false,orders=[],pots=[null,null],broth=true,served=0,lost=0,spawn=1,time=200,nid=0;
 const hud=H.hud(root,[["rm","RAMENS","0/8"],["tp","TEMPO",200],["sc","PONTOS",0]]);
 const say=H.msg(root,"Clique no pedido para <b>cozinhar o macarrão</b> (2 bocas, 6s). <b>Caldo</b> precisa estar quente. Depois clique para <b>montar com a cobertura certa</b>!");
@@ -15,15 +15,15 @@ function paint(){
   orders.forEach(o=>{
     const b=H.el("button","g-chip"+(o.noodle==="ok"?" good":o.noodle?" hot":""),null,lbox);
     b.style.cursor="pointer";
-    b.innerHTML="🍜+"+o.top+" "+(o.noodle==="ok"?"✅ MONTAR!":o.noodle?"⏳ cozinhando":"🅿️ cozinhar")+" · ⏳"+Math.ceil(o.p);
+    b.innerHTML="ramen +["+o.top+"] "+(o.noodle==="ok"?"✔ MONTAR!":o.noodle?"cozinhando":"cozinhar")+" · "+Math.ceil(o.p)+"s";
     b.addEventListener("click",()=>act(o.id));
   });
   if(!orders.length)H.el("div","g-chip","sem pedidos…",lbox);
   pbox.innerHTML="";
   pots.forEach((p,i)=>{
-    H.el("div","g-chip",!p?"🍲 boca "+(i+1)+" livre":"🍲 "+Math.ceil(p.t)+"s"+(p.over?" ⚠️":""),pbox);
+    H.el("div","g-chip",!p?"boca "+(i+1)+" livre":""+Math.ceil(p.t)+"s"+(p.over?"":""),pbox);
   });
-  H.el("div","g-chip"+(broth?" good":" bad"),broth?"🔥 caldo quente":"🥶 caldo frio! REAQUEÇA",pbox);
+  H.el("div","g-chip"+(broth?" good":" bad"),broth?"caldo quente":"caldo frio! REAQUEÇA",pbox);
 }
 function act(id){
   if(over)return;
@@ -53,12 +53,12 @@ TOP.forEach(t=>{
     o.topOk=true;H.sfx("ok");say("Cobertura certa! Clique no pedido para montar.");paint();
   },false);
 });
-H.btn(root,"🔥 Reaquecer caldo",()=>{if(!over){broth=true;H.sfx("tick");paint();}},false);
+H.btn(root,"Reaquecer caldo",()=>{if(!over){broth=true;H.sfx("tick");paint();}},false);
 H.loop(dt=>{
   if(over)return;
   time-=dt;hud.set("tp",Math.max(0,Math.ceil(time)));
   if(time<=0){over=true;return H.done({win:false,score:sc,title:"Loja fechou!",sub:"Só "+served+"/8."});}
-  if(Math.random()<dt*.12&&broth){broth=false;paint();say("🥶 O caldo esfriou! Reaqueça.");}
+  if(Math.random()<dt*.12&&broth){broth=false;paint();say("O caldo esfriou! Reaqueça.");}
   spawn-=dt;
   if(spawn<=0&&orders.length<3&&served+orders.length<10){
     spawn=8;orders.push({id:nid++,top:TOP[Math.floor(Math.random()*3)],p:44,noodle:null,topOk:false});paint();

@@ -41,9 +41,9 @@ H.loop(dt=>{
   x.fillStyle=H.C.gold;x.fillRect(40+(o.W-80)*0.34,40,(o.W-80)*0.08,44);
   x.fillRect(40+(o.W-80)*0.58,40,(o.W-80)*0.08,44);
   x.fillStyle=H.C.ink;x.fillRect(40+pos*(o.W-80)-3,34,6,56);
-  x.font="🔨";x.font="34px serif";x.fillText("🔨",40+pos*(o.W-80)-17,130);
+  x.font="i:hammer";x.font="34px serif";x.fillText("i:hammer",40+pos*(o.W-80)-17,130);
   x.fillStyle=H.C.ink3;x.font="11px 'Space Mono',monospace";
   x.fillText("prego "+(nail+1)+"/5 · marteladas "+hits+"/3",40,104);
 });
-H.btn(root,"🔨 MARTELO!",hit,true);
+H.btn(root,"MARTELO!",hit,true);
 }});

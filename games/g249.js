@@ -4,11 +4,11 @@ init(root,H){
 const N=8;
 let over=false,ps=[],cs=[],psh=[],csh=[],turn=0,hunt=[];
 const hud=H.hud(root,[["vc","SEUS NAVIOS",5],["cp","DELES",5]]);
-const say=H.msg(root,"Clique no <b>mar inimigo</b> (acima) para atirar! 🚢 seus navios abaixo. Afunde os 5 dele primeiro. Navios: 3,2,2,1,1.");
+const say=H.msg(root,"Clique no <b>mar inimigo</b> (acima) para atirar! seus navios abaixo. Afunde os 5 dele primeiro. Navios: 3,2,2,1,1.");
 const box=H.el("div","g-col",null,root);
-H.el("div","g-chip","🌊 MAR INIMIGO — clique para atirar",box);
+H.el("div","g-chip","MAR INIMIGO — clique para atirar",box);
 const eb=H.el("div","g-board",null,box);
-H.el("div","g-chip","🚢 SUA FROTA",box);
+H.el("div","g-chip","SUA FROTA",box);
 const pb=H.el("div","g-board",null,box);
 [eb,pb].forEach(bd=>{bd.style.gridTemplateColumns="repeat(8,1fr)";bd.style.width="min(100%,320px)";});
 const SHIPS=[3,2,2,1,1];
@@ -57,21 +57,21 @@ function paint(){
   hud.set("cp",(5-sunkCount(cs))+"");
   eb.innerHTML="";pb.innerHTML="";
   for(let i=0;i<N*N;i++){
-    const d=H.el("button","g-cell",csh[i]===2?"🔥":csh[i]===1?"💦":"🌊",eb);
+    const d=H.el("button","g-cell",csh[i]===2?"":csh[i]===1?"":"",eb);
     d.style.aspectRatio="1";d.style.fontSize="13px";d.style.minWidth="0";
     if(!csh[i]&&turn===0)d.addEventListener("click",()=>fire(i));
   }
   for(let i=0;i<N*N;i++){
     const mine=ps.some(s=>s.cells.includes(i));
-    const d=H.el("div","g-cell",psh[i]===2?"🔥":psh[i]===1?"💦":mine?"🚢":"🌊",pb);
+    const d=H.el("div","g-cell",psh[i]===2?"":psh[i]===1?"":mine?"":"",pb);
     d.style.aspectRatio="1";d.style.fontSize="13px";
   }
 }
 function fire(i){
   if(over||turn!==0||csh[i])return;
   const s=cs.find(k=>k.cells.includes(i));
-  if(s){s.hits++;csh[i]=2;H.sfx("ok");say(s.hits>=s.cells.length?"🔥 NAVIO DESTRUÍDO!":"🔥 Acertou!");}
-  else{csh[i]=1;H.sfx("bad");say("💦 Água…");}
+  if(s){s.hits++;csh[i]=2;H.sfx("ok");say(s.hits>=s.cells.length?"NAVIO DESTRUÍDO!":"Acertou!");}
+  else{csh[i]=1;H.sfx("bad");say("Água…");}
   if(sunkCount(cs)>=5){over=true;paint();
     return H.done({win:true,score:300,title:"Almirante!",sub:"Frota inimiga afundada!"});}
   turn=1;paint();H.after(600,ai);
@@ -93,7 +93,7 @@ function ai(){
       const nr=ir+d[0],nc=ic+d[1];
       if(nr>=0&&nr<N&&nc>=0&&nc<N&&!psh[nr*N+nc])hunt.push(nr*N+nc);
     });
-    if(s.hits>=s.cells.length)say("🔥 Eles afundaram um seu!");
+    if(s.hits>=s.cells.length)say("Eles afundaram um seu!");
   }else{psh[i]=1;}
   H.sfx("tick");
   if(sunkCount(ps)>=5){over=true;paint();

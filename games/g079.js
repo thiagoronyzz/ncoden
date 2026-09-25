@@ -9,7 +9,7 @@ const say=H.msg(root,"Digite as <b>letras</b> das palavras (teclado físico ou t
 const o=H.cvs(root,500,360),x=o.x;
 function startWave(){
   wave++;kills=0;buf="";lock=-1;foes=[];spawn=0;
-  hud.set("wv",wave+"/3");say("🌊 Onda "+wave+": destrua "+QUOTA[wave-1]+" invasores!");
+  hud.set("wv",wave+"/3");say("Onda "+wave+": destrua "+QUOTA[wave-1]+" invasores!");
 }
 startWave();
 function feed(ch){
@@ -67,12 +67,12 @@ H.loop(dt=>{
       foes.splice(i,1);if(lock===i){lock=-1;buf="";}
       lives--;hud.set("vd",lives);H.sfx("bad");
       if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Base invadida!",sub:"3 invasores passaram. Digite mais rápido!"});}
-      say("👾 Passou um! Vidas: "+lives);
+      say("Passou um! Vidas: "+lives);
     }
   }
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   x.fillStyle=H.C.terra;x.fillRect(0,o.H-24,o.W,24);
-  x.fillStyle="#fff";x.font="bold 12px 'Space Mono',monospace";x.fillText("⚠ LINHA DA BASE",o.W/2-70,o.H-7);
+  x.fillStyle="#fff";x.font="bold 12px 'Space Mono',monospace";x.fillText("LINHA DA BASE",o.W/2-70,o.H-7);
   foes.forEach((f,i)=>{
     x.font="18px 'Space Mono',monospace";
     const tw=x.measureText(f.w).width;
@@ -84,7 +84,7 @@ H.loop(dt=>{
     const done=f.w.slice(0,i===lock?buf.length:0),rest=f.w.slice(i===lock?buf.length:0);
     x.fillStyle=H.C.terra;x.fillText(done,f.x-tw/2,f.y+4);
     x.fillStyle=H.C.ink;x.fillText(rest,f.x-tw/2+x.measureText(done).width,f.y+4);
-    x.font="20px serif";x.fillText("👾",f.x-10,f.y-24);
+    x.font="20px serif";x.fillText("i:robot",f.x-10,f.y-24);
   });
 });
 }});

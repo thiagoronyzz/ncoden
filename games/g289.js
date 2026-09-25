@@ -3,15 +3,15 @@ GREG(289,{
 init(root,H){
 let over=false,px=230,dist=0,sp=220,lives=3,t=0;
 const OBS=[];
-for(let i=0;i<40;i++)OBS.push({x:40+Math.random()*380,y:-i*260-300,k:Math.random()<.5?'🌲':'🪨',hit:false});
+for(let i=0;i<40;i++)OBS.push({x:40+Math.random()*380,y:-i*260-300,k:Math.random()<.5?'i:pine':'i:box',hit:false});
 const hud=H.hud(root,[['v','VIDAS',3],['d','DIST','0%']]);
-const say=H.msg(root,'Desça até a base! ⬅️➡️ desviam, ⬇️ freia. Bater tira vida e velocidade.');
+const say=H.msg(root,'Desça até a base! ←→ desviam, ↓ freia. Bater tira vida e velocidade.');
 const o=H.cvs(root,460,520),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{tapS=qx<230?-1:1;tapT=.3;});
 let tapS=0,tapT=0;
 function gameOver(win){over=true;const sc=win?Math.max(200,700-(t|0)*8)+lives*60:dist/40|0;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🛷 Descida limpa!',sub:t.toFixed(1)+'s com '+lives+' vidas.'}:{win:false,score:sc,title:'Trenó quebrado!',sub:'3 batidas. Freie nas curvas!'});}
+H.done(win?{win:true,score:sc,title:'Descida limpa!',sub:t.toFixed(1)+'s com '+lives+' vidas.'}:{win:false,score:sc,title:'Trenó quebrado!',sub:'3 batidas. Freie nas curvas!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(tapT>0)tapT-=dt;else tapS=0;
@@ -37,10 +37,10 @@ H.loop(dt=>{
   const oy=ob.y+dist;
   if(oy<-30||oy>550)return;
   x.font='26px system-ui';x.textAlign='center';
-  x.fillText(ob.hit?'💥':ob.k,(ob.x,oy+9));
+  x.fillText(ob.hit?'i:burst':ob.k,ob.x,oy+9);
  });
- x.font='32px system-ui';x.fillText('🛷',px,452);
+ x.font='32px system-ui';x.fillText('i:sled',px,452);
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('❤️'.repeat(Math.max(0,lives))+'  '+(dist/10500*100|0)+'%  '+sp.toFixed(0)+'km/h',12,26);
+ x.fillText('i:heart'.repeat(Math.max(0,lives))+'  '+(dist/10500*100|0)+'%  '+sp.toFixed(0)+'km/h',12,26);
 });
 }});

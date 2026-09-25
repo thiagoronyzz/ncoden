@@ -14,12 +14,12 @@ function fresh(){
   return{pts,bar:[0,0,0],off:[0,0,0]};
 }
 let B=fresh(),over=false,turn=YOU,dice=[],seqs=[],seq=0,plies=0;
-let msg='Você (🔴) anda da direita para a esquerda em cima e recolhe embaixo à direita.';
+let msg='Você (○) anda da direita para a esquerda em cima e recolhe embaixo à direita.';
 const hud=H.hud(root,[['yo','SUAS FORA','0/15'],['ao','DELE FORA','0/15'],['py','SEUS PIPS',167],['pa','PIPS DELE',167]]);
 const say=H.msg(root,'Vença retirando as 15 damas! Dama sozinha (blot) pode ser capturada. Com dama na barra, ela entra primeiro. Dados iguais = 4 lances!');
 const o=H.cvs(root,560,400),x=o.x;
 const brow=H.el('div','g-row',null,root);
-const rollBtn=H.btn(root,'🎲 Rolar dados',doRoll,true);
+const rollBtn=H.btn(root,'Rolar dados',doRoll,true);
 const opp=w=>3-w;
 function clone(b){return{pts:b.pts.map(p=>[p[0],p[1]]),bar:[b.bar[0],b.bar[1],b.bar[2]],off:[b.off[0],b.off[1],b.off[2]]};}
 function canLand(b,w,t){return b.pts[t][0]!==opp(w)||b.pts[t][1]<=1;}
@@ -181,7 +181,7 @@ function gameOver(youWin){
   over=true;seq++;brow.innerHTML='';rollBtn.disabled=true;
   const sc=youWin?400+pips(B,AI)*2:Math.max(20,B.off[1]*15);
   H.score(sc);
-  H.done(youWin?{win:true,score:sc,title:'🏆 Gamão vencido!',sub:'15 damas retiradas · '+plies+' rodadas · '+pips(B,AI)+' pips dele restantes.'}
+  H.done(youWin?{win:true,score:sc,title:'Gamão vencido!',sub:'15 damas retiradas · '+plies+' rodadas · '+pips(B,AI)+' pips dele restantes.'}
     :{win:false,score:sc,title:'CPU retirou tudo!',sub:'Você tirou '+B.off[1]+'/15 · proteja os blots!'});
 }
 function colX(k){return PX+k*PW+(k>=6?26:0);}
@@ -242,7 +242,7 @@ H.loop(()=>{
   x.font='bold 15px system-ui';x.textAlign='left';
   x.fillText(turn===YOU?'SUA VEZ':'VEZ DA CPU',14,392);
   x.textAlign='right';
-  x.fillText(dice.length?'🎲 '+dice[0]+'  '+dice[1]:'🎲 —',546,392);
+  x.fillText(dice.length?'i:dice'+dice[0]+'  '+dice[1]:'i:dice —',546,392);
   x.textAlign='left';
 });
 status();

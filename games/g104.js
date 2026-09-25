@@ -41,7 +41,7 @@ function pick(i){
     }
   }else{
     strikes++;H.sfx("bad");
-    say("❌ Erro ("+strikes+"/3)! "+(EDS[e].bad.includes(w)?"Essa palavra tem grafia errada.":"Fora de ordem."));
+    say("✕ Erro ("+strikes+"/3)! "+(EDS[e].bad.includes(w)?"Essa palavra tem grafia errada.":"Fora de ordem."));
     if(strikes>=3){over=true;return H.done({win:false,score:sc,title:"Jornal recolhido!",sub:"3 erros na edição "+(e+1)+". Leia com calma!"});}
   }
 }

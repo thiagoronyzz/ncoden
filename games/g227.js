@@ -30,7 +30,7 @@ H.onTap(o,(px,py)=>{
       say("Palavra pescada! Próxima…");build();
     }
   }else{
-    chips.forEach(k=>k.got=false);buf=[];H.sfx("bad");say("❌ Fora de ordem! Recomece "+WORDS[wi]+".");
+    chips.forEach(k=>k.got=false);buf=[];H.sfx("bad");say("✕ Fora de ordem! Recomece "+WORDS[wi]+".");
   }
 });
 H.loop(dt=>{
@@ -48,7 +48,7 @@ H.loop(dt=>{
   x.fillStyle="#8A4F14";
   for(let i=0;i<20;i++){x.beginPath();x.arc((i*67)%o.W,(i*97)%o.H,3,0,7);x.fill();}
   x.fillStyle="#fff";x.font="bold 16px 'Space Mono',monospace";
-  x.fillText("🎯 "+WORDS[wi]+"  ·  "+buf.join(""),14,28);
+  x.fillText("i:target"+WORDS[wi]+"  ·  "+buf.join(""),14,28);
   x.font="bold 18px 'Space Mono',monospace";
   chips.forEach(c=>{
     if(c.got)return;

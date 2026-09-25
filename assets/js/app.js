@@ -26,7 +26,7 @@ function buildChips(){
     box.appendChild(b);
   };
   mk("all","Tudo",CAT.length);
-  Object.keys(GENRES).forEach(k=>mk(k, GENRES[k].e+" "+GENRES[k].n, CAT.filter(g=>g[2]===k).length));
+  Object.keys(GENRES).forEach(k=>mk(k, GENRES[k].n, CAT.filter(g=>g[2]===k).length));
 }
 
 function favs(){ return store.get("fav",[]); }
@@ -64,7 +64,7 @@ function build(){
       '<div class="card-top"><span class="card-idx">Nº <b>'+String(id).padStart(3,"0")+'</b></span><span class="card-tools">'+stHtml+'</span></div>'+
       "<h2>"+esc(title)+"</h2>"+
       '<p class="card-desc">'+esc(desc)+"</p>"+
-      '<div class="card-foot"><span class="gtag">'+GENRES[genre].e+" "+esc(GENRES[genre].n)+'</span>'+
+      '<div class="card-foot"><span class="gtag">'+esc(GENRES[genre].n)+'</span>'+
       (best?'<span class="best">★ '+best+'</span>':"")+
       '<span class="card-go">JOGAR <i>→</i></span></div>';
     const fav = document.createElement("button");
@@ -96,7 +96,7 @@ function stats(){
 function theme(){
   const t = store.get("theme","light");
   document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light");
-  $("#themeIc").textContent = t==="dark"?"☀":"◐";
+  $("#themeIc").innerHTML = t==="dark" ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>' : '◐';
   $("#themeLbl").textContent = t==="dark"?"CLARO":"ESCURO";
 }
 document.addEventListener("DOMContentLoaded",()=>{

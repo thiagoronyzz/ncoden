@@ -5,13 +5,13 @@ let over=false,px=60,py=300,stam=100,t=0,sig=0,phase='swim';
 const DEB=[];
 for(let i=0;i<12;i++)DEB.push({x:100+Math.random()*600,y:100+Math.random()*320,hit:false});
 const hud=H.hud(root,[['f','FÔLEGO','100%'],['s','SINAL','0%']]);
-const say=H.msg(root,'Nade até a praia 🏖️ desviando dos destroços! Lá, fique parado para acender a fogueira de sinalização!');
+const say=H.msg(root,'Nade até a praia desviando dos destroços! Lá, fique parado para acender a fogueira de sinalização!');
 const o=H.cvs(root,560,420),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{tx=qx-cam;ty=qy;});
 let tx=null,ty=null,cam=0;
 function gameOver(win){over=true;const sc=win?Math.max(200,500-(t|0)*5):px/8|0;H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'🔥 Resgatado!',sub:'Sinalização acesa!'}:{win:false,score:sc|0,title:'À deriva!',sub:stam<=0?'Fôlego zerado — nade com calma!':'Os destroços te pegaram. Desvie!'});}
+H.done(win?{win:true,score:sc|0,title:'Resgatado!',sub:'Sinalização acesa!'}:{win:false,score:sc|0,title:'À deriva!',sub:stam<=0?'Fôlego zerado — nade com calma!':'Os destroços te pegaram. Desvie!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const sp=140*dt;
@@ -36,9 +36,9 @@ H.loop(dt=>{
  cam=H.clamp(px-140,0,240);
  x.fillStyle='#2E6E8A';x.fillRect(0,0,560,420);
  x.fillStyle='#E8C86B';x.fillRect(730-cam,0,90,420);
- x.font='30px system-ui';x.textAlign='center';x.fillText('🏖️',765-cam,60);
- DEB.forEach(d=>{if(!d.hit){x.font='22px system-ui';x.fillText('🛢️',d.x-cam,d.y);}});
- x.font='30px system-ui';x.fillText('🏊',px-cam,py+10);
- if(phase==='sig'){x.fillStyle='#fff';x.font='bold 14px system-ui';x.textAlign='left';x.fillText('🔥 Acendendo: '+(sig|0)+'% — fique PARADO!',14,30);}
+ x.font='30px system-ui';x.textAlign='center';x.fillText('i:umbrella',765-cam,60);
+ DEB.forEach(d=>{if(!d.hit){x.font='22px system-ui';x.fillText('i:barrel',d.x-cam,d.y);}});
+ x.font='30px system-ui';x.fillText('i:swim',px-cam,py+10);
+ if(phase==='sig'){x.fillStyle='#fff';x.font='bold 14px system-ui';x.textAlign='left';x.fillText('Acendendo: '+(sig|0)+'% — fique PARADO!',14,30);}
 });
 }});

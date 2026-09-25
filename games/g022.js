@@ -3,7 +3,7 @@ GREG(22,{
 init(root,H){
 let round=0,over=false,sc=0,correct=0,lock=false;
 const hud=H.hud(root,[["rd","RODADA","1/5"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Observe as <b>dobras</b> e o <b>corte</b> (✂). Qual padrão surge ao desdobrar?");
+const say=H.msg(root,"Observe as <b>dobras</b> e o <b>corte</b> (). Qual padrão surge ao desdobrar?");
 const info=H.el("div","g-msg","",root);
 const optsRow=H.el("div","g-row",null,root);
 function foldC(c){return c<2?c:3-c;}
@@ -53,7 +53,7 @@ function build(){
   while(cands.length<4){const m=new Set([Math.floor(r()*4)+","+Math.floor(r()*4)]);if(!cands.some(c=>setEq(c,m)))cands.push(m);}
   const order=H.shuffle(r,[0,1,2,3]);
   correct=order.indexOf(0);
-  info.innerHTML="Dobras: <b>"+folds.join(" → ")+"</b> · Cortes: <b>"+cuts.size+"× ✂</b> · Rodada "+(round+1)+" de 5";
+  info.innerHTML="Dobras: <b>"+folds.join(" → ")+"</b> · Cortes: <b>"+cuts.size+"× </b> · Rodada "+(round+1)+" de 5";
   optsRow.innerHTML="";
   order.forEach((ci,k)=>{
     const box=H.el("div","g-col",null,optsRow);
@@ -64,11 +64,11 @@ function build(){
     const pick=()=>{
       if(lock||over)return;lock=true;
       if(k===correct){H.sfx("ok");sc+=100;H.score(sc);hud.set("sc",sc);
-        say("✅ Correto! O corte se espelhou por todas as dobras.");
+        say("✔ Correto! O corte se espelhou por todas as dobras.");
         round++;
         if(round>=5){over=true;H.after(700,()=>H.done({win:true,score:sc+100,title:"Mestre do origami!",sub:"5 desdobramentos previstos com perfeição."}));}
         else H.after(900,build);
-      }else{H.sfx("bad");say("❌ Não é essa. Observe como cada dobra <b>espelha</b> o corte.");lock=false;}
+      }else{H.sfx("bad");say("✕ Não é essa. Observe como cada dobra <b>espelha</b> o corte.");lock=false;}
     };
     b.addEventListener("click",pick);
     H.onTap(cv,()=>pick());

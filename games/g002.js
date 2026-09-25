@@ -81,7 +81,7 @@ function fire(){
   }else say("Acertou <b>"+hit+"/"+L.tgt.length+"</b> alvos. Ajuste os espelhos e dispare de novo.");
 }
 const row=H.el("div","g-row",null,root);
-H.btn(row,"⚡ Disparar laser",fire,true);
+H.btn(row,"Disparar laser",fire,true);
 H.btn(row,"Limpar espelhos",()=>{if(!over){mir={};used=0;paint();hud.set("mr","0/"+LV[lv].k);}},false);
 build();
 }});

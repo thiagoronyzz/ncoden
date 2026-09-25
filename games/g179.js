@@ -1,7 +1,7 @@
 /* NCODE N · 179 Mistura de Fluidos — camadas na medida! */
 GREG(179,{
 init(root,H){
-const FL={mel:{d:3,c:"#B06A1F",n:"🍯 mel"},agua:{d:2,c:"#2E6E8A",n:"💧 água"},oleo:{d:1,c:"#E8D33D",n:"🫒 óleo"},alcool:{d:0,c:"#BFE0EF",n:"🧪 álcool"}};
+const FL={mel:{d:3,c:"#B06A1F",n:"mel"},agua:{d:2,c:"#2E6E8A",n:"água"},oleo:{d:1,c:"#E8D33D",n:"óleo"},alcool:{d:0,c:"#BFE0EF",n:"álcool"}};
 const ROUNDS=[
   {t:{mel:30,agua:30},n:"mel 30 + água 30"},
   {t:{mel:25,agua:25,oleo:25},n:"mel 25 + água 25 + óleo 25"},
@@ -15,7 +15,7 @@ const od=H.el("div","g-msg","",box);
 function paint(){
   const tot=vol.mel+vol.agua+vol.oleo+vol.alcool;
   hud.set("rd",(rd+1)+"/3");hud.set("tt",Math.floor(tot)+"/100");
-  od.innerHTML="🧾 Meta: "+ROUNDS[rd].n+" · atual: "+
+  od.innerHTML="Meta: "+ROUNDS[rd].n+" · atual: "+
     Object.keys(vol).map(k=>FL[k].n.split(" ")[0]+Math.floor(vol[k])).join(" ")+" · despejando: "+FL[sel].n;
 }
 paint();
@@ -35,7 +35,7 @@ H.loop(dt=>{
     const tot=vol.mel+vol.agua+vol.oleo+vol.alcool;
     if(tot>100){
       vol={mel:0,agua:0,oleo:0,alcool:0};pour=false;H.sfx("bad");
-      say("🌊 TRANSBORDOU! Tanque esvaziado — recomece a rodada.");
+      say("TRANSBORDOU! Tanque esvaziado — recomece a rodada.");
     }
     paint();
   }
@@ -58,7 +58,7 @@ H.loop(dt=>{
   }
 });
 const row=H.el("div","g-row",null,box);
-H.btn(row,"✅ Conferir",()=>{
+H.btn(row,"✔ Conferir",()=>{
   if(over)return;
   const T=ROUNDS[rd].t;
   const ok=Object.keys(T).every(k=>Math.abs(vol[k]-T[k])<=8)&&
@@ -68,8 +68,8 @@ H.btn(row,"✅ Conferir",()=>{
     if(rd>=ROUNDS.length){over=true;
       return H.done({win:true,score:400,title:"Química perfeita!",sub:"3 tanques em camadas exatas."});}
     vol={mel:0,agua:0,oleo:0,alcool:0};
-    say("✅ Rodada pronta! Agora: "+ROUNDS[rd].n);paint();
-  }else{H.sfx("bad");say("❌ Fora da medida! Compare os números (±8).");}
+    say("✔ Rodada pronta! Agora: "+ROUNDS[rd].n);paint();
+  }else{H.sfx("bad");say("✕ Fora da medida! Compare os números (±8).");}
 },true);
-H.btn(row,"🗑️ Esvaziar",()=>{if(!over){vol={mel:0,agua:0,oleo:0,alcool:0};H.sfx("tick");paint();}},false);
+H.btn(row,"Esvaziar",()=>{if(!over){vol={mel:0,agua:0,oleo:0,alcool:0};H.sfx("tick");paint();}},false);
 }});

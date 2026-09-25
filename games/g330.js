@@ -10,19 +10,19 @@ const brow=H.el('div','g-row',null,box);
 let sys={o2:true,heat:true,pump:false};
 function status(){
  hud.set('ox',Math.max(0,o2|0));hud.set('en',Math.max(0,power|0));hud.set('pr',press|0);
- st.innerHTML='🌊 '+(time|0)+'s restantes<br>O₂ '+o2.toFixed(0)+' · ⚡ '+power.toFixed(0)+' · 🧭 '+press.toFixed(0)+'%';
+ st.innerHTML=(time|0)+'s restantes<br>O₂ '+o2.toFixed(0)+' · '+power.toFixed(0)+' · '+press.toFixed(0)+'%';
  paintBtns();
 }
 function paintBtns(){
  brow.innerHTML='';
  if(over)return;
- H.btn(brow,(sys.o2?'🟢':'🔴')+' Gerador O₂',()=>{sys.o2=!sys.o2;H.sfx('tick');status();},false);
- H.btn(brow,(sys.heat?'🟢':'🔴')+' Aquecedor',()=>{sys.heat=!sys.heat;H.sfx('tick');status();},false);
- H.btn(brow,(sys.pump?'🟢':'🔴')+' Bomba pressão',()=>{sys.pump=!sys.pump;H.sfx('tick');status();},false);
+ H.btn(brow,(sys.o2?'●':'○')+' Gerador O₂',()=>{sys.o2=!sys.o2;H.sfx('tick');status();},false);
+ H.btn(brow,(sys.heat?'●':'○')+' Aquecedor',()=>{sys.heat=!sys.heat;H.sfx('tick');status();},false);
+ H.btn(brow,(sys.pump?'●':'○')+' Bomba pressão',()=>{sys.pump=!sys.pump;H.sfx('tick');status();},false);
 }
 function gameOver(win,why){over=true;brow.innerHTML='';
  const sc=win?400:Math.max(20,120-time|0);H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'🌊 Turno completo!',sub:'Base estável por 120s!'}:{win:false,score:sc|0,title:'Base perdida!',sub:why});}
+H.done(win?{win:true,score:sc|0,title:'Turno completo!',sub:'Base estável por 120s!'}:{win:false,score:sc|0,title:'Base perdida!',sub:why});}
 H.every(500,()=>{
  if(over)return;
  time-=.5;

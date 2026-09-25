@@ -40,14 +40,14 @@ function tray(){
   trayBox.innerHTML="";
   LV[lv].burn.forEach((b,i)=>{
     const row=H.el("div","g-row",null,trayBox);
-    H.el("span","g-chip","Pavio "+(i+1)+" · retardo <b>"+delays[i].toFixed(1)+"s</b> → 💥 "+(delays[i]+b).toFixed(1)+"s",row);
+    H.el("span","g-chip","Pavio "+(i+1)+" · retardo <b>"+delays[i].toFixed(1)+"s</b> → "+(delays[i]+b).toFixed(1)+"s",row);
     const m=H.el("button","g-btn sm ghost","−0.5",row);
     const p=H.el("button","g-btn sm ghost","+0.5",row);
     m.addEventListener("click",()=>{if(!running){delays[i]=Math.max(0,+(delays[i]-0.5).toFixed(1));H.sfx("tick");paint();tray();}});
     p.addEventListener("click",()=>{if(!running){delays[i]=Math.min(12,+(delays[i]+0.5).toFixed(1));H.sfx("tick");paint();tray();}});
   });
 }
-H.btn(root,"🎆 Acender pavios",()=>{
+H.btn(root,"Acender pavios",()=>{
   if(over||running)return;
   running=true;
   const B=LV[lv].burn;

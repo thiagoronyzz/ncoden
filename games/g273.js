@@ -6,12 +6,12 @@ const EMIT=[{x:150,y:120},{x:330,y:280}];
 const DEV={x:415,y:60};
 let rings=[];
 const hud=H.hud(root,[['v','VIDAS',3],['pl','INSTALAÇÃO','0%']]);
-const say=H.msg(root,'Chegue ao terminal 🖥️ e fique parado para instalar (3s)! Anéis de sonar revelam — fuja das bordas dos anéis!');
+const say=H.msg(root,'Chegue ao terminal e fique parado para instalar (3s)! Anéis de sonar revelam — fuja das bordas dos anéis!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
 function gameOver(win){over=true;const sc=win?350+lives*100:plant|0;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🌊 Fantasma das profundezas!',sub:'Dispositivo instalado sem um ping.'}:{win:false,score:sc,title:'Detectado!',sub:'O sonar te localizou. Desvie dos anéis!'});}
+H.done(win?{win:true,score:sc,title:'Fantasma das profundezas!',sub:'Dispositivo instalado sem um ping.'}:{win:false,score:sc,title:'Detectado!',sub:'O sonar te localizou. Desvie dos anéis!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  EMIT.forEach((e,i)=>{if(((t+i*1.4)%2.8)<dt*1.2)rings.push({x:e.x,y:e.y,r:8});});
@@ -31,7 +31,7 @@ H.loop(dt=>{
  x.fillStyle='#12303C';x.fillRect(0,0,460,460);
  EMIT.forEach(e=>{x.fillStyle='#E8A33D';x.beginPath();x.arc(e.x,e.y,9,0,7);x.fill();});
  rings.forEach(r=>{x.strokeStyle='rgba(232,163,61,.6)';x.lineWidth=3;x.beginPath();x.arc(r.x,r.y,r.r,0,7);x.stroke();});
- x.font='30px system-ui';x.textAlign='center';x.fillText('🖥️',DEV.x,DEV.y+10);
+ x.font='30px system-ui';x.textAlign='center';x.fillText('i:tv',DEV.x,DEV.y+10);
  x.strokeStyle='#C4D645';x.lineWidth=2;x.beginPath();x.arc(DEV.x,DEV.y,34,0,7);x.stroke();
  x.fillStyle=pinged?'#D94E34':'#C4D645';x.beginPath();x.arc(px,py,10,0,7);x.fill();
  x.fillStyle='#000';x.fillRect(10,436,200,12);

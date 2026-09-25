@@ -18,7 +18,7 @@ const box=H.el("div","g-col",null,root);
 function paint(){
   hud.set("qs",(qi+1)+"/8");
   box.innerHTML="";
-  H.el("div","g-msg","🗣️ \""+Q[qi].d+"\"<br>🚫 tabu: "+Q[qi].tab.join(", "),box);
+  H.el("div","g-msg","\""+Q[qi].d+"\"<br>✕ tabu: "+Q[qi].tab.join(", "),box);
   Q[qi].o.forEach((op,i)=>{
     const b=H.el("button","g-btn ghost",op,box);
     b.addEventListener("click",()=>{

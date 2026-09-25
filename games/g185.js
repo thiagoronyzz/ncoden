@@ -73,7 +73,7 @@ H.loop(dt=>{
   x.fillStyle="#8A877C";x.fillRect(0,360,o.W,20);
   x.fillStyle="#5b3d20";x.fillRect(PLAT.x,PLAT.y,PLAT.w,PLAT.h);
   x.fillRect(PLAT.x+10,PLAT.y+16,14,44);x.fillRect(PLAT.x+PLAT.w-24,PLAT.y+16,14,44);
-  x.font="30px serif";x.fillText("💣",CAN.x-15,CAN.y+10);
+  x.font="30px serif";x.fillText("i:bomb",CAN.x-15,CAN.y+10);
   if(aim){
     x.strokeStyle=H.C.terra;x.lineWidth=2;
     x.beginPath();x.moveTo(CAN.x,CAN.y);x.lineTo(aim.x,aim.y);x.stroke();

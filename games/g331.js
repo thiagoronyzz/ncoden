@@ -14,13 +14,13 @@ H.onTap(o,(px,py)=>{
  }
 });
 function gameOver(win){over=true;const sc=kills*15+(win?250:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🌾 Lavoura salva!',sub:kills+' pragas esmagadas!'}:{win:false,score:sc,title:'Lavoura devorada!',sub:'Onda '+wave+'/6. Seja mais rápido!'});}
+H.done(win?{win:true,score:sc,title:'Lavoura salva!',sub:kills+' pragas esmagadas!'}:{win:false,score:sc,title:'Lavoura devorada!',sub:'Onda '+wave+'/6. Seja mais rápido!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(!pests.length){
   if(wave>=6){gameOver(true);return;}
   wave++;hud.set('o',wave+'/6');
-  const kinds=['🦗','🐀','🐦‍⬛'];
+  const kinds=['','',''];
   for(let i=0;i<4+wave*2;i++)pests.push({x:Math.random()*440+10,y:-i*46-Math.random()*60,k:kinds[i%3],sp:40+wave*10+Math.random()*20});
   say('Onda '+wave+'/6!');
  }
@@ -31,9 +31,9 @@ H.loop(dt=>{
  x.fillStyle='#7CB56B';x.fillRect(0,0,460,420);
  x.fillStyle='#3E7C4F';x.fillRect(0,360,460,60);
  x.font='18px system-ui';x.textAlign='center';
- for(let i=0;i<23;i++)x.fillText(crop>0?'🌽':'🥀',10+i*20,398);
- pests.forEach(p=>{x.font='24px system-ui';x.fillText(p.k==='🐦‍⬛'?'🐦':p.k,p.x,p.y);});
+ for(let i=0;i<23;i++)x.fillText(crop>0?'i:wheat':'',10+i*20,398);
+ pests.forEach(p=>{x.font='24px system-ui';x.fillText(p.k===''?'i:bird':p.k,p.x,p.y);});
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('Onda '+wave+'/6 · 🌽 '+(crop|0)+'% · ☠️ '+kills,12,26);
+ x.fillText('Onda '+wave+'/6 · '+(crop|0)+'% · '+kills,12,26);
 });
 }});

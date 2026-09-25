@@ -9,10 +9,10 @@ let sc=0;
 function paint(){
   hud.set("pv",served+"/10");
   box.innerHTML="";
-  H.el("div","g-msg","🧺 Cesto: "+items.length+" peça(s) suja(s)",box);
+  H.el("div","g-msg","Cesto: "+items.length+" peça(s) suja(s)",box);
   const r1=H.el("div","g-row",null,box);
   items.forEach(it=>{
-    const b=H.el("button","g-chip","👕 "+Math.ceil(it.p)+"s",r1);
+    const b=H.el("button","g-chip",""+Math.ceil(it.p)+"s",r1);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>{
       if(over)return;
@@ -26,7 +26,7 @@ function paint(){
   wash.forEach((w,i)=>{
     const b=H.el("button","g-cell"+(w&&w.t<=0?" good":w?" hot":""),null,r2);
     b.style.minWidth="120px";b.style.fontSize="13px";
-    b.innerHTML=!w?"🌀 lav "+(i+1)+"<br>livre":w.t>0?"🌀 lavando<br>"+Math.ceil(w.t)+"s":"✅ PRONTA!<br>"+Math.ceil(w.over)+"s";
+    b.innerHTML=!w?"lav "+(i+1)+"<br>livre":w.t>0?"lavando<br>"+Math.ceil(w.t)+"s":"✔ PRONTA!<br>"+Math.ceil(w.over)+"s";
     b.addEventListener("click",()=>{
       if(over||!w||w.t>0)return;
       if(dry[0]){H.sfx("bad");say("Secadora ocupada!");return;}
@@ -37,7 +37,7 @@ function paint(){
   const d=dry[0];
   const bd=H.el("button","g-cell"+(d&&d.t<=0?" good":d?" hot":""),null,r3);
   bd.style.minWidth="140px";bd.style.fontSize="13px";
-  bd.innerHTML=!d?"💨 secadora<br>livre":d.t>0?"💨 secando<br>"+Math.ceil(d.t)+"s":"✅ DOBRAR!<br>"+Math.ceil(d.over)+"s";
+  bd.innerHTML=!d?"secadora<br>livre":d.t>0?"secando<br>"+Math.ceil(d.t)+"s":"✔ DOBRAR!<br>"+Math.ceil(d.over)+"s";
   bd.addEventListener("click",()=>{
     if(over||!d||d.t>0)return;
     dry[0]=null;served++;sc+=30;H.score(sc);H.sfx("ok");paint();
@@ -56,12 +56,12 @@ H.loop(dt=>{
   wash.forEach((w,i)=>{
     if(!w)return;
     if(w.t>0)w.t-=dt;
-    else{w.over-=dt;if(w.over<=0){wash[i]=null;items.push({id:nid++,p:30});H.sfx("bad");say("🤢 Peça mofou na lavadora! Relave.");paint();}}
+    else{w.over-=dt;if(w.over<=0){wash[i]=null;items.push({id:nid++,p:30});H.sfx("bad");say("Peça mofou na lavadora! Relave.");paint();}}
   });
   if(dry[0]){
     if(dry[0].t>0)dry[0].t-=dt;
     else{dry[0].over-=dt;
-      if(dry[0].over<=0){dry[0]=null;items.push({id:nid++,p:30});H.sfx("bad");say("🤢 Peça mofou na secadora! Relave.");paint();}}
+      if(dry[0].over<=0){dry[0]=null;items.push({id:nid++,p:30});H.sfx("bad");say("Peça mofou na secadora! Relave.");paint();}}
   }
   for(let i=items.length-1;i>=0;i--){
     items[i].p-=dt;

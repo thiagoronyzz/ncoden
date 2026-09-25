@@ -8,7 +8,7 @@ const LV=[
 ];
 let lv=0,over=false,lock=false;
 const hud=H.hud(root,[["nv","NÍVEL",1],["gr","ENGRENAGENS",0],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique para <b>colocar/retirar</b> engrenagens e conecte ⚙️ à 🎯. Depois pressione <b>Girar</b>.");
+const say=H.msg(root,"Clique para <b>colocar/retirar</b> engrenagens e conecte até a <b>roda final</b>. Depois pressione <b>Girar</b>.");
 const board=H.el("div","g-board",null,root);
 let cells=[],gears=new Set();
 function key(r,c){return r+","+c;}
@@ -22,13 +22,13 @@ function build(){
   for(let r=0;r<L.n;r++)for(let c=0;c<L.n;c++){
     const d=H.el("button","g-cell",null,board);
     d.style.aspectRatio="1";d.style.fontSize="22px";
-    if(r===L.drv[0]&&c===L.drv[1]){d.textContent="⚙️";d.classList.add("sel");}
-    else if(r===L.fin[0]&&c===L.fin[1]){d.textContent="🎯";}
-    else if(L.obs.some(o=>o[0]===r&&o[1]===c)){d.textContent="🧱";d.disabled=true;}
+    if(r===L.drv[0]&&c===L.drv[1]){d.textContent="";d.classList.add("sel");}
+    else if(r===L.fin[0]&&c===L.fin[1]){d.textContent="";}
+    else if(L.obs.some(o=>o[0]===r&&o[1]===c)){d.textContent="";d.disabled=true;}
     else{(function(rr,cc,dd){dd.addEventListener("click",()=>{
       if(over||lock)return;const k=key(rr,cc);
       if(gears.has(k)){gears.delete(k);dd.textContent="";}
-      else{if(gears.size>=L.k){H.sfx("bad");say("Limite de <b>"+L.k+"</b> engrenagens!");return;}gears.add(k);dd.textContent="⚙️";}
+      else{if(gears.size>=L.k){H.sfx("bad");say("Limite de <b>"+L.k+"</b> engrenagens!");return;}gears.add(k);dd.textContent="";}
       hud.set("gr",gears.size+"/"+L.k);H.sfx("tick");
     });})(r,c,d);}
     cells.push(d);
@@ -62,6 +62,6 @@ function spin(){
   }else{H.sfx("bad");say("O giro <b>não chegou</b> à roda final. Complete a cadeia de vizinhas.");}
 }
 const row=H.el("div","g-row",null,root);
-H.btn(row,"⚙️ Girar mecanismo",spin,true);
+H.btn(row,"Girar mecanismo",spin,true);
 build();
 }});

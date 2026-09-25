@@ -38,7 +38,7 @@ function tray(){
     b2.addEventListener("click",()=>{mix[i]=Math.min(255,mix[i]+16);H.sfx("tick");paint();tray();});
   });
   const row=H.el("div","g-row",null,trayBox);
-  H.btn(row,"⚗ Provar poção",prove,true);
+  H.btn(row,"Provar poção",prove,true);
 }
 function prove(){
   if(over)return;

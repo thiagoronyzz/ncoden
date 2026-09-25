@@ -5,16 +5,16 @@ let over=false,f=0,t=0,round=0,score=0;
 const hud=H.hud(root,[['v','VELA','1/5'],['pt','PONTOS',0]]);
 const say=H.msg(root,'A chama oscila! SOPRE quando ela estiver no ponto MAIS ALTO. 5 velas, 3+ apagadas!');
 const o=H.cvs(root,400,380),x=o.x;
-H.btn(root,'💨 SOPRAR!',()=>{
+H.btn(root,'SOPRAR!',()=>{
  if(over)return;
- if(f>.8){score+=100;H.sfx('ok');say('🕯️ Apagada! +100');}
- else{H.sfx('bad');say('❌ A chama resistiu…');}
+ if(f>.8){score+=100;H.sfx('ok');say('Apagada! +100');}
+ else{H.sfx('bad');say('✕ A chama resistiu…');}
  hud.set('pt',score);round++;
  if(round>=5){gameOver();return;}
  hud.set('v',(round+1)+'/5');t=0;
 },true);
 function gameOver(){over=true;H.score(score);
-H.done({win:score>=300,score,title:score>=300?'💨 Sopro certeiro!':'💨 Fim!',sub:score+'/500 pontos.'});}
+H.done({win:score>=300,score,title:score>=300?'Sopro certeiro!':'Fim!',sub:score+'/500 pontos.'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  f=(Math.sin(t*3.1)*.5+.5)*.7+(Math.sin(t*7.3)*.5+.5)*.3;

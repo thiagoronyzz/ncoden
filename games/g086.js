@@ -16,15 +16,15 @@ function paint(){
   for(let i=0;i<N*N;i++){
     const d=H.el("button","g-cell",null,bP);
     d.style.aspectRatio="1";d.style.fontSize="14px";
-    if(shotsE.has(i))d.textContent=pc.has(i)?"🔥":"·";
-    else if(pc.has(i))d.textContent="🚢";
+    if(shotsE.has(i))d.textContent=pc.has(i)?"":"·";
+    else if(pc.has(i))d.textContent="";
     if(phase==="place"){(function(idx){d.addEventListener("click",()=>place(idx));})(i);}
   }
   for(let i=0;i<N*N;i++){
     const d=H.el("button","g-cell",null,bE);
     d.style.aspectRatio="1";d.style.fontSize="14px";
-    if(shotsP.has(i))d.textContent=ec.has(i)?"🔥":"🌊";
-    else d.textContent="❔";
+    if(shotsP.has(i))d.textContent=ec.has(i)?"":"";
+    else d.textContent="?";
     if(phase==="war"){(function(idx){d.addEventListener("click",()=>fire(idx));})(i);}
   }
   const alive=S=>S.filter(s=>!cells(s).every(c=>(S===pships?shotsE:shotsP).has(c))).length;
@@ -52,7 +52,7 @@ function place(i){
       eships.push(s);
     }
     phase="war";hud.set("fs","GUERRA");
-    say("⚔️ Guerra! Clique no mar inimigo (direita) para atirar.");
+    say("Guerra! Clique no mar inimigo (direita) para atirar.");
   }else say("Navio "+(pi+1)+"/3 (tamanho "+SHIPS[pi]+"). Orientação: "+orient);
   paint();
 }
@@ -62,9 +62,9 @@ function fire(i){
   shotsP.add(i);
   const ec=new Set(eships.flatMap(cells));
   if(ec.has(i)){H.sfx("ok");sc+=20;H.score(sc);
-    say("🎯 Acertou! Atire de novo.");
+    say("Acertou! Atire de novo.");
     if(sunk(eships,shotsP)>=eships.length){over=true;paint();return H.done({win:true,score:sc+150,title:"Mar dominado!",sub:"Frota inimiga afundada."});}
-  }else{H.sfx("tick");say("🌊 Água… vez do inimigo!");
+  }else{H.sfx("tick");say("Água… vez do inimigo!");
     H.after(600,()=>{
       if(over)return;
       aiMove();
@@ -79,7 +79,7 @@ function aiMove(){
   shotsE.add(i);
   const pc=new Set(pships.flatMap(cells));
   if(pc.has(i)){
-    say("🔥 Seu navio foi atingido! O inimigo atira de novo…");paint();
+    say("Seu navio foi atingido! O inimigo atira de novo…");paint();
     if(sunk(pships,shotsE)>=pships.length){over=true;return H.done({win:false,score:sc,title:"Frota afundada!",sub:"Seus navios viraram recife."});}
     H.after(700,()=>{if(!over)aiMove();});
   }else{say("O inimigo errou. Sua vez!");paint();}

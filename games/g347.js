@@ -3,8 +3,8 @@ GREG(347,{
 init(root,H){
 let over=false,found={},t=0,time=90;
 const CR=[
- {k:'🦀',n:'caranguejo',x:80,y:120},{k:'⭐',n:'estrela-do-mar',x:200,y:220},{k:'🐚',n:'concha',x:330,y:140},
- {k:'🦐',n:'camarão',x:140,y:300},{k:'🐙',n:'polvo bebê',x:380,y:290},{k:'🪸',n:'anêmona',x:260,y:90}
+ {k:'',n:'caranguejo',x:80,y:120},{k:'★',n:'estrela-do-mar',x:200,y:220},{k:'',n:'concha',x:330,y:140},
+ {k:'',n:'camarão',x:140,y:300},{k:'',n:'polvo bebê',x:380,y:290},{k:'',n:'anêmona',x:260,y:90}
 ];
 const ROCKS=[];
 for(let i=0;i<8;i++)ROCKS.push({x:40+Math.random()*380,y:60+Math.random()*300,open:false});
@@ -26,7 +26,7 @@ H.onTap(o,(px,py)=>{
  });
 });
 function gameOver(win){over=true;const n=Object.keys(found).length;const sc=n*60+(win?200:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🦀 Catálogo completo!',sub:'6 bichos da maré!'}:{win:false,score:sc,title:'A maré subiu!',sub:n+'/6. Vire todas as pedras!'});}
+H.done(win?{win:true,score:sc,title:'Catálogo completo!',sub:'6 bichos da maré!'}:{win:false,score:sc,title:'A maré subiu!',sub:n+'/6. Vire todas as pedras!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;time-=dt;
  hud.set('tp',Math.ceil(time));
@@ -43,6 +43,6 @@ H.loop(dt=>{
   x.fillStyle='#5A5A55';x.beginPath();x.ellipse(r.x,r.y,28,20,0,0,7);x.fill();
  });
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('📋 '+Object.keys(found).join(', ')+'  ⏱️'+Math.ceil(time),12,26);
+ x.fillText('i:clipboard'+Object.keys(found).join(', ')+Math.ceil(time),12,26);
 });
 }});

@@ -32,7 +32,7 @@ H.loop(dt=>{
     if(s.y>o.H-120&&s.y<o.H-40&&s.lane===lane){
       shots.splice(i,1);lives--;hud.set("vd",lives);H.sfx("bad");
       if(lives<=0){over=true;return H.done({win:false,score:Math.floor(sc*10),title:"Flechado!",sub:"Sobreviveu "+(45-Math.ceil(t))+"s. Fuja do vermelho!"});}
-      say("🏹 Ai! Vidas: "+lives);continue;
+      say("Ai! Vidas: "+lives);continue;
     }
     if(s.y>o.H+20)shots.splice(i,1);
   }
@@ -41,7 +41,7 @@ H.loop(dt=>{
     const hot=warn.some(w=>w.lane===i);
     x.fillStyle=hot?"rgba(217,78,52,.25)":i%2?"#EDE8DC":H.C.card;
     x.fillRect(lx-48,0,96,o.H);
-    if(hot){x.fillStyle=H.C.terra;x.font="bold 13px 'Space Mono',monospace";x.fillText("⚠",lx-8,30);}
+    if(hot){x.fillStyle=H.C.terra;x.font="bold 13px 'Space Mono',monospace";x.fillText("i:warning",lx-8,30);}
   });
   for(const s of shots){
     const lx=LANES[s.lane];
@@ -50,7 +50,7 @@ H.loop(dt=>{
     x.fillStyle=H.C.ink;
     x.beginPath();x.moveTo(lx-6,s.y-8);x.lineTo(lx+6,s.y-8);x.lineTo(lx,s.y+4);x.closePath();x.fill();
   }
-  x.font="32px serif";x.fillText("🧍",LANES[lane]-16,o.H-70);
+  x.font="32px serif";x.fillText("i:person",LANES[lane]-16,o.H-70);
 });
 H.btn(root,"↻ Recomeçar",()=>{if(!over)build();},false);
 }});

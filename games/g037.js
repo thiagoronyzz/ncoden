@@ -24,10 +24,10 @@ function build(){
     d.style.aspectRatio="1";
     const k=y+","+xx;
     const isModel=axis==="V"?xx<W/2:y<Hh/2;
-    if(isModel){d.disabled=true;if(model.has(k)){d.textContent="⬛";d.style.background=H.C.ink;}}
+    if(isModel){d.disabled=true;if(model.has(k)){d.textContent="■";d.style.background=H.C.ink;}}
     else{(function(kk,dd){dd.addEventListener("click",()=>{if(over)return;
       if(ans.has(kk)){ans.delete(kk);dd.textContent="";dd.classList.remove("sel");}
-      else{ans.add(kk);dd.textContent="⬛";dd.classList.add("sel");}
+      else{ans.add(kk);dd.textContent="■";dd.classList.add("sel");}
       H.sfx("tick");
     });})(k,d);}
     if(axis==="V"&&xx===W/2)d.style.borderLeft="3px solid "+H.C.terra;

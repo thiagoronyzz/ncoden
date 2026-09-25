@@ -12,7 +12,7 @@ const rk=H.el("div","g-row",null,box);
 const fd=H.el("div","g-msg","",box);
 let score=0;
 function paint(){
-  cur.innerHTML="⌨️ "+(buf||"_");
+  cur.innerHTML=""+(buf||"_");
   rk.innerHTML="";
   RACK.forEach((l,i)=>{
     const b=H.el("button","g-btn"+(used.includes(i)?"":" ghost"),l,rk);
@@ -20,7 +20,7 @@ function paint(){
     if(used.includes(i))b.disabled=true;
     b.addEventListener("click",()=>pick(i));
   });
-  fd.innerHTML="📖 "+(found.join(" · ")||"nada ainda…");
+  fd.innerHTML=""+(found.join(" · ")||"nada ainda…");
 }
 function pick(i){
   if(over||used.includes(i))return;
@@ -34,9 +34,9 @@ kb.on((c,d)=>{if(!d||over)return;
   if(i>=0)pick(i);});
 paint();
 const row=H.el("div","g-row",null,box);
-H.btn(row,"⌫",()=>{if(!over){used.pop();buf=buf.slice(0,-1);paint();}},false);
-H.btn(row,"🔀",()=>{if(!over){used=[];buf="";paint();}},false);
-H.btn(row,"✅ Enviar",()=>{
+H.btn(row,"",()=>{if(!over){used.pop();buf=buf.slice(0,-1);paint();}},false);
+H.btn(row,"",()=>{if(!over){used=[];buf="";paint();}},false);
+H.btn(row,"✔ Enviar",()=>{
   if(over||!buf)return;
   if(buf.length>=3&&DICT.includes(buf)&&!found.includes(buf)){
     found.push(buf);score+=buf.length*10;H.score(score);

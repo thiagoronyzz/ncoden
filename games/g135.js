@@ -1,7 +1,7 @@
 /* NCODE N · 135 Pizzaria Delivery — 8 pizzas quentes */
 GREG(135,{
 init(root,H){
-const TOP=["🍕","🍄","🫒","🌶️","🧅","🥓"];
+const TOP=["queijo","cogumelo","azeitona","pimenta","cebola","bacon"];
 let over=false,orders=[],oven=[],served=0,lost=0,spawn=1,time=200,nid=0;
 const hud=H.hud(root,[["pz","ENTREGUES","0/8"],["tp","TEMPO",200],["sc","PONTOS",0]]);
 const say=H.msg(root,"Clique no pedido para <b>montar a cobertura certa</b> e <b>enfornar</b> (8s). Depois clique para <b>entregar</b> antes de esfriar!");
@@ -14,7 +14,7 @@ function paint(){
   orders.forEach(o=>{
     const b=H.el("button","g-chip"+(o.baked?" good":o.baking>0?" hot":""),null,list);
     b.style.cursor="pointer";
-    b.innerHTML="🍕+["+o.top+"] "+(o.baking>0?"🔥"+Math.ceil(o.baking)+"s":o.baked?"🛵 ENTREGAR! ⏳"+Math.ceil(o.cool)+"s":"🅿️ montar")+" · ⏳"+Math.ceil(o.p);
+    b.innerHTML="+["+o.top+"] "+(o.baking>0?""+Math.ceil(o.baking)+"s":o.baked?"ENTREGAR! "+Math.ceil(o.cool)+"s":"montar")+" · "+Math.ceil(o.p);
     b.addEventListener("click",()=>act(o.id));
   });
   if(!orders.length)H.el("div","g-chip","sem pedidos…",list);
@@ -49,7 +49,7 @@ H.loop(dt=>{
     if(o.baking>0){o.baking-=dt;
       if(o.baking<=0){o.baked=true;oven=oven.filter(q=>q!==o.id);H.sfx("ok");}}
     else if(o.baked){o.cool-=dt;
-      if(o.cool<=0){orders.splice(i,1);lost++;H.sfx("bad");paint();say("🥶 Pizza esfriou! ("+lost+"/3)");
+      if(o.cool<=0){orders.splice(i,1);lost++;H.sfx("bad");paint();say("Pizza esfriou! ("+lost+"/3)");
         if(lost>=3){over=true;return H.done({win:false,score:sc,title:"Massa fria!",sub:"3 pizzas esfriaram. Entregue logo!"});}
         continue;}}
     else{o.p-=dt;

@@ -63,7 +63,7 @@ function finish(a,b){
   const hit=WORDS.find(k=>(k===w||k===rev)&&!found.includes(k));
   if(hit){
     found.push(hit);H.score(found.length*50);hud.set("pv",found.length+"/6");H.sfx("ok");
-    say("✅ "+hit+"! ("+found.length+"/6)");
+    say("✔"+hit+"! ("+found.length+"/6)");
     if(found.length>=WORDS.length){over=true;
       return H.done({win:true,score:300+Math.floor(time),title:"Olho de lince!",sub:"6 palavras encontradas."});}
   }else H.sfx("bad");

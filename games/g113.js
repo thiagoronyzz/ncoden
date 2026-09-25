@@ -1,10 +1,10 @@
 /* NCODE N · 113 Pousada da Montanha — 10 hóspedes felizes */
 GREG(113,{
 init(root,H){
-const ROOMS=[{t:"solteiro",e:"🛏️"},{t:"solteiro",e:"🛏️"},{t:"casal",e:"❤️"},{t:"casal",e:"❤️"},{t:"luxo",e:"👑"},{t:"luxo",e:"👑"}];
+const ROOMS=[{t:"solteiro",e:""},{t:"solteiro",e:""},{t:"casal",e:"♥"},{t:"casal",e:"♥"},{t:"luxo",e:""},{t:"luxo",e:""}];
 let over=false,rooms=[],guest=null,done2=0,sat=0,walk=0,spawn=2,sel=-1;
 const hud=H.hud(root,[["hs","HÓSPEDES","0/10"],["st","SATISFAÇÃO","—"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique no hóspede e depois no quarto. Tipo certo = 😍 · upgrade grátis = 🙂 · downgrade = 😠!");
+const say=H.msg(root,"Clique no hóspede e depois no quarto. Tipo certo = · upgrade grátis = · downgrade = !");
 const box=H.el("div","g-col",null,root);
 const grow=H.el("div","g-row",null,box);
 const rrow=H.el("div","g-board",null,box);
@@ -16,14 +16,14 @@ const PREF=["solteiro","casal","luxo"];
 function paint(){
   grow.innerHTML="";rrow.innerHTML="";
   if(guest){
-    const b=H.el("button","g-chip"+(sel===0?" hot":""),"🧳 quer "+guest+" ⏳"+Math.ceil(guest.p),grow);
+    const b=H.el("button","g-chip"+(sel===0?" hot":""),"quer "+guest+""+Math.ceil(guest.p),grow);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>{sel=0;H.sfx("tick");paint();});
   }else H.el("div","g-chip","recepção livre…",grow);
   rooms.forEach((r,i)=>{
     const b=H.el("button","g-cell"+(r.busy>0?"":" good"),null,rrow);
     b.style.minHeight="60px";b.style.fontSize="14px";
-    b.innerHTML=r.busy>0?("🔒 "+Math.ceil(r.busy)+"s"):(r.e+"<br>"+r.t);
+    b.innerHTML=r.busy>0?("ocupado "+Math.ceil(r.busy)+"s"):((r.e?r.e+" ":"")+r.t);
     b.addEventListener("click",()=>{
       if(over||!guest||sel<0||r.busy>0)return;
       const gi=PREF.indexOf(guest.t),ri=PREF.indexOf(r.t);
@@ -32,7 +32,7 @@ function paint(){
       r.busy=9;sat+=s;done2++;sc+=s;H.score(sc);
       hud.set("hs",done2+"/10");hud.set("st",Math.round(sat/done2)+"%");hud.set("sc",sc);
       H.sfx(s>=70?"ok":"bad");
-      say(s===100?"😍 Perfeito!":s===70?"🙂 Upgrade agradou.":"😠 Quarto abaixo do esperado!");
+      say(s===100?"Perfeito!":s===70?"Upgrade agradou.":"Quarto abaixo do esperado!");
       guest=null;sel=-1;paint();
       if(done2>=10){
         over=true;
@@ -51,7 +51,7 @@ H.loop(dt=>{
     guest.p-=dt;
     if(guest.p<=0){
       guest=null;walk++;H.sfx("bad");paint();
-      say("🚶 Hóspede desistiu! ("+walk+")");
+      say("Hóspede desistiu! ("+walk+")");
       if(walk>2){over=true;return H.done({win:false,score:sc,title:"Pousada vazia!",sub:"3 desistências. Quartos ocupados demais?"});}
     }else if(Math.random()<dt*2)paint();
   }

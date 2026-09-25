@@ -4,7 +4,7 @@ init(root,H){
 const N=6,QUOTA=30,MAXT=20;
 let over=false,turn=1,intel=0,agents=[],targets=[],guards=[],selA=-1;
 const hud=H.hud(root,[["tn","TURNO","1/20"],["in","INTEL","0/30"],["ag","AGENTES",4]]);
-const say=H.msg(root,"Clique num agente 🕵️ e depois no destino (até 2 casas). Alvos 👀 vigiados (raio 2) geram intel. Guardas 💂 capturam agentes vizinhos!");
+const say=H.msg(root,"Clique num agente e depois no destino (até 2 casas). Alvos vigiados (raio 2) geram intel. Guardas capturam agentes vizinhos!");
 const o=H.cvs(root,420,420),x=o.x;
 function build(){
   const r=H.rng(31);
@@ -44,7 +44,7 @@ function advance(){
   for(let i=agents.length-1;i>=0;i--){
     if(guards.some(g2=>Math.abs(g2.r-agents[i].r)+Math.abs(g2.c-agents[i].c)<=1)){
       agents.splice(i,1);intel=Math.max(0,intel-5);H.sfx("bad");
-      say("🚨 Agente capturado! Restam "+agents.length+".");
+      say("Agente capturado! Restam "+agents.length+".");
     }
   }
   if(!agents.length){over=true;return H.done({win:false,score:intel,title:"Rede desmantelada!",sub:"Todos os agentes caíram. Afaste-se dos guardas!"});}
@@ -66,14 +66,14 @@ H.loop(()=>{
     x.strokeStyle=H.C.cement;x.strokeRect(c*s+1,r*s+1,s-2,s-2);
   }
   x.font=Math.floor(s*.55)+"px serif";
-  guards.forEach(g2=>x.fillText("💂",g2.c*s+8,g2.r*s+s-8));
-  targets.forEach(t=>x.fillText("👀",t.c*s+8,t.r*s+s-8));
+  guards.forEach(g2=>x.fillText("i:guard",g2.c*s+8,g2.r*s+s-8));
+  targets.forEach(t=>x.fillText("i:eye",t.c*s+8,t.r*s+s-8));
   agents.forEach((a,i)=>{
     x.fillStyle=i===selA?"rgba(196,214,69,.4)":"transparent";
     x.fillRect(a.c*s,a.r*s,s,s);
     x.strokeStyle=H.C.ink;x.strokeRect(a.c*s+2,a.r*s+2,s-4,s-4);
-    x.fillText("🕵️",a.c*s+8,a.r*s+s-8);
+    x.fillText("i:detective",a.c*s+8,a.r*s+s-8);
   });
 });
-H.btn(root,"⏭ Passar turno (sem mover)",()=>{if(!over){selA=-1;advance();}},false);
+H.btn(root,"Passar turno (sem mover)",()=>{if(!over){selA=-1;advance();}},false);
 }});

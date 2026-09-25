@@ -3,7 +3,7 @@ GREG(178,{
 init(root,H){
 let over=false,parts=[],mags=[],holdT=0,time=120;
 const hud=H.hud(root,[["lm","NO ALVO","0%"],["tp","TEMPO",120],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique no vazio para plantar <b>ímã 🧲N (atrai)</b>, clique nele para virar <b>S (repele)</b>, de novo para tirar (máx 4). Segure 70% no ⭕ por 3s!");
+const say=H.msg(root,"Clique no vazio para plantar <b>ímã N (atrai)</b>, clique nele para virar <b>S (repele)</b>, de novo para tirar (máx 4). Segure 70% no ○ por 3s!");
 const o=H.cvs(root,500,360),x=o.x;
 const TGT={x:400,y:90,r:46};
 const r=H.rng(55);
@@ -53,14 +53,14 @@ H.loop(dt=>{
   parts.forEach(p=>{x.beginPath();x.arc(p.x,p.y,3,0,7);x.fill();});
   x.font="20px serif";
   mags.forEach(m=>{
-    x.fillText(m.p==="N"?"🧲":"🧿",m.x-10,m.y+7);
+    x.fillText(m.p==="N"?"i:battery":"i:spark",m.x-10,m.y+7);
     x.fillStyle=m.p==="N"?"#D94E34":"#2E6E8A";x.font="bold 11px 'Space Mono',monospace";
     x.fillText(m.p,m.x-4,m.y-14);x.font="20px serif";
   });
   if(holdT>0){x.fillStyle=H.C.wasabi;x.font="bold 14px 'Space Mono',monospace";
     x.fillText("SEGURANDO "+(3-holdT).toFixed(1)+"s…",180,30);}
 });
-H.btn(root,"🔀 Espalhar limalha",()=>{
+H.btn(root,"Espalhar limalha",()=>{
   if(over)return;
   parts.forEach(p=>{p.x=40+Math.random()*300;p.y=120+Math.random()*200;p.vx=0;p.vy=0;});
   H.sfx("tick");

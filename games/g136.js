@@ -45,21 +45,21 @@ H.loop(dt=>{
     if(tangle>3){
       tangle=0;knots++;hud.set("no",knots+"/3");H.sfx("bad");
       dogs.forEach((d,i)=>{d.x=100+i*150;d.y=120;});
-      say("🪢 Nó! ("+knots+"/3) Cães reposicionados.");
+      say("Nó! ("+knots+"/3) Cães reposicionados.");
       if(knots>=3){over=true;return H.done({win:false,score:sc,title:"Emaranhado total!",sub:"3 nós. Arraste os cães para separar!"});}
     }
   }else tangle=Math.max(0,tangle-dt*2);
   x.fillStyle=H.C.ok;x.fillRect(0,0,o.W,o.H);
   x.font="22px serif";
-  posts.forEach(p=>x.fillText("🌳",p.x-11,p.y+8));
+  posts.forEach(p=>x.fillText("i:tree",p.x-11,p.y+8));
   dogs.forEach(d=>{
     x.strokeStyle=cross?"#D94E34":H.C.ink;x.lineWidth=2;
     x.beginPath();x.moveTo(walker.x,walker.y);x.lineTo(d.x,d.y);x.stroke();
   });
   x.font="26px serif";
-  x.fillText("🧍",walker.x-13,walker.y+9);
-  dogs.forEach(d=>x.fillText("🐕",d.x-13,d.y+9));
+  x.fillText("i:person",walker.x-13,walker.y+9);
+  dogs.forEach(d=>x.fillText("i:dog",d.x-13,d.y+9));
   if(cross){x.fillStyle="#D94E34";x.font="bold 14px 'Space Mono',monospace";
-    x.fillText("⚠ GUIAS CRUZADAS! "+(3-tangle).toFixed(1)+"s",120,24);}
+    x.fillText("GUIAS CRUZADAS! "+(3-tangle).toFixed(1)+"s",120,24);}
 });
 }});

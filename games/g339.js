@@ -10,7 +10,7 @@ const brow=H.el('div','g-row',null,box);
 let water=100;
 function status(){
  hud.set('t',(temp|0)+'°');hud.set('tp',Math.ceil(time));
- st.innerHTML='☢️ '+(temp|0)+'°C · 💧 '+(water|0)+'% · ⏱️'+Math.ceil(time)+'s<br>Válvulas: '+flow.map(f=>f?'🟢':'🔴').join(' ');
+ st.innerHTML=(temp|0)+'°C · '+(water|0)+'% · '+Math.ceil(time)+'s<br>Válvulas: '+flow.map(f=>f?'●':'○').join(' ');
  paintBtns();
 }
 function paintBtns(){
@@ -36,6 +36,6 @@ H.every(500,()=>{
 });
 function gameOver(win){over=true;brow.innerHTML='';
  const sc=win?400+Math.ceil(water)*2:Math.max(20,120-time|0);H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'☢️ Núcleo estável!',sub:'Crise evitada!'}:{win:false,score:sc|0,title:'FUSÃO!',sub:'Abra válvulas antes dos 1000°!'});}
+H.done(win?{win:true,score:sc|0,title:'Núcleo estável!',sub:'Crise evitada!'}:{win:false,score:sc|0,title:'FUSÃO!',sub:'Abra válvulas antes dos 1000°!'});}
 status();
 }});
