@@ -25,7 +25,7 @@ H.onTap(o,(qx,qy)=>{
 });
 function gameOver(){
  over=true;const win=mowed>aiM;const sc=mowed*5;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🌱 Gramado impecável!',sub:(mowed/144*100|0)+'% × '+(aiM/144*100|0)+'% da CPU.'}:{win:false,score:sc,title:'CPU aparou mais!',sub:(mowed/144*100|0)+'% × '+(aiM/144*100|0)+'%. Cubra o mapa!'});}
+H.done(win?{win:true,score:sc,title:'Gramado impecável!',sub:(mowed/144*100|0)+'% × '+(aiM/144*100|0)+'% da CPU.'}:{win:false,score:sc,title:'CPU aparou mais!',sub:(mowed/144*100|0)+'% × '+(aiM/144*100|0)+'%. Cubra o mapa!'});}
 let aiT=0;
 H.loop(dt=>{
  if(over)return;t+=dt;time-=dt;
@@ -48,9 +48,9 @@ H.loop(dt=>{
   x.strokeStyle=H.C.paper;x.strokeRect(OX+c*CS+.5,OY+r*CS+.5,CS-1,CS-1);
  }
  x.font='20px system-ui';x.textAlign='center';
- x.fillText('🚜',OX+px*CS+18,OY+py*CS+26);
- x.fillText('🚜',OX+ai.x*CS+18,OY+ai.y*CS+26);
+ x.fillText('i:tractor',OX+px*CS+18,OY+py*CS+26);
+ x.fillText('i:tractor',OX+ai.x*CS+18,OY+ai.y*CS+26);
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('Você '+(mowed/144*100|0)+'% · CPU '+(aiM/144*100|0)+'% · ⏱️'+Math.ceil(time),14,30);
+ x.fillText('Você '+(mowed/144*100|0)+'% · CPU '+(aiM/144*100|0)+'% · '+Math.ceil(time),14,30);
 });
 }});

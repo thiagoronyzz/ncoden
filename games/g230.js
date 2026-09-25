@@ -10,8 +10,8 @@ const sg=H.el("div","g-msg","",box);
 const cur=H.el("div","g-msg","",box);
 function paint(){
   hud.set("sg",(si+1)+"/5");hud.set("pv",words.length+"/"+SIG[si].length);
-  sg.innerHTML="🔤 Sigla: <b style='font-size:24px'>"+SIG[si]+"</b> → "+(words.join(" ")||"…");
-  cur.innerHTML="⌨️ palavra com <b>"+SIG[si][words.length]+"</b>: "+(buf||"_");
+  sg.innerHTML="Sigla: <b style='font-size:24px'>"+SIG[si]+"</b> → "+(words.join(" ")||"…");
+  cur.innerHTML="palavra com <b>"+SIG[si][words.length]+"</b>: "+(buf||"_");
 }
 function feed(ch){if(!over){buf+=ch;H.sfx("tick");paint();}}
 function back(){buf=buf.slice(0,-1);paint();}
@@ -28,7 +28,7 @@ function ok(){
       say("Sigla pronta! Próxima: "+SIG[si]);
     }
     paint();
-  }else{H.sfx("bad");say("❌ 3+ letras começando com "+want+"!");buf="";paint();}
+  }else{H.sfx("bad");say("✕ 3+ letras começando com "+want+"!");buf="";paint();}
 }
 const kb=H.keys();
 kb.on((c,d)=>{if(!d||over)return;
@@ -43,7 +43,7 @@ kb.on((c,d)=>{if(!d||over)return;
   });
 });
 const row=H.el("div","g-row",null,box);
-H.btn(row,"⌫",back,false);
-H.btn(row,"✅ Palavra!",ok,true);
+H.btn(row,"",back,false);
+H.btn(row,"✔ Palavra!",ok,true);
 paint();
 }});

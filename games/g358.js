@@ -20,13 +20,13 @@ H.onTap(o,(px,py)=>{
  else{
   let bd=99;
   SPR.forEach(s=>{if(!s.got){const d=Math.abs(s.c-c)+Math.abs(s.r-r);if(d<bd)bd=d;}});
-  hint=bd<=1?'🔥 QUENTE!':bd<=2?'🌡️ morno…':'🧊 frio…';
+  hint=bd<=1?'QUENTE!':bd<=2?'morno…':'frio…';
   H.sfx('tick');
  }
  if(digs<=0){gameOver(found>=2);return;}
 });
 function gameOver(win){over=true;const sc=found*120+(win?digs*25:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'♨️ Águas termais!',sub:'2 fontes descobertas!'}:{win:false,score:sc,title:'Sem pás!',sub:found+'/2 fontes. Cerque o QUENTE!'});}
+H.done(win?{win:true,score:sc,title:'Águas termais!',sub:'2 fontes descobertas!'}:{win:false,score:sc,title:'Sem pás!',sub:found+'/2 fontes. Cerque o QUENTE!'});}
 H.loop(()=>{
  if(over)return;
  x.fillStyle='#5A6E5A';x.fillRect(0,0,460,490);
@@ -36,9 +36,9 @@ H.loop(()=>{
   x.fillStyle=tried.has(k)?'#8A877C':'#4A5A4A';
   x.fillRect(OX+c*CS,OY+r*CS,CS,CS);
   x.strokeStyle='#2A3A2A';x.strokeRect(OX+c*CS+.5,OY+r*CS+.5,CS-1,CS-1);
-  if(s){x.font='30px system-ui';x.textAlign='center';x.fillText('♨️',OX+c*CS+30,OY+r*CS+42);}
+  if(s){x.font='30px system-ui';x.textAlign='center';x.fillText('',OX+c*CS+30,OY+r*CS+42);}
  }
  x.fillStyle='#fff';x.font='bold 16px system-ui';x.textAlign='left';
- x.fillText('♨️ '+found+'/2 · 🥄 '+digs+'  '+hint,12,30);
+ x.fillText('Relíquias '+found+'/2 · Escavações '+digs+'  ·  '+hint,12,30);
 });
 }});

@@ -5,7 +5,7 @@ let over=false,tor={x:250,y:200},objs=[],got=0,time=90;
 const hud=H.hud(root,[["sg","SUGADOS","0/14"],["tp","TEMPO",90],["sc","PONTOS",0]]);
 const say=H.msg(root,"ARRASTE o tornado pela cidade! Quem chegar perto do funil roda e some. Sugue 14 em 90s!");
 const o=H.cvs(root,500,380),x=o.x;
-const EM=["🏠","🏠","🚗","🚗","🌳","🌳","🐄","🚚","🏠","🌳","🚗","⛽","🏫","🌳","🚗","🏠"];
+const EM=["i:house","i:house","i:car","i:car","i:pine","i:pine","i:sheep","i:truck","i:house","i:pine","i:car","i:barrel","i:building","i:pine","i:car","i:house"];
 const r=H.rng(33);
 EM.forEach(e=>objs.push({e,x:30+r()*440,y:60+r()*280,suck:0,a:r()*6,spin:2+r()*3}));
 const ptr=H.ptr(o);

@@ -15,7 +15,7 @@ function tap(){
   H.score(beat*10);hud.set("bt",beat+"/40");
   if(beat>=40){over=true;return H.done({win:true,score:500,title:"Expresso pontual!",sub:"40 batidas até a estação."});}
 }
-H.btn(root,"🔥 ALIMENTAR FORNALHA!",tap,true);
+H.btn(root,"ALIMENTAR FORNALHA!",tap,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")tap();});
 H.onTap(o,()=>tap());
@@ -36,8 +36,8 @@ H.loop(dt=>{
   for(let i=0;i<14;i++)x.fillRect(i*40-((t*120)%40),250,20,10);
   x.fillStyle="#8A877C";x.fillRect(-20,246,o.W+40,6);x.fillRect(-20,262,o.W+40,6);
   x.font="64px serif";
-  x.fillText("🚂",60,240);
-  x.fillText("🚃",150,240);x.fillText("🚃",230,240);
+  x.fillText("i:train",60,240);
+  x.fillText("i:wagon",150,240);x.fillText("i:wagon",230,240);
   const ph=H.clamp(1-Math.abs(t-next)/(iv*0.3),0,1);
   x.fillStyle=ph>0.5?H.C.wasabi:H.C.card;
   x.beginPath();x.arc(o.W/2,110,34+ph*10,0,7);x.fill();

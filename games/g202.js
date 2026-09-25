@@ -20,7 +20,7 @@ function tap(){
     return H.done({win:false,score:beat*10,title:"Fora de passo!",sub:"Coesão "+Math.floor(coh)+"% (precisa 60)."});
   }
 }
-H.btn(root,"🥁 MARCAR PASSO!",tap,true);
+H.btn(root,"MARCAR PASSO!",tap,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")tap();});
 H.onTap(o,()=>tap());
@@ -35,14 +35,14 @@ H.loop(dt=>{
   const ph=(t%IV)/IV;
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   // maestro
-  x.font="40px serif";x.fillText("🤵",o.W/2-20,70);
+  x.font="40px serif";x.fillText("i:suit",o.W/2-20,70);
   const ang=Math.sin(ph*Math.PI*2)*.7;
   x.save();x.translate(o.W/2+18,50);x.rotate(ang);
   x.strokeStyle=H.C.ink;x.lineWidth=4;
   x.beginPath();x.moveTo(0,0);x.lineTo(0,-46);x.stroke();
   x.restore();
   x.font="26px serif";
-  for(let i=0;i<6;i++)x.fillText("🥁",40+i*70,180+Math.sin(t*4+i)*6);
+  for(let i=0;i<6;i++)x.fillText("i:drum",40+i*70,180+Math.sin(t*4+i)*6);
   // coesão
   x.fillStyle=H.C.card;x.fillRect(60,250,o.W-120,20);
   x.fillStyle=coh>60?H.C.ok:coh>30?"#E8A33D":H.C.terra;

@@ -60,6 +60,6 @@ H.loop(dt=>{
     x.fillStyle=H.C.terra;x.beginPath();x.arc(px,py,9,0,7);x.fill();
   }
 });
-H.btn(root,"✂ CORTAR A CORDA",cut,true);
+H.btn(root,"CORTAR A CORDA",cut,true);
 attempt();
 }});

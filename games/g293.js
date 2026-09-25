@@ -6,14 +6,14 @@ const OPP=[];
 for(let i=0;i<6;i++)OPP.push({a:i/6*6.28,sp:.5+Math.random()*.3,lap:0});
 let passed={};
 const hud=H.hud(root,[['pt','PONTOS',0],['tp','TEMPO',75]]);
-const say=H.msg(root,'Você é a jammer ⭐! ⬆️ acelera, ⬅️➡️ mudam de faixa. Ultrapasse rivais para pontuar. Meta: 12 pontos em 75s!');
+const say=H.msg(root,'Você é a jammer ★! ↑ acelera, ←→ mudam de faixa. Ultrapasse rivais para pontuar. Meta: 12 pontos em 75s!');
 const o=H.cvs(root,460,400),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 const CX=230,CY=200,RX=170,RY=120;
 function pos(a,lane){return{x:CX+Math.cos(a)*(RX+lane*22),y:CY+Math.sin(a)*(RY+lane*14)};}
 let ma=0,lane=0;
 function gameOver(){over=true;const win=score>=12;H.score(score*50);
-H.done(win?{win:true,score:score*50,title:'⭐ Jammer estrela!',sub:score+' ultrapassagens!'}:{win:false,score:score*50,title:'Fim do jam!',sub:score+'/12 pontos. Acelere nas retas!'});}
+H.done(win?{win:true,score:score*50,title:'★ Jammer estrela!',sub:score+' ultrapassagens!'}:{win:false,score:score*50,title:'Fim do jam!',sub:score+'/12 pontos. Acelere nas retas!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;time-=dt;
  const up=dn.ArrowUp||dn.KeyW;
@@ -45,6 +45,6 @@ H.loop(dt=>{
  x.fillStyle='#D94E34';x.beginPath();x.arc(mp.x,mp.y,12,0,7);x.fill();
  x.fillStyle='#fff';x.font='bold 12px system-ui';x.textAlign='center';x.fillText('★',mp.x,mp.y+4);
  x.fillStyle='#181816';x.font='bold 16px system-ui';x.textAlign='left';
- x.fillText(score+' pts · ⏱️'+Math.ceil(time)+'s · meta 12',12,26);
+ x.fillText(score+' pts · '+Math.ceil(time)+'s · meta 12',12,26);
 });
 }});

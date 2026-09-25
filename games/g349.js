@@ -21,12 +21,12 @@ H.onTap(o,(px,py)=>{
      if(ci>=3){gameOver(true);return;}
      hud.set('c',(ci+1)+'/3');H.sfx('ok');
     }
-   }else{path=[];H.sfx('bad');say('❌ Ordem errada! Recomece a constelação.');}
+   }else{path=[];H.sfx('bad');say('✕ Ordem errada! Recomece a constelação.');}
   }
  });
 });
 function gameOver(win){over=true;const sc=win?300+Math.ceil(time)*2:ci*80;H.score(sc);
-H.done(win?{win:true,score:sc,title:'✨ Céu mapeado!',sub:'3 constelações ligadas!'}:{win:false,score:sc,title:'Amanheceu!',sub:ci+'/3. Siga os números!'});}
+H.done(win?{win:true,score:sc,title:'Céu mapeado!',sub:'3 constelações ligadas!'}:{win:false,score:sc,title:'Amanheceu!',sub:ci+'/3. Siga os números!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;time-=dt;
  hud.set('tp',Math.ceil(time));
@@ -48,6 +48,6 @@ H.loop(dt=>{
   x.fillText(c.need.indexOf(i)+1,p[0],p[1]+5);
  });
  x.fillStyle='#fff';x.font='bold 16px system-ui';x.textAlign='left';
- x.fillText(c.n+' · '+path.length+'/'+c.need.length+' · ⏱️'+Math.ceil(time),12,28);
+ x.fillText(c.n+' · '+path.length+'/'+c.need.length+' · '+Math.ceil(time),12,28);
 });
 }});

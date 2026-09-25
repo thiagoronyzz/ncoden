@@ -27,13 +27,13 @@ function show(){
    const maj=votes[0]===votes[1]?-1:(votes[0]>votes[1]?0:1);
    if(maj===i){score+=100;H.sfx('ok');}
    else H.sfx('bad');
-   dm.innerHTML='<b>'+d[0]+'</b> '+votes[0]+' × '+votes[1]+' <b>'+d[1]+'</b><br>'+(maj===i?'✅ Com a maioria! +100':'❌ Minoria…');
+   dm.innerHTML='<b>'+d[0]+'</b> '+votes[0]+' × '+votes[1]+' <b>'+d[1]+'</b><br>'+(maj===i?'✔ Com a maioria! +100':'✕ Minoria…');
    round++;hud.set('pt',score);
    H.after(1400,()=>{if(!over)show();});
   },false);
  });
 }
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=500,score,title:score>=500?'🗳️ Voz do povo!':'🗳️ Fim!',sub:score+'/800 pontos.'});}
+H.done({win:score>=500,score,title:score>=500?'Voz do povo!':'Fim!',sub:score+'/800 pontos.'});}
 show();
 }});

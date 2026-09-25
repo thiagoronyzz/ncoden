@@ -3,7 +3,7 @@ GREG(14,{
 init(root,H){
 let lv=0,over=false,lock=false;
 const hud=H.hud(root,[["nv","NÍVEL",1],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique nas peças para <b>girar</b>. Ligue a 🔋 até a 💡 com trilhas conectadas.");
+const say=H.msg(root,"Clique nas peças para <b>girar</b>. Ligue a até a com trilhas conectadas.");
 const board=H.el("div","g-board",null,root);
 let n=4,cells=[],tiles=[];
 const DV=[[-1,0],[0,1],[1,0],[0,-1]];
@@ -60,7 +60,7 @@ function paint(lit){
   const lset=new Set(lit||[]);
   tiles.forEach((t,i)=>{
     const o2=opens(i).slice().sort().join(",");
-    cells[i].textContent=i===0?"🔋":i===n*n-1?(lset.has(i)?"💡":"🌑"):(GLYPH[o2]||"·");
+    cells[i].textContent=i===0?"":i===n*n-1?(lset.has(i)?"":""):(GLYPH[o2]||"·");
     cells[i].classList.toggle("good",lset.has(i));
     cells[i].classList.toggle("sel",i===0);
   });

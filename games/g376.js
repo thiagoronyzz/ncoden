@@ -20,10 +20,10 @@ function show(){
  time=15;
  hud.set('r',(round+1)+'/6');
  const p=P[round];
- ph.innerHTML='🗣️ Leia com sotaque <b>'+p[1].toUpperCase()+'</b>:<br>"<i>'+p[0]+'</i>"<br>⏱️ 15s';
+ ph.innerHTML='Leia com sotaque <b>'+p[1].toUpperCase()+'</b>:<br>"<i>'+p[0]+'</i>"<br> 15s';
  brow.innerHTML='';
- H.btn(brow,'✅ Adivinharam o sotaque!',()=>{score+=100;round++;H.sfx('ok');hud.set('pt',score);show();},true);
- H.btn(brow,'❌ Erraram',()=>{round++;H.sfx('bad');show();},false);
+ H.btn(brow,'✔ Adivinharam o sotaque!',()=>{score+=100;round++;H.sfx('ok');hud.set('pt',score);show();},true);
+ H.btn(brow,'✕ Erraram',()=>{round++;H.sfx('bad');show();},false);
 }
 H.every(1000,()=>{
  if(over||round>=6)return;
@@ -31,6 +31,6 @@ H.every(1000,()=>{
  if(time<=0){round++;show();return;}
 });
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=400,score,title:score>=400?'🗣️ Poliglota!':'🗣️ Fim!',sub:score+'/600 pontos.'});}
+H.done({win:score>=400,score,title:score>=400?'Poliglota!':'Fim!',sub:score+'/600 pontos.'});}
 show();
 }});

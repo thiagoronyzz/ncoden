@@ -2,9 +2,9 @@
 GREG(374,{
 init(root,H){
 const CATS=[
- ['FRUTAS',['🍎','🍌','🍇','🚗','🐶','🍊','⚽','🍉','🎸']],
- ['ANIMAIS',['🐶','🐱','🍎','🐦','🚗','🐟','⚽','🐵','🍌']],
- ['VEÍCULOS',['🚗','✈️','🍎','🚲','🐶','🚀','⚽','🛶','🍇']]
+ ['FRUTAS',['','','','','','','','','']],
+ ['ANIMAIS',['','','','','','','','','']],
+ ['VEÍCULOS',['','','','','','','','','']]
 ];
 let over=false,round=0,score=0,bot=0,time=0,need=0;
 const hud=H.hud(root,[['r','RODADA','1/3'],['vc','VOCÊ',0],['bt','BOT',0]]);
@@ -19,9 +19,9 @@ function show(){
  const c=CATS[round];
  hud.set('r',(round+1)+'/3');
  time=20;
- items=c[1].map((e,i)=>({e,ok:'🍎🍌🍇🍊🍉🐶🐱🐦🐟🐵🚗✈️🚲🚀🛶'.includes(e)&&((round===0&&'🍎🍌🍇🍊🍉'.includes(e))||(round===1&&'🐶🐱🐦🐟🐵'.includes(e))||(round===2&&'🚗✈️🚲🚀🛶'.includes(e))),got:false}));
+ items=c[1].map((e,i)=>({e,ok:''.includes(e)&&((round===0&&''.includes(e))||(round===1&&''.includes(e))||(round===2&&''.includes(e))),got:false}));
  need=items.filter(i=>i.ok).length;
- ct.innerHTML='<b>'+c[0]+'</b> · ache '+need+'! ⏱️20s';
+ ct.innerHTML='<b>'+c[0]+'</b> · ache '+need+'! 20s';
  grid.innerHTML='';
  items.forEach(it=>{
   const b=H.el('button','g-cell',it.e,grid);
@@ -37,10 +37,10 @@ function show(){
 H.every(1000,()=>{
  if(over||round>=3)return;
  time--;
- ct.innerHTML='<b>'+CATS[round][0]+'</b> · ache '+items.filter(i=>i.ok&&!i.got).length+'! ⏱️'+time+'s';
+ ct.innerHTML='<b>'+CATS[round][0]+'</b> · ache '+items.filter(i=>i.ok&&!i.got).length+'! '+time+'s';
  if(time<=0){round++;bot+=4;hud.set('bt',bot);show();}
 });
 function gameOver(){over=true;grid.innerHTML='';H.score(score*20);
-H.done({win:score>bot,score:score*20,title:score>bot?'🏁 Mais rápido!':'🏁 Bot venceu!',sub:'Você '+score+' × '+bot+' bot.'});}
+H.done({win:score>bot,score:score*20,title:score>bot?'Mais rápido!':'Bot venceu!',sub:'Você '+score+' × '+bot+' bot.'});}
 show();
 }});

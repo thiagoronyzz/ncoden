@@ -4,7 +4,7 @@ init(root,H){
 const GOAL=25;
 let over=false,coins=[],sc=0,t=60,spawn=0,mag=0,cd=0,px=110,py=0;
 const hud=H.hud(root,[["mo","MOEDAS","0/25"],["mg","ÍMÃ","PRONTO"],["tp","TEMPO",60]]);
-const say=H.msg(root,"Você corre sozinho. <b>Toque/Espaço</b> liga o ímã por 1,5s (recarrega 3s) e puxa as 🪙 próximas!");
+const say=H.msg(root,"Você corre sozinho. <b>Toque/Espaço</b> liga o ímã por 1,5s (recarrega 3s) e puxa as próximas!");
 const o=H.cvs(root,520,340),x=o.x;
 py=o.H-90;
 function pulse(){if(over||cd>0)return;mag=1.5;cd=4.5;H.sfx("pop");}
@@ -37,12 +37,12 @@ H.loop(dt=>{
   x.fillStyle=H.C.cement;x.fillRect(0,py+34,o.W,o.H-py);
   x.fillStyle=H.C.ink;x.fillRect(0,py+32,o.W,3);
   const run=Math.sin(Date.now()/90)*4;
-  x.font="34px serif";x.fillText("🏃",px-17,py+22+run);
+  x.font="34px serif";x.fillText("i:run",px-17,py+22+run);
   if(mag>0){x.strokeStyle=H.C.terra;x.lineWidth=3;
     x.beginPath();x.arc(px,py+6,60+Math.sin(Date.now()/60)*8,0,7);x.stroke();
     x.beginPath();x.arc(px,py+6,110,0,7);x.stroke();}
   x.font="22px serif";
-  for(const c of coins)x.fillText("🪙",c.x-11,c.y+8);
+  for(const c of coins)x.fillText("i:coin",c.x-11,c.y+8);
   x.fillStyle=H.C.ink3;x.font="11px 'Space Mono',monospace";
   x.fillText("ímã: "+(mag>0?"ON":cd>0?cd.toFixed(1)+"s":"pronto"),12,20);
 });

@@ -30,7 +30,7 @@ function checkSet(i){
 }
 function ranks(i){return[...new Set(hands[i])].sort((a,b)=>a-b);}
 function paint(){
-  tb.innerHTML="🎣 Sua mão: <b>"+ranks(0).map(RN).join(" ")+"</b> ("+hands[0].length+") · CPU1: "+hands[1].length+" · CPU2: "+hands[2].length+" · monte: "+stock.length+(turn===0&&!busy?"<br>Escolha valor + alvo!":turn===0?"":"<br>CPU"+turn+" pensando…");
+  tb.innerHTML="Sua mão: <b>"+ranks(0).map(RN).join(" ")+"</b> ("+hands[0].length+") · CPU1: "+hands[1].length+" · CPU2: "+hands[2].length+" · monte: "+stock.length+(turn===0&&!busy?"<br>Escolha valor + alvo!":turn===0?"":"<br>CPU"+turn+" pensando…");
   hb.innerHTML="";
   if(turn===0&&!busy){
     ranks(0).forEach(r=>{
@@ -64,7 +64,7 @@ function ask(from,to,r){
         const c=stock.pop();
         hands[from].push(c);checkSet(from);
         if(c===r){
-          say("🎣 Pescou justo "+RN(r)+"! De novo.");
+          say("Pescou justo "+RN(r)+"! De novo.");
           busy=false;paint();
           if(from!==0){busy=true;H.after(900,()=>{busy=false;aiTurn(from);});}
           return;

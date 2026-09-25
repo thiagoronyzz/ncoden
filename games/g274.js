@@ -9,7 +9,7 @@ const SOL=[
  {x:230,y:60,a:4,sp:.55}
 ];
 const hud=H.hud(root,[['v','VIDAS',3],['av','AVISTADO','0%']]);
-const say=H.msg(root,'Chegue à saída 🚪! Dentro dos arbustos você some. Binóculos têm visão longa e estreita!');
+const say=H.msg(root,'Chegue à saída ! Dentro dos arbustos você some. Binóculos têm visão longa e estreita!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
@@ -24,7 +24,7 @@ function seen(){
  });
 }
 function gameOver(win){over=true;const sc=win?350+lives*100:60;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🌿 Invisível na mata!',sub:'Atravessou sem ser visto.'}:{win:false,score:sc,title:'Avistado!',sub:'Os binóculos te acharam. Use os arbustos!'});}
+H.done(win?{win:true,score:sc,title:'Invisível na mata!',sub:'Atravessou sem ser visto.'}:{win:false,score:sc,title:'Avistado!',sub:'Os binóculos te acharam. Use os arbustos!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  SOL.forEach(s=>s.a+=s.sp*dt);
@@ -41,10 +41,10 @@ H.loop(dt=>{
  if(px>406&&py<54){gameOver(true);return;}
  x.fillStyle='#2E4A2A';x.fillRect(0,0,460,460);
  BUSH.forEach(s=>{x.fillStyle='#3E7C4F';x.beginPath();x.ellipse(s[0]+s[2]/2,s[1]+s[3]/2,s[2]/2,s[3]/2,0,0,7);x.fill();});
- x.fillStyle='#C4D645';x.fillRect(406,8,46,46);x.fillStyle='#181816';x.font='24px system-ui';x.textAlign='center';x.fillText('🚪',429,42);
+ x.fillStyle='#C4D645';x.fillRect(406,8,46,46);x.fillStyle='#181816';x.font='24px system-ui';x.textAlign='center';x.fillText('i:door',429,42);
  SOL.forEach(s=>{
   x.fillStyle='rgba(232,163,61,.3)';x.beginPath();x.moveTo(s.x,s.y);x.arc(s.x,s.y,260,s.a-.22,s.a+.22);x.fill();
-  x.font='18px system-ui';x.fillText('🔭',s.x,s.y+6);
+  x.font='18px system-ui';x.fillText('i:telescope',s.x,s.y+6);
  });
  x.fillStyle=hid?'#3E7C4F':s?'#D94E34':'#E8A33D';
  x.beginPath();x.arc(px,py,10,0,7);x.fill();x.strokeStyle='#000';x.lineWidth=2;x.stroke();

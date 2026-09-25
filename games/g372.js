@@ -12,13 +12,13 @@ function show(){
  if(round>=4){gameOver();return;}
  time=30;side=(Math.random()*2)|0;
  hud.set('r',(round+1)+'/4');
- tp.innerHTML='🎤 TEMA: <b>'+T[round]+'</b><br>Você defende: <b>'+(side?'✅ A FAVOR':'❌ CONTRA')+'</b><br>⏱️ 30s — DEBATA!';
+ tp.innerHTML='TEMA: <b>'+T[round]+'</b><br>Você defende: <b>'+(side?'✔ A FAVOR':'✕ CONTRA')+'</b><br> 30s — DEBATA!';
  brow.innerHTML='';
- H.btn(brow,'🗳️ Encerrar e votar',()=>{
+ H.btn(brow,'Encerrar e votar',()=>{
   if(over)return;
   const v=1+((Math.random()*5)|0);
   score+=v*25;H.sfx(v>=3?'ok':'bad');
-  tp.innerHTML='Votos: '+'⭐'.repeat(v)+' ('+v+'/5)';
+  tp.innerHTML='Votos: '+'★'.repeat(v)+' ('+v+'/5)';
   round++;hud.set('pt',score);
   H.after(1500,()=>{if(!over)show();});
  },true);
@@ -30,9 +30,9 @@ H.every(1000,()=>{
   const v=1+((Math.random()*5)|0);
   score+=v*25;round++;hud.set('pt',score);show();return;
  }
- tp.innerHTML='🎤 TEMA: <b>'+T[round]+'</b><br>Você defende: <b>'+(side?'✅ A FAVOR':'❌ CONTRA')+'</b><br>⏱️ '+time+'s — DEBATA!';
+ tp.innerHTML='TEMA: <b>'+T[round]+'</b><br>Você defende: <b>'+(side?'✔ A FAVOR':'✕ CONTRA')+'</b><br> '+time+'s — DEBATA!';
 });
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=250,score,title:score>=250?'🎤 Orador supremo!':'🎤 Fim!',sub:score+' pontos.'});}
+H.done({win:score>=250,score,title:score>=250?'Orador supremo!':'Fim!',sub:score+' pontos.'});}
 show();
 }});

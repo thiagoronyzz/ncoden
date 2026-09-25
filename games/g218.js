@@ -9,8 +9,8 @@ const box=H.el("div","g-col",null,root);
 const wd=H.el("div","g-msg","",box);
 function paint(){
   hud.set("pv",(wi+1)+"/6");
-  if(show>0)wd.innerHTML="🐝 Decore: <b style='font-size:26px'>"+WORDS[wi]+"</b> ("+Math.ceil(show)+"s)";
-  else wd.innerHTML="🐝 Soletre: <b style='font-size:26px'>"+buf+"</b> ("+buf.length+"/"+WORDS[wi].length+")";
+  if(show>0)wd.innerHTML="Decore: <b style='font-size:26px'>"+WORDS[wi]+"</b> ("+Math.ceil(show)+"s)";
+  else wd.innerHTML="Soletre: <b style='font-size:26px'>"+buf+"</b> ("+buf.length+"/"+WORDS[wi].length+")";
 }
 function feed(ch){
   if(over||show>0)return;
@@ -25,7 +25,7 @@ function feed(ch){
   }else{
     strikes++;hud.set("er",strikes+"/3");H.sfx("bad");
     if(strikes>=3){over=true;return H.done({win:false,score,title:"Enxame confuso!",sub:"3 erros de soletração."});}
-    say("❌ Letra errada! ("+strikes+"/3) Recomece a palavra.");
+    say("✕ Letra errada! ("+strikes+"/3) Recomece a palavra.");
     buf="";
   }
   paint();

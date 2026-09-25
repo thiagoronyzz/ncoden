@@ -3,7 +3,7 @@ GREG(176,{
 init(root,H){
 let over=false,tgts=[],craters=[],shots=8,fall=null;
 const hud=H.hud(root,[["mt","METEOROS",8],["al","ALVOS","0/5"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique no céu para lançar o meteoro ali! A cratera destrói alvos 🎯 num raio de ~55px.");
+const say=H.msg(root,"Clique no céu para lançar o meteoro ali! A cratera destrói alvos num raio de ~55px.");
 const o=H.cvs(root,520,380),x=o.x;
 let sc=0;
 const r=H.rng(77);
@@ -44,7 +44,7 @@ H.loop(dt=>{
     x.strokeStyle="#5b3d20";x.lineWidth=3;x.stroke();
   });
   x.font="24px serif";
-  tgts.forEach(t=>{if(!t.dead)x.fillText("🎯",t.x-12,t.y+8);});
+  tgts.forEach(t=>{if(!t.dead)x.fillText("i:target",t.x-12,t.y+8);});
   if(fall){
     x.strokeStyle="#F5A623";x.lineWidth=3;
     x.beginPath();x.moveTo(fall.x,fall.y-60);x.lineTo(fall.x,fall.y);x.stroke();

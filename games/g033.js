@@ -1,7 +1,7 @@
 /* NCODE N · 033 Sudoku Simbólico — símbolos + diagonal */
 GREG(33,{
 init(root,H){
-const SYM=["🍎","🌙","⭐","⚓"];
+const SYM=["","","★",""];
 const SOL=[
  [0,1,2,3, 3,2,1,0, 1,0,3,2, 2,3,0,1],
  [1,0,2,3, 3,2,1,0, 0,1,3,2, 2,3,0,1],
@@ -67,7 +67,7 @@ function check(){
     errs++;hud.set("er",errs+"/5");H.sfx("bad");
     bad.forEach(i=>{g[i]=-1;});
     if(errs>=5){over=true;return H.done({win:false,score:lv*100,title:"Símbolos embaralhados",sub:"5 erros na quebra "+(lv+1)+". Confira a diagonal ↘!"});}
-    say("❌ "+bad.length+" casas erradas foram limpas. Erros: "+errs+"/5.");
+    say("✕"+bad.length+" casas erradas foram limpas. Erros: "+errs+"/5.");
     paint();
   }
 }

@@ -15,15 +15,15 @@ function paint(){
   wheels.forEach((w,i)=>{
     const b=H.el("button","g-cell"+(w.bad?" bad":w.flip?" good":" hot"),null,wbox);
     b.style.minHeight="72px";b.style.fontSize="13px";
-    b.innerHTML=w.bad?"🤢<br>estragada":"🧀 "+Math.floor(w.q)+"<br>"+(w.flip?"virada ✓":"VIRAR!");
+    b.innerHTML=w.bad?"<br>estragada":""+Math.floor(w.q)+"<br>"+(w.flip?"virada ✓":"VIRAR!");
     if(!w.bad)b.addEventListener("click",()=>{if(!over){w.flip=true;H.sfx("tick");paint();}});
   });
 }
 paint();
 const row=H.el("div","g-row",null,root);
-H.btn(row,"🔥 +1°",()=>{if(!over){temp++;H.sfx("tick");paint();}},false);
-H.btn(row,"❄️ −1°",()=>{if(!over){temp--;H.sfx("tick");paint();}},false);
-H.btn(root,"🌙 Próximo dia",()=>{
+H.btn(row,"+1°",()=>{if(!over){temp++;H.sfx("tick");paint();}},false);
+H.btn(row,"−1°",()=>{if(!over){temp--;H.sfx("tick");paint();}},false);
+H.btn(root,"Próximo dia",()=>{
   if(over)return;
   const okT=temp>=12&&temp<=14;
   wheels.forEach(w=>{
@@ -43,7 +43,7 @@ H.btn(root,"🌙 Próximo dia",()=>{
     if(good>=4)return H.done({win:true,score:good*60+100,title:"Queijos premiados!",sub:good+" rodas perfeitas após 10 dias."});
     return H.done({win:false,score:good*60,title:"Adega azeda…",sub:"Só "+good+"/4 premiadas. Vire todo dia, segure 12–14°C!"});
   }
-  say("☀️ Dia "+day+": adega em "+temp+"°C. Vire as rodas!");
+  say("Dia "+day+": adega em "+temp+"°C. Vire as rodas!");
   paint();
 },true);
 }});

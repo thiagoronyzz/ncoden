@@ -18,14 +18,14 @@ function snap(){
   const n=pile.length;
   if(pile[n-1]===pile[n-2]){
     you+=pile.length;pile=[];avail=false;aiT=-1;
-    H.score(you);hud.set("vc",you);H.sfx("ok");say("⚡ SNAP seu! +pilha.");
+    H.score(you);hud.set("vc",you);H.sfx("ok");say("SNAP seu! +pilha.");
     H.after(600,()=>{avail=true;});
   }else{
     cpu+=1;you=Math.max(0,you-1);
-    hud.set("vc",you);hud.set("cp",cpu);H.sfx("bad");say("❌ Falso snap! −1.");
+    hud.set("vc",you);hud.set("cp",cpu);H.sfx("bad");say("✕ Falso snap! −1.");
   }
 }
-H.btn(root,"⚡ SNAP! (Espaço)",snap,true);
+H.btn(root,"SNAP! (Espaço)",snap,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")snap();});
 H.loop(dt=>{
@@ -52,10 +52,10 @@ H.loop(dt=>{
     aiT-=dt;
     if(aiT<=0){
       cpu+=pile.length;pile=[];aiT=-1;
-      hud.set("cp",cpu);H.sfx("bad");say("🤖 CPU deu snap!");
+      hud.set("cp",cpu);H.sfx("bad");say("CPU deu snap!");
     }
   }
   const n=pile.length;
-  tp.innerHTML="🎴 Pilha ("+n+"): "+pile.slice(-6).map(RN).join(" ")+(n>=2&&pile[n-1]===pile[n-2]?"<br><b>⚡ IGUAIS! BATA!</b>":"");
+  tp.innerHTML="Pilha ("+n+"): "+pile.slice(-6).map(RN).join(" ")+(n>=2&&pile[n-1]===pile[n-2]?"<br><b> IGUAIS! BATA!</b>":"");
 });
 }});

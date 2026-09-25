@@ -19,14 +19,14 @@ const o=H.cvs(root,440,60),x=o.x;
 function paint(){
   hud.set("rd",(qi+1)+"/8");
   box.innerHTML="";
-  H.el("div","g-msg","🔤 <b>"+Q[qi].r+"</b> + ___",box);
+  H.el("div","g-msg","<b>"+Q[qi].r+"</b> + ___",box);
   const row=H.el("div","g-row",null,box);
   Q[qi].o.forEach((op,i)=>{
     const b=H.el("button","g-btn ghost","…"+op,row);
     b.addEventListener("click",()=>{
       if(over)return;
-      if(i===Q[qi].a){pw++;hud.set("pl",pw);H.sfx("ok");say("⚡ Você! "+Q[qi].r.toLowerCase()+op.toLowerCase());}
-      else{aw++;hud.set("ai",aw);H.sfx("bad");say("❌ Errado! Ponto da máquina.");}
+      if(i===Q[qi].a){pw++;hud.set("pl",pw);H.sfx("ok");say("Você! "+Q[qi].r.toLowerCase()+op.toLowerCase());}
+      else{aw++;hud.set("ai",aw);H.sfx("bad");say("✕ Errado! Ponto da máquina.");}
       next();
     });
   });
@@ -46,7 +46,7 @@ H.loop(dt=>{
   if(over)return;
   aiT+=dt;
   if(aiT>=aiMax){
-    aw++;hud.set("ai",aw);H.sfx("bad");say("🤖 Máquina foi mais rápida! ("+aw+")");
+    aw++;hud.set("ai",aw);H.sfx("bad");say("Máquina foi mais rápida! ("+aw+")");
     next();return;
   }
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
@@ -55,6 +55,6 @@ H.loop(dt=>{
   x.fillRect(10,20,(o.W-20)*aiT/aiMax,20);
   x.strokeStyle=H.C.ink;x.strokeRect(10,20,o.W-20,20);
   x.fillStyle=H.C.ink;x.font="11px 'Space Mono',monospace";
-  x.fillText("🤖 pensando…",14,14);
+  x.fillText("pensando…",14,14);
 });
 }});

@@ -4,7 +4,7 @@ init(root,H){
 const LV=[{wind:0,pad:90},{wind:26,pad:60}];
 let lv=0,over=false,r={},thrust=false,left=false,right=false;
 const hud=H.hud(root,[["nv","NÍVEL","1/2"],["cb","COMBUSTÍVEL",100],["vv","VEL",0]]);
-const say=H.msg(root,"<b>↑/W</b> motor · <b>←→/AD</b> inclinar. Pouse na 🟩 plataforma devagar (&lt;50) e reto! Toque: segure os botões.");
+const say=H.msg(root,"<b>↑/W</b> motor · <b>←→/AD</b> inclinar. Pouse na ■ plataforma devagar (&lt;50) e reto! Toque: segure os botões.");
 const o=H.cvs(root,500,420),x=o.x;
 function build(){
   r={x:o.W/2+(Math.random()-.5)*160,y:50,vx:(Math.random()-.5)*30,vy:0,a:0,fuel:100};
@@ -27,7 +27,7 @@ function holdBtn(label,set){
 }
 const brow=H.el("div","g-row",null,root);
 holdBtn("◀",v=>left=v);
-holdBtn("🔥",v=>thrust=v);
+holdBtn("",v=>thrust=v);
 holdBtn("▶",v=>right=v);
 const PADY=o.H-40,PADX=o.W/2;
 H.loop(dt=>{

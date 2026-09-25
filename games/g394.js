@@ -6,7 +6,7 @@ const MAX=110;
 const hud=H.hud(root,[['b','BOLHA','1/10'],['pt','PONTOS',0]]);
 const say=H.msg(root,'A bolha cresce… e ESTOURA sozinha! Toque ESTOURAR o mais perto do máximo. 10 bolhas!');
 const o=H.cvs(root,400,380),x=o.x;
-H.btn(root,'💥 ESTOURAR!',()=>{
+H.btn(root,'ESTOURAR!',()=>{
  if(over)return;
  const p=r/MAX;
  if(p>.92){score+=100;H.sfx('ok');}
@@ -21,12 +21,12 @@ function next(){
  r=10;sp=40+Math.random()*50;
 }
 function gameOver(){over=true;H.score(score);
-H.done({win:score>=700,score,title:score>=700?'🫧 Mestre das bolhas!':'🫧 Fim!',sub:score+'/1000 pontos.'});}
+H.done({win:score>=700,score,title:score>=700?'Mestre das bolhas!':'Fim!',sub:score+'/1000 pontos.'});}
 sp=50;
 H.loop(dt=>{
  if(over)return;
  r+=sp*dt;
- if(r>=MAX){H.sfx('bad');say('💥 Estourou sozinha!');next();return;}
+ if(r>=MAX){H.sfx('bad');say('Estourou sozinha!');next();return;}
  x.fillStyle='#BFD9E2';x.fillRect(0,0,400,380);
  x.fillStyle='rgba(255,255,255,.5)';x.beginPath();x.arc(200,190,r,0,7);x.fill();
  x.strokeStyle='#2E6E8A';x.lineWidth=3;x.stroke();

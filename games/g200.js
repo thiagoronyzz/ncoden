@@ -18,7 +18,7 @@ function jump(){
     if(lives<=0){over=true;return H.done({win:false,score:jumped*25,title:"Tropeçou!",sub:jumped+"/20. Pule só na zona verde!"});}
   }
 }
-H.btn(root,"⬆️ PULAR!",jump,true);
+H.btn(root,"↑ PULAR!",jump,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")jump();});
 H.onTap(o,()=>jump());
@@ -39,7 +39,7 @@ H.loop(dt=>{
   // corredor
   const run=(t*120)%o.W;
   x.font="30px serif";
-  x.fillText("🏃",60,232-jumpA*60);
+  x.fillText("i:run",60,232-jumpA*60);
   // linha de tempo
   x.fillStyle=H.C.card;x.fillRect(40,60,o.W-80,40);
   x.fillStyle=H.C.ok;x.fillRect(o.W/2-30,60,60,40);

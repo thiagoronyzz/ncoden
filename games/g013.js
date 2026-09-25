@@ -75,7 +75,7 @@ H.loop(dt=>{
     const f=walker.t-seg;
     const a=A[p[seg]],b=A[p[seg+1]];
     const wx=a[0]+(b[0]-a[0])*f,wy=a[1]+(b[1]-a[1])*f-14;
-    x.font="22px serif";x.fillText("🚶",wx-11,wy+8);
+    x.font="22px serif";x.fillText("i:walk",wx-11,wy+8);
     if(walker.t>=p.length-1){walker=null;celebrate();}
   }
 });
@@ -86,7 +86,7 @@ function celebrate(){
   lv++;say("Nível "+(lv+1)+": vão maior, tábuas mais curtas.");reset();
 }
 const row=H.el("div","g-row",null,root);
-H.btn(row,"🚶 Testar travessia",()=>{
+H.btn(row,"Testar travessia",()=>{
   if(over||testing)return;
   const p=findPath();
   if(!p){H.sfx("bad");say("Sem caminho contínuo da <b>margem esquerda</b> à direita.");return;}

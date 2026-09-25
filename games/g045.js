@@ -12,7 +12,13 @@ function build(){
   plats=[];let y=o.H-40;
   for(let i=0;i<24;i++){
     const gap=132-Math.min(50,i*2.4);
-    plats.push({y,gx:40+Math.random()*(o.W-80-gap),gw:gap});
+    let gx=40+Math.random()*(o.W-80-gap);
+    if(i===0){ // a fenda inicial não fica sob a bola
+      const mid=o.W/2-34;
+      if(gx<mid&&gx+gap>mid+68)gx=mid+68;
+      else if(gx<mid+68&&gx+gap>mid)gx=Math.max(40,Math.min(gx,mid-70-gap>40?mid-70-gap:gx));
+    }
+    plats.push({y,gx,gw:gap});
     y-=118;
   }
 }

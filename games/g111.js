@@ -1,7 +1,7 @@
 /* NCODE N · 111 Vinhedo das Estações — 10 cachos em 2 anos */
 GREG(111,{
 init(root,H){
-const SE=["🌱 Primavera","☀️ Verão","🍂 Outono","❄️ Inverno"];
+const SE=["Primavera","Verão","Outono","Inverno"];
 let over=false,turn=0,vines=[],acts=3,grapes=0;
 const hud=H.hud(root,[["es","ESTAÇÃO","Primavera"],["uv","UVAS","0/10"],["ac","AÇÕES",3]]);
 const say=H.msg(root,"Clique na parreira para <b>cuidar</b> (+crescimento). No <b>outono</b>, parreira madura (3+) vira colheita!");
@@ -17,7 +17,7 @@ function paint(){
   vines.forEach((v,i)=>{
     const d=H.el("button","g-cell"+(v.g>=3?" good":""),null,board);
     d.style.minHeight="70px";d.style.fontSize="14px";
-    d.innerHTML=(v.g>=3?"🍇":v.g===0?"🪴":"🌿")+"<br>"+v.g+"/3"+(se===2&&v.g>=3?"<br>COLHER!":"");
+    d.innerHTML=(v.g>=3?"":v.g===0?"":"")+"<br>"+v.g+"/3"+(se===2&&v.g>=3?"<br>COLHER!":"");
     d.addEventListener("click",()=>tend(i));
   });
 }
@@ -30,11 +30,11 @@ function tend(i){
   paint();
 }
 paint();
-H.btn(root,"⏭ Próxima estação",()=>{
+H.btn(root,"Próxima estação",()=>{
   if(over)return;
   turn++;acts=3;
-  if(turn%4===3){let rot=0;vines.forEach(v=>{if(v.g>=3){v.g=0;rot++;}});if(rot)say("❄️ "+rot+" parreira(s) apodreceu(ram)! Colha no outono.");}
-  if(turn%4===0&&turn>0){vines.forEach(v=>v.g=0);say("🌱 Novo ano! As parreiras rebrotam.");}
+  if(turn%4===3){let rot=0;vines.forEach(v=>{if(v.g>=3){v.g=0;rot++;}});if(rot)say(""+rot+" parreira(s) apodreceu(ram)! Colha no outono.");}
+  if(turn%4===0&&turn>0){vines.forEach(v=>v.g=0);say("Novo ano! As parreiras rebrotam.");}
   if(turn>=8){
     over=true;H.score(grapes*20);
     if(grapes>=10)return H.done({win:true,score:grapes*20+100,title:"Safra premiada!",sub:grapes+" cachos em 2 anos."});

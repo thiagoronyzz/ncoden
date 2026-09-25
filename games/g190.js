@@ -3,7 +3,7 @@ GREG(190,{
 init(root,H){
 let over=false,pl={x:250,y:200,vx:0,vy:0},stars=[],got=0,time=90,ax=0;
 const hud=H.hud(root,[["es","ESTRELAS","0/8"],["tp","TEMPO",90],["sc","PONTOS",0]]);
-const say=H.msg(root,"Setas/A-D ou ARRASTE para os lados — o pula-pula quica sozinho! Pegue as 8 ⭐ em 90s. Rosa = super-quique!");
+const say=H.msg(root,"Setas/A-D ou ARRASTE para os lados — o pula-pula quica sozinho! Pegue as 8 ★ em 90s. Rosa = super-quique!");
 const o=H.cvs(root,500,400),x=o.x;
 const r=H.rng(12);
 for(let i=0;i<8;i++)stars.push({x:40+r()*420,y:60+r()*180,got:false});
@@ -48,8 +48,8 @@ H.loop(dt=>{
     x.fillStyle=H.C.wasabi;x.fillRect(b.x,330,b.w,12);
   });
   x.font="24px serif";
-  stars.forEach(s=>{if(!s.got)x.fillText("⭐",s.x-12,s.y+8);});
+  stars.forEach(s=>{if(!s.got)x.fillText("★",s.x-12,s.y+8);});
   x.font="30px serif";
-  x.fillText("🤸",pl.x-15,pl.y-6);
+  x.fillText("i:acrobat",pl.x-15,pl.y-6);
 });
 }});

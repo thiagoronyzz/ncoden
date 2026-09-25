@@ -9,7 +9,7 @@ const MAPS=[
 ];
 let lv=0,over=false,moves=0;
 const hud=H.hud(root,[["nv","NÍVEL",1],["mv","DESLIZES",0],["sc","PONTOS",0]]);
-const say=H.msg(root,"Setas, deslize ou clique numa casa: você <b>só para</b> ao bater. ⭕ é buraco — desvie.");
+const say=H.msg(root,"Setas, deslize ou clique numa casa: você <b>só para</b> ao bater. ○ é buraco — desvie.");
 const o=H.cvs(root,460,400),x=o.x;
 let grid=[],W=0,Hh=0,px=0,py=0,anim=null;
 function load(){
@@ -27,8 +27,8 @@ function draw(){
     x.fillRect(X+1,Y+1,s-2,s-2);
     x.strokeStyle=H.C.cement;x.strokeRect(X+1,Y+1,s-2,s-2);
     x.font=Math.floor(s*0.5)+"px serif";x.textAlign="center";x.textBaseline="middle";
-    if(v==="E"){x.fillStyle=H.C.ok;x.fillText("🏁",X+s/2,Y+s/2);}
-    if(v==="O"){x.fillStyle=H.C.paper;x.fillText("⭕",X+s/2,Y+s/2);}
+    if(v==="E"){x.fillStyle=H.C.ok;x.fillText("i:flag",X+s/2,Y+s/2);}
+    if(v==="O"){x.fillStyle=H.C.paper;x.fillText("i:target",X+s/2,Y+s/2);}
   }
   const bx=ox+px*s+s/2,by=oy+py*s+s/2;
   x.fillStyle=H.C.terra;x.beginPath();x.arc(bx,by,s*0.3,0,7);x.fill();
@@ -57,7 +57,7 @@ H.loop(dt=>{
     px=Math.round(fx);py=Math.round(fy);draw();
     if(anim.t>=1){
       px=anim.tx;py=anim.ty;
-      if(anim.fell){H.sfx("bad");say("🕳️ Caiu no buraco! De volta ao início.");load();}
+      if(anim.fell){H.sfx("bad");say("Caiu no buraco! De volta ao início.");load();}
       else if(anim.win){
         H.sfx("ok");const sc=(lv+1)*120+Math.max(0,60-moves*3);H.score(sc);hud.set("sc",sc);
         if(lv>=MAPS.length-1){over=true;anim=null;return H.done({win:true,score:sc+100,title:"Pista gelada vencida!",sub:"4 labirintos derrapados até a saída."});}

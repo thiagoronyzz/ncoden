@@ -3,7 +3,7 @@ GREG(170,{
 init(root,H){
 let over=false,crate={},bals=[],gates=[],t=0,gust=0,win=0;
 const hud=H.hud(root,[["bl","BALÕES",0],["pt","PORTÕES","0/3"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique na 📦 caixa para <b>amarrar balão</b> (sobe). Clique no <b>balão</b> para estourar (desce). Passe pelos 3 portões e pouse na 🟩!");
+const say=H.msg(root,"Clique na caixa para <b>amarrar balão</b> (sobe). Clique no <b>balão</b> para estourar (desce). Passe pelos 3 portões e pouse na ■!");
 const o=H.cvs(root,520,400),x=o.x;
 function build(){
   crate={x:50,y:300,vy:0};
@@ -72,7 +72,7 @@ H.loop(dt=>{
     x.beginPath();x.ellipse(bx,by,16,20,0,0,7);x.fill();
     x.strokeStyle=H.C.ink;x.stroke();
   });
-  x.font="30px serif";x.fillText("📦",crate.x-15,crate.y+10);
+  x.font="30px serif";x.fillText("i:box",crate.x-15,crate.y+10);
   x.fillStyle=H.C.ink;x.font="12px 'Space Mono',monospace";
   x.fillText("vento "+Math.round(gust),12,20);
 });

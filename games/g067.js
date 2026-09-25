@@ -51,7 +51,7 @@ H.loop(dt=>{
   }
   x.restore();
   x.fillStyle=H.C.ink;x.font="bold 12px 'Space Mono',monospace";
-  x.fillText("🎯 "+(GOAL-sc)+" restantes",14,24);
+  x.fillText("i:target"+(GOAL-sc)+" restantes",14,24);
   const ky=knife?knife.y:o.H-40;
   x.fillStyle="#c9c5b8";x.fillRect(cx-5,ky-44,10,44);
   x.strokeStyle=H.C.ink;x.lineWidth=2;x.strokeRect(cx-5,ky-44,10,44);

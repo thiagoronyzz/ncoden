@@ -32,7 +32,7 @@ function startWave(){
   wave++;hud.set("wv",wave+"/8");
   const n=5+wave*2;
   for(let i=0;i<n;i++)spawning.push({hp:22+wave*13,speed:52+wave*4,rw:8+wave*2});
-  spawnT=0;say("🌊 Onda "+wave+": "+n+" criaturas a caminho!");
+  spawnT=0;say("Onda "+wave+": "+n+" criaturas a caminho!");
 }
 H.loop(dt=>{
   if(over)return;
@@ -55,7 +55,7 @@ H.loop(dt=>{
     if(c.seg>=WP.length-1){
       creeps.splice(i,1);lives--;hud.set("vd",lives);H.sfx("bad");
       if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Base invadida!",sub:"Onda "+wave+". Venda? Não — construa mais cedo!"});}
-      say("👹 Vazou uma! Vidas: "+lives);continue;
+      say("Vazou uma! Vidas: "+lives);continue;
     }
     const a=WP[c.seg],b=WP[c.seg+1];
     const len=Math.max(1,Math.hypot(b[0]-a[0],b[1]-a[1]));
@@ -112,10 +112,10 @@ H.loop(dt=>{
   x.fillStyle=H.C.gold;
   for(const s of shots){x.beginPath();x.arc(s.x,s.y,4,0,7);x.fill();}
   x.fillStyle="#fff";x.font="bold 12px 'Space Mono',monospace";
-  x.fillText("🏰",o.W-34,336);
+  x.fillText("i:castle",o.W-34,336);
 });
 const row=H.el("div","g-row",null,root);
-const b1=H.btn(row,"🏹 Arqueira $50",()=>{selT="arch";H.sfx("tick");},false);
-const b2=H.btn(row,"💣 Canhão $100",()=>{selT="can";H.sfx("tick");},false);
-H.btn(row,"🌊 Iniciar onda",startWave,true);
+const b1=H.btn(row,"Arqueira $50",()=>{selT="arch";H.sfx("tick");},false);
+const b2=H.btn(row,"Canhão $100",()=>{selT="can";H.sfx("tick");},false);
+H.btn(row,"Iniciar onda",startWave,true);
 }});

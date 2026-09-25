@@ -12,8 +12,8 @@ const cur=H.el("div","g-msg","",box);
 function paint(){
   const L=LAD[li];
   hud.set("esc",(li+1)+"/3");hud.set("ps",chain.length+"/"+L.max);
-  ch.innerHTML="🪜 "+L.a+" → … → <b>"+L.b+"</b><br>"+chain.join(" → ");
-  cur.innerHTML="⌨️ "+(buf||"_")+" ("+(buf.length)+"/"+L.a.length+")";
+  ch.innerHTML=""+L.a+" → … → <b>"+L.b+"</b><br>"+chain.join(" → ");
+  cur.innerHTML=""+(buf||"_")+" ("+(buf.length)+"/"+L.a.length+")";
 }
 function diff1(a,b){
   if(a.length!==b.length)return false;
@@ -32,7 +32,7 @@ function ok(){
   const L=LAD[li];
   const prev=chain.length?chain[chain.length-1]:L.a;
   if(buf.length!==L.a.length||!diff1(prev,buf)||!DICT.includes(buf)){
-    H.sfx("bad");say("❌ Precisa: válida + 1 letra diferente de "+prev+"!");buf="";paint();return;
+    H.sfx("bad");say("✕ Precisa: válida + 1 letra diferente de "+prev+"!");buf="";paint();return;
   }
   chain.push(buf);buf="";
   H.sfx("ok");paint();
@@ -57,7 +57,7 @@ kb.on((c,d)=>{if(!d||over)return;
   });
 });
 const row=H.el("div","g-row",null,box);
-H.btn(row,"⌫",back,false);
-H.btn(row,"✅ Confirmar",ok,true);
+H.btn(row,"",back,false);
+H.btn(row,"✔ Confirmar",ok,true);
 paint();
 }});

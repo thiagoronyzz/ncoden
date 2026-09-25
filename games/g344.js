@@ -3,8 +3,8 @@ GREG(344,{
 init(root,H){
 let over=false,px=60,py=260,fuel=100,t=0,photos=0;
 const PL=[
- {x:400,y:120,k:'🪐',got:false},{x:700,y:330,k:'🔴',got:false},{x:1000,y:150,k:'🌎',got:false},
- {x:1300,y:300,k:'🪨',got:false},{x:1600,y:200,k:'☄️',got:false}
+ {x:400,y:120,k:'',got:false},{x:700,y:330,k:'○',got:false},{x:1000,y:150,k:'',got:false},
+ {x:1300,y:300,k:'',got:false},{x:1600,y:200,k:'',got:false}
 ];
 const hud=H.hud(root,[['cb','COMBUSTÍVEL','100%'],['f','FOTOS','0/5']]);
 const say=H.msg(root,'Voe até cada corpo celeste e FOTOGRAFE! Setas/toque movem. Sem combustível = à deriva!');
@@ -12,7 +12,7 @@ const o=H.cvs(root,560,420),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{tx=qx+cam;ty=qy;});
 let tx=null,ty=null,cam=0;
-H.btn(root,'📸 Fotografar',()=>{
+H.btn(root,'Fotografar',()=>{
  if(over)return;
  const p=PL.find(q=>!q.got&&Math.hypot(px-q.x,py-q.y)<70);
  if(p){p.got=true;photos++;H.sfx('ok');hud.set('f',photos+'/5');
@@ -20,7 +20,7 @@ H.btn(root,'📸 Fotografar',()=>{
  else H.sfx('bad');
 },true);
 function gameOver(win){over=true;const sc=photos*70+(win?200:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🛰️ Missão completa!',sub:'5 corpos fotografados!'}:{win:false,score:sc,title:'À deriva!',sub:photos+'/5 fotos. Economize combustível!'});}
+H.done(win?{win:true,score:sc,title:'Missão completa!',sub:'5 corpos fotografados!'}:{win:false,score:sc,title:'À deriva!',sub:photos+'/5 fotos. Economize combustível!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const sp=170*dt;
@@ -43,9 +43,9 @@ H.loop(dt=>{
   if(qx>-40&&qx<600){
    x.font='40px system-ui';x.textAlign='center';x.fillText(p.k,qx,p.y);
    if(!p.got){x.strokeStyle='#C4D645';x.lineWidth=2;x.beginPath();x.arc(qx,p.y,44,0,7);x.stroke();}
-   else{x.font='20px system-ui';x.fillText('✅',qx,p.y-36);}
+   else{x.font='20px system-ui';x.fillText('i:check',qx,p.y-36);}
   }
  });
- x.font='26px system-ui';x.fillText('🛰️',px-cam,py+9);
+ x.font='26px system-ui';x.fillText('i:satellite',px-cam,py+9);
 });
 }});

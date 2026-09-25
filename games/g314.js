@@ -11,9 +11,9 @@ function status(){hud.set('o',wave+'/8');hud.set('b',Math.max(0,bar|0));hud.set(
 function paintBtns(){
  brow.innerHTML='';
  if(over||phase!=='build')return;
- H.btn(brow,'🔨 Reparar (+40)',()=>{bar=Math.min(100,bar+40);H.sfx('tick');status();},false);
- H.btn(brow,'🔫 Balas (+15)',()=>{ammo+=15;H.sfx('tick');status();},false);
- H.btn(brow,'🌊 Chamar onda '+(wave+1),()=>{startWave();},true);
+ H.btn(brow,'Reparar (+40)',()=>{bar=Math.min(100,bar+40);H.sfx('tick');status();},false);
+ H.btn(brow,'Balas (+15)',()=>{ammo+=15;H.sfx('tick');status();},false);
+ H.btn(brow,'Chamar onda '+(wave+1),()=>{startWave();},true);
 }
 function startWave(){
  if(over||phase!=='build')return;
@@ -22,7 +22,7 @@ function startWave(){
  zombs=[];
  for(let i=0;i<n;i++)zombs.push({x:500+Math.random()*220+i*30,y:80+Math.random()*280,hp:1+(wave>4?1:0),sp:26+wave*4+Math.random()*14});
  phase='fight';brow.innerHTML='';
- say('🌊 Onda '+wave+'/8 — '+n+' zumbis!');
+ say('Onda '+wave+'/8 — '+n+' zumbis!');
  status();
 }
 H.onTap(o,(px,py)=>{
@@ -35,7 +35,7 @@ H.onTap(o,(px,py)=>{
 });
 function gameOver(win){over=true;brow.innerHTML='';
  const sc=kills*20+(win?300:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🌅 Amanheceu!',sub:kills+' zumbis abatidos!'}:{win:false,score:sc,title:'A casa caiu!',sub:'Onda '+wave+'/8 · '+kills+' abates. Mire na cabeça!'});}
+H.done(win?{win:true,score:sc,title:'Amanheceu!',sub:kills+' zumbis abatidos!'}:{win:false,score:sc,title:'A casa caiu!',sub:'Onda '+wave+'/8 · '+kills+' abates. Mire na cabeça!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(phase==='fight'){
@@ -54,9 +54,9 @@ H.loop(dt=>{
  for(let i=0;i<6;i++)x.fillRect(6,70+i*50,48,10);
  x.fillStyle='#D94E34';x.font='bold 13px system-ui';x.textAlign='left';
  x.fillText('CASA '+Math.max(0,bar|0),4,54);
- zombs.forEach(z=>{x.font='26px system-ui';x.textAlign='center';x.fillText('🧟',z.x,z.y);});
+ zombs.forEach(z=>{x.font='26px system-ui';x.textAlign='center';x.fillText('i:zombie',z.x,z.y);});
  x.fillStyle='#fff';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('Onda '+wave+'/8 · 🔫'+ammo+' · 🧟'+zombs.length,70,30);
+ x.fillText('Onda '+wave+'/8 · '+ammo+' · '+zombs.length,70,30);
 });
 paintBtns();status();
 }});

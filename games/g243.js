@@ -47,10 +47,10 @@ function paint(){
     b.style.width="44px";b.style.height="60px";
     b.addEventListener("click",()=>clickWaste());
   }else H.el("div","g-chip","descarte vazio",sb);
-  H.btn(sb,"🎲 Monte ("+stock.length+")",()=>{
+  H.btn(sb,"Monte ("+stock.length+")",()=>{
     if(over)return;
     if(stock.length){waste.push(stock.pop());sel=null;H.sfx("tick");paint();}
-    else if(passes>1){passes--;stock=waste.reverse();waste=[];sel=null;H.sfx("tick");say("🔄 Novo passe! ("+(passes-1)+" restantes)");paint();}
+    else if(passes>1){passes--;stock=waste.reverse();waste=[];sel=null;H.sfx("tick");say("↻ Novo passe! ("+(passes-1)+" restantes)");paint();}
     else{H.sfx("bad");say("Sem passes!");}
   },false);
   if(!left){over=true;H.score(400+passes*100);

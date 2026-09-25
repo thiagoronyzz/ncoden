@@ -10,8 +10,8 @@ const cur=H.el("div","g-msg","",box);
 function paint(){
   const last=chain[chain.length-1];
   hud.set("el",chain.length+"/10");hud.set("lt",last[last.length-1]);
-  ch.innerHTML="🔗 "+chain.join(" → ");
-  cur.innerHTML="⌨️ "+(buf||"_");
+  ch.innerHTML=""+chain.join(" → ");
+  cur.innerHTML=""+(buf||"_");
 }
 function feed(chr){if(!over){buf+=chr;H.sfx("tick");paint();}}
 function back(){buf=buf.slice(0,-1);paint();}
@@ -22,7 +22,7 @@ function ok(){
   if(b.length>=4&&b[0]===last[last.length-1]&&!chain.includes(b)){
     chain.push(b);score+=40;H.score(score);buf="";time=20;H.sfx("ok");paint();
     if(chain.length>=10){over=true;return H.done({win:true,score:score+100,title:"Corrente forte!",sub:"10 elos sem quebrar."});}
-  }else{H.sfx("bad");say("❌ Comece com "+last[last.length-1]+", 4+ letras, sem repetir!");buf="";paint();}
+  }else{H.sfx("bad");say("✕ Comece com "+last[last.length-1]+", 4+ letras, sem repetir!");buf="";paint();}
 }
 const kb=H.keys();
 kb.on((c,d)=>{if(!d||over)return;
@@ -37,8 +37,8 @@ kb.on((c,d)=>{if(!d||over)return;
   });
 });
 const row=H.el("div","g-row",null,box);
-H.btn(row,"⌫",back,false);
-H.btn(row,"✅ Elo!",ok,true);
+H.btn(row,"",back,false);
+H.btn(row,"✔ Elo!",ok,true);
 paint();
 H.loop(dt=>{
   if(over)return;

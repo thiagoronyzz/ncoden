@@ -7,13 +7,13 @@ for(let i=0;i<40;i++)AST.push({x:500+i*330+Math.random()*150,y:40+Math.random()*
 const FUEL=[];
 for(let i=0;i<8;i++)FUEL.push({x:900+i*1300,y:60+Math.random()*400,got:false});
 const hud=H.hud(root,[['cb','COMBUSTÍVEL','100%'],['e','ESCUDO',3],['d','DIST','0%']]);
-const say=H.msg(root,'Chegue ao planeta 🪐! Setas movem, ⬆️ gasta mais combustível. Pegue ⛽ e desvie dos asteroides!');
+const say=H.msg(root,'Chegue ao planeta ! Setas movem, ↑ gasta mais combustível. Pegue e desvie dos asteroides!');
 const o=H.cvs(root,560,520),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{tpx=qx;tpy=qy;});
 let tpx=null,tpy=null;
 function gameOver(win){over=true;const sc=win?Math.max(250,800-(t|0)*6):dist/150|0;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🚀 Órbita alcançada!',sub:'Campo de asteroides vencido!'}:{win:false,score:sc,title:'Missão abortada!',sub:fuel<=0?'Sem combustível — pegue os ⛽!':'Escudo esgotado. Desvie mais cedo!'});}
+H.done(win?{win:true,score:sc,title:'Órbita alcançada!',sub:'Campo de asteroides vencido!'}:{win:false,score:sc,title:'Missão abortada!',sub:fuel<=0?'Sem combustível — pegue os !':'Escudo esgotado. Desvie mais cedo!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const L=dn.ArrowLeft||dn.KeyA,R=dn.ArrowRight||dn.KeyD,U=dn.ArrowUp||dn.KeyW,D=dn.ArrowDown||dn.KeyS;
@@ -46,10 +46,10 @@ H.loop(dt=>{
  });
  FUEL.forEach(f=>{
   const fx=f.x-dist*.9;
-  if(!f.got&&fx>-30&&fx<590){x.font='22px system-ui';x.textAlign='center';x.fillText('⛽',fx,f.y);}
+  if(!f.got&&fx>-30&&fx<590){x.font='22px system-ui';x.textAlign='center';x.fillText('i:barrel',fx,f.y);}
  });
- x.font='30px system-ui';x.textAlign='center';x.fillText('🪐',14500-dist*.9>600?600:14500-dist*.9,260);
+ x.font='30px system-ui';x.textAlign='center';x.fillText('i:planet',14500-dist*.9>600?600:14500-dist*.9,260);
  x.save();x.translate(px,py);x.rotate(Math.PI/4);
- x.font='28px system-ui';x.fillText('🚀',0,9);x.restore();
+ x.font='28px system-ui';x.fillText('i:rocket',0,9);x.restore();
 });
 }});

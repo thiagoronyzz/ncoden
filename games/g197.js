@@ -23,7 +23,7 @@ function clap(){
     return H.done({win:false,score:0,title:"Fora do ritmo!",sub:"Erro médio "+Math.floor(avg*1000)+"ms (precisa <120ms)."});
   }
 }
-H.btn(root,"👏 PALMA!",clap,true);
+H.btn(root,"PALMA!",clap,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")clap();});
 H.onTap(o,()=>clap());
@@ -37,7 +37,7 @@ H.loop(dt=>{
   x.fillStyle=near?H.C.wasabi:H.C.card;
   x.beginPath();x.arc(o.W/2,o.H/2,60+ph*30,0,7);x.fill();
   x.strokeStyle=H.C.ink;x.lineWidth=4;x.stroke();
-  x.font="44px serif";x.fillText("👏",o.W/2-22,o.H/2+16);
+  x.font="44px serif";x.fillText("i:clap",o.W/2-22,o.H/2+16);
   x.fillStyle=H.C.ink;x.font="bold 14px 'Space Mono',monospace";
   x.fillText(near?"AGORA!":"…",o.W/2-30,o.H-30);
 });

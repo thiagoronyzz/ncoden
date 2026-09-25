@@ -3,7 +3,7 @@ GREG(34,{
 init(root,H){
 let over=false,water=0,leaks=[],patched=0,spawnT=0,t=0,nextId=1;
 const hud=H.hud(root,[["rm","REMENDOS",0],["nv","NÍVEL DA ÁGUA","0%"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique nos <b>vazamentos 💦</b> para remendar. Cada vazamento aberto acelera a cheia!");
+const say=H.msg(root,"Clique nos <b>vazamentos </b> para remendar. Cada vazamento aberto acelera a cheia!");
 const o=H.cvs(root,480,400),x=o.x;
 H.onTap(o,(px,py)=>{
   if(over)return;
@@ -46,6 +46,6 @@ H.loop(dt=>{
   const wh=o.H*(water/100);
   x.fillStyle="rgba(46,110,138,.75)";x.fillRect(0,o.H-wh,o.W,wh);
   x.fillStyle=H.C.ink;x.font="12px 'Space Mono',monospace";
-  x.fillText("💦 "+leaks.length+" abertos",14,24);
+  x.fillText("i:splash"+leaks.length+" abertos",14,24);
 });
 }});

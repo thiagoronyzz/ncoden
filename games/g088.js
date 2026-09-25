@@ -2,7 +2,7 @@
 GREG(88,{
 init(root,H){
 const N=5;
-const Z={casa:{e:"🏠",c:20},loja:{e:"🏪",c:30},fab:{e:"🏭",c:30},parq:{e:"🌳",c:25}};
+const Z={casa:{e:"casa",c:20},loja:{e:"loja",c:30},fab:{e:"fábrica",c:30},parq:{e:"parque",c:25}};
 let over=false,g=[],sel="casa",cash=200,built=0;
 const hud=H.hud(root,[["din","CAIXA",200],["fel","FELICIDADE",0],["ob","OBRAS",0]]);
 const say=H.msg(root,"Escolha a zona e clique nos lotes. Meta: <b>10 obras e felicidade ≥ 20</b>. Casas amam parques e odeiam fábricas!");
@@ -49,7 +49,7 @@ function place(i){
 }
 const row=H.el("div","g-row",null,root);
 Object.keys(Z).forEach(k=>{
-  const b=H.el("button","g-chip",Z[k].e+" "+k+" $"+Z[k].c,row);
+  const b=H.el("button","g-chip",Z[k].e+" $"+Z[k].c,row);
   b.style.cursor="pointer";
   b.addEventListener("click",()=>{sel=k;H.sfx("tick");say("Zona: <b>"+k+"</b> ($"+Z[k].c+")");});
 });

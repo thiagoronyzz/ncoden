@@ -28,7 +28,7 @@ function build(){
 }
 function paint(){
   for(let i=0;i<N*N;i++){
-    cells[i].textContent=g[i]?"💡":"·";
+    cells[i].textContent=g[i]?"":"·";
     cells[i].classList.toggle("good",g[i]);
   }
 }

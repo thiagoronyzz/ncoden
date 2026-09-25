@@ -29,8 +29,8 @@ function show(){
   H.btn(brow,opt,()=>{
    if(over||answered)return;
    answered=true;
-   if(i===q[2]){const p=Math.max(10,100-(t*12|0));score+=p;H.sfx('ok');say('✅ +'+p+'!');}
-   else{H.sfx('bad');say('❌ Era: '+q[1][q[2]]);}
+   if(i===q[2]){const p=Math.max(10,100-(t*12|0));score+=p;H.sfx('ok');say('✔ +'+p+'!');}
+   else{H.sfx('bad');say('✕ Era: '+q[1][q[2]]);}
    qi++;hud.set('vc',score);
    H.after(900,()=>{if(!over)show();});
   },false);
@@ -41,13 +41,13 @@ H.every(100,()=>{
  t+=.1;
  if(t>=botT){
   answered=true;
-  if(Math.random()<.65){bot+=60;H.sfx('bad');say('🤖 Bot respondeu primeiro! +60 para eles.');}
-  else{say('🤖 Bots erraram! Responda!');answered=false;botT=t+3;return;}
+  if(Math.random()<.65){bot+=60;H.sfx('bad');say('Bot respondeu primeiro! +60 para eles.');}
+  else{say('Bots erraram! Responda!');answered=false;botT=t+3;return;}
   qi++;hud.set('bt',bot);
   H.after(900,()=>{if(!over)show();});
  }
 });
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>bot,score,title:score>bot?'⚡ Mais rápido!':'⚡ Bots venceram!',sub:'Você '+score+' × '+bot+' bots.'});}
+H.done({win:score>bot,score,title:score>bot?'Mais rápido!':'Bots venceram!',sub:'Você '+score+' × '+bot+' bots.'});}
 show();
 }});

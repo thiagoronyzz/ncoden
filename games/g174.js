@@ -4,7 +4,7 @@ init(root,H){
 const CW=26,CH=18,CS=18;
 let over=false,grid=[],walls=12,time=100,spawn=0,burned=0;
 const hud=H.hud(root,[["tp","TEMPO",100],["mr","MUROS",12],["vl","VILAS","3/3"]]);
-const say=H.msg(root,"Clique para erguer <b>muro</b> (12 no total, clique de novo para tirar). A lava desce do 🌋 — proteja as 3 🏘️ por 100s ou jogue-a no 🌊 mar (direita)!");
+const say=H.msg(root,"Clique para erguer <b>muro</b> (12 no total, clique de novo para tirar). A lava desce do — proteja as 3 por 100s ou jogue-a no mar (direita)!");
 const o=H.cvs(root,CW*CS+20,CH*CS+20),x=o.x;
 const OX=10,OY=10;
 const CR={c:12,r:1};
@@ -48,7 +48,7 @@ H.loop(dt=>{
     if(vilAlive[i]&&grid[idx(v.c,v.r)]===1){
       vilAlive[i]=false;burned++;H.sfx("bad");
       hud.set("vl",vilAlive.filter(Boolean).length+"/3");
-      say("🔥 Uma vila queimou! ("+vilAlive.filter(Boolean).length+" restantes)");
+      say("Uma vila queimou! ("+vilAlive.filter(Boolean).length+" restantes)");
       if(vilAlive.filter(Boolean).length<2){
         // continua até o fim; derrota decidida no tempo
       }
@@ -67,7 +67,7 @@ H.loop(dt=>{
   }
   x.fillStyle="#2E6E8A";x.fillRect(OX+(CW-1)*CS,OY,CS,CH*CS);
   x.font="16px serif";
-  x.fillText("🌋",OX+CR.c*CS-2,OY+CR.r*CS+16);
-  VIL.forEach((v,i)=>x.fillText(vilAlive[i]?"🏘️":"☠️",OX+v.c*CS-2,OY+v.r*CS+16));
+  x.fillText("i:volcano",OX+CR.c*CS-2,OY+CR.r*CS+16);
+  VIL.forEach((v,i)=>x.fillText(vilAlive[i]?"i:house":"i:skull",OX+v.c*CS-2,OY+v.r*CS+16));
 });
 }});

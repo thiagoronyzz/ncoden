@@ -19,15 +19,15 @@ function paint(){
   if(over||qi>=Q.length)return;
   hud.set("qs",(qi+1)+"/8");
   box.innerHTML="";
-  H.el("div","g-msg","🔤 ___ + <b>"+Q[qi].r+"</b>",box);
+  H.el("div","g-msg","___ + <b>"+Q[qi].r+"</b>",box);
   const row=H.el("div","g-row",null,box);
   Q[qi].o.forEach((op,i)=>{
     const b=H.el("button","g-btn ghost",op+"…",row);
     b.addEventListener("click",()=>{
       if(over)return;
       if(Q[qi].ok.includes(i)){score+=50;H.score(score);hud.set("pt",score);H.sfx("ok");
-        say("✅ "+op.toLowerCase()+Q[qi].r.toLowerCase()+" existe!");
-      }else{H.sfx("bad");say("❌ Não existe essa palavra!");}
+        say("✔"+op.toLowerCase()+Q[qi].r.toLowerCase()+" existe!");
+      }else{H.sfx("bad");say("✕ Não existe essa palavra!");}
       qi++;
       if(qi>=Q.length){
         over=true;

@@ -24,9 +24,9 @@ function aiBid(h){
 function paint(){
   if(over)return;
   box.innerHTML="";
-  H.el("div","g-msg","🎴 Vazas: você "+tricks[0]+"/"+(bids[0]!=null?bids[0]:"?")+" · CPU "+tricks.slice(1).join("/")+" (apostas "+(bids.slice(1).join("/")||"?")+") · mesa: "+(table.map(t=>RN(t.c.r)+S[t.c.s]).join(" ")||"—"),box);
+  H.el("div","g-msg","Vazas: você "+tricks[0]+"/"+(bids[0]!=null?bids[0]:"?")+" · CPU "+tricks.slice(1).join("/")+" (apostas "+(bids.slice(1).join("/")||"?")+") · mesa: "+(table.map(t=>RN(t.c.r)+S[t.c.s]).join(" ")||"—"),box);
   if(bidding){
-    H.el("div","g-msg","📢 Sua aposta (vazas):",box);
+    H.el("div","g-msg","Sua aposta (vazas):",box);
     const row=H.el("div","g-row",null,box);
     for(let b=1;b<=7;b++){
       H.btn(row,""+b,()=>{

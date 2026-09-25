@@ -1,7 +1,7 @@
 /* NCODE N · 157 Sushi Bar — 10 pedidos da esteira */
 GREG(157,{
 init(root,H){
-const PC=["🍣 nigiri","🍱 maki","🍤 temaki"];
+const PC=["nigiri","maki","temaki"];
 let over=false,belt=[],order=0,served=0,err=0,time=150,spawn=0,nid=0;
 const hud=H.hud(root,[["pd","PEDIDOS","0/10"],["er","ERROS","0/3"],["tp","TEMPO",150]]);
 const say=H.msg(root,"O pedido mostra a peça. Clique no <b>prato certo</b> quando passar na esteira! Prato errado = erro.");
@@ -21,7 +21,7 @@ H.loop(dt=>{
   }
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   x.fillStyle=H.C.ink;x.font="bold 15px 'Space Mono',monospace";
-  x.fillText("🧾 PEDIDO: "+PC[order],14,30);
+  x.fillText("PEDIDO: "+PC[order],14,30);
   x.fillStyle="#8A877C";x.fillRect(0,120,o.W,80);
   x.fillStyle=H.C.ink;
   for(let lx=0;lx<o.W;lx+=44)x.fillRect(lx,156,24,6);
@@ -42,7 +42,7 @@ H.onTap(o,(px,py)=>{
     if(served>=10){over=true;return H.done({win:true,score:sc+100,title:"Itamae!",sub:"10 pedidos pescados da esteira."});}
     newOrder();
   }else{
-    err++;hud.set("er",err+"/3");H.sfx("bad");say("❌ Peça errada! Pedido: "+PC[order]+". ("+err+"/3)");
+    err++;hud.set("er",err+"/3");H.sfx("bad");say("✕ Peça errada! Pedido: "+PC[order]+". ("+err+"/3)");
     if(err>=3){over=true;return H.done({win:false,score:sc,title:"Cliente alérgico!",sub:"3 pratos errados. Leia o pedido!"});}
   }
 });

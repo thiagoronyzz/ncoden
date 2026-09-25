@@ -28,8 +28,8 @@ kb.on((c,d)=>{if(!d)return;
   if(c==="ArrowLeft"||c==="KeyA")step("L");
   if(c==="ArrowRight"||c==="KeyD")step("R");});
 const row=H.el("div","g-row",null,root);
-H.btn(row,"🦶 ESQUERDO",()=>step("L"),false);
-H.btn(row,"DIREITO 🦶",()=>step("R"),false);
+H.btn(row,"ESQUERDO",()=>step("L"),false);
+H.btn(row,"DIREITO ",()=>step("R"),false);
 H.loop(dt=>{
   if(over)return;
   t+=dt;
@@ -42,7 +42,7 @@ H.loop(dt=>{
   if(over)return;
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   x.font="54px serif";
-  x.fillText("💃",o.W/2-27,120);
+  x.fillText("i:dance",o.W/2-27,120);
   const nx=steps.find(s=>!s.hit);
   x.font="bold 20px 'Space Mono',monospace";
   steps.forEach((s,i)=>{

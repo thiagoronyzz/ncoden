@@ -1,7 +1,7 @@
 /* NCODE N · 090 Rotação de Culturas — 4 estações no verde */
 GREG(90,{
 init(root,H){
-const CR={trigo:{y:60,n:-20,e:"🌾"},milho:{y:95,n:-35,e:"🌽"},feijao:{y:40,n:25,e:"🫘"},pousio:{y:0,n:12,e:"🟫"}};
+const CR={trigo:{y:60,n:-20,l:"Trigo"},milho:{y:95,n:-35,l:"Milho"},feijao:{y:40,n:25,l:"Feijão"},pousio:{y:0,n:12,l:"Pousio",e:"■"}};
 const SE=["Primavera","Verão","Outono","Inverno"];
 let over=false,se=0,cash=100,N2=[60,60,60,60],plan=["trigo","trigo","trigo","trigo"];
 const hud=H.hud(root,[["es","ESTAÇÃO","Primavera"],["cx","CAIXA",100],["sc","META","$800"]]);
@@ -14,7 +14,7 @@ function paint(){
     const row=H.el("div","g-row",null,box);
     H.el("span","g-chip","Talhão "+(f+1)+" · N=<b>"+Math.round(N2[f])+"</b>",row);
     Object.keys(CR).forEach(k=>{
-      const b=H.el("button","g-chip"+(plan[f]===k?" hot":""),CR[k].e+" "+k,row);
+      const b=H.el("button","g-chip"+(plan[f]===k?" hot":""),(CR[k].e?CR[k].e+" ":"")+CR[k].l,row);
       b.style.cursor="pointer";
       (function(ff,kk){b.addEventListener("click",()=>{plan[ff]=kk;H.sfx("tick");paint();});})(f,k);
     });
@@ -41,6 +41,6 @@ function advance(){
   }
   paint();
 }
-H.btn(root,"🌤️ Avançar estação",advance,true);
+H.btn(root,"Avançar estação",advance,true);
 paint();
 }});

@@ -10,12 +10,12 @@ const POL=[
  {wp:[[60,400],[400,400],[400,260],[60,260]],i:0,sp:80,x:60,y:400}
 ];
 const hud=H.hud(root,[['v','VIDAS',3],['en','ENTREGA','0%']]);
-const say=H.msg(root,'Encontre o contato de chapéu vermelho 🎩 na estação e fique perto para entregar! Policiais de perto prendem!');
+const say=H.msg(root,'Encontre o contato de chapéu vermelho na estação e fique perto para entregar! Policiais de perto prendem!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
 function gameOver(win){over=true;const sc=win?Math.max(150,450-(t|0)*4)+lives*60:20;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🤝 Pacote entregue!',sub:'Missão cumprida em '+(t|0)+'s.'}:{win:false,score:sc,title:'Preso!',sub:'A polícia te pegou 3 vezes.'});}
+H.done(win?{win:true,score:sc,title:'Pacote entregue!',sub:'Missão cumprida em '+(t|0)+'s.'}:{win:false,score:sc,title:'Preso!',sub:'A polícia te pegou 3 vezes.'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  WK.forEach(w=>{w.x+=w.vx*dt;w.y+=w.vy*dt;w.ph+=dt*5;if(w.x<0||w.x>460)w.vx*=-1;if(w.y<0||w.y>460)w.vy*=-1;});
@@ -37,9 +37,9 @@ H.loop(dt=>{
  x.fillStyle='#B9B5A8';
  for(let i=0;i<5;i++)x.fillRect(0,90+i*70,460,8);
  WK.forEach(w=>{x.fillStyle='#8A877C';x.beginPath();x.arc(w.x,w.y+Math.sin(w.ph)*2,8,0,7);x.fill();});
- x.font='22px system-ui';x.textAlign='center';x.fillText('🎩',CT.x,CT.y+8);
+ x.font='22px system-ui';x.textAlign='center';x.fillText('',CT.x,CT.y+8);
  x.strokeStyle='#D94E34';x.lineWidth=2;x.beginPath();x.arc(CT.x,CT.y,36,0,7);x.stroke();
- POL.forEach(p=>{x.font='20px system-ui';x.fillText('👮',p.x,p.y+7);});
+ POL.forEach(p=>{x.font='20px system-ui';x.fillText('i:guard',p.x,p.y+7);});
  x.fillStyle='#181816';x.beginPath();x.arc(px,py,10,0,7);x.fill();
  x.fillStyle='#C4D645';x.beginPath();x.arc(px,py,4,0,7);x.fill();
 });

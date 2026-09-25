@@ -5,11 +5,11 @@ let over=false,px=230,py=400,tx=px,ty=py,t=0,doc=0;
 const PT=[];
 for(let i=0;i<5;i++)PT.push({x:50+Math.random()*360,y:60+Math.random()*300,got:false});
 const hud=H.hud(root,[['d','DOCUMENTADAS','0/5']]);
-const say=H.msg(root,'Explore no escuro com a tocha! Perto de uma pintura 🎨, toque DOCUMENTAR. 5 pinturas!');
+const say=H.msg(root,'Explore no escuro com a tocha! Perto de uma pintura , toque DOCUMENTAR. 5 pinturas!');
 const o=H.cvs(root,460,480),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
-H.btn(root,'📝 Documentar',()=>{
+H.btn(root,'Documentar',()=>{
  if(over)return;
  const p=PT.find(q=>!q.got&&Math.hypot(px-q.x,py-q.y)<70);
  if(p){p.got=true;doc++;H.sfx('ok');hud.set('d',doc+'/5');
@@ -17,7 +17,7 @@ H.btn(root,'📝 Documentar',()=>{
  else H.sfx('bad');
 },true);
 function gameOver(win){over=true;const sc=win?Math.max(150,450-(t|0)*3):doc*50;H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'🎨 Acervo completo!',sub:'5 pinturas documentadas!'}:{win:false,score:sc|0,title:'Fim!',sub:doc+'/5. Explore cada canto!'});}
+H.done(win?{win:true,score:sc|0,title:'Acervo completo!',sub:'5 pinturas documentadas!'}:{win:false,score:sc|0,title:'Fim!',sub:doc+'/5. Explore cada canto!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const sp=140*dt;
@@ -31,9 +31,9 @@ H.loop(dt=>{
  PT.forEach(p=>{
   if(Math.hypot(px-p.x,py-p.y)>110&&!p.got)return;
   x.font='30px system-ui';x.textAlign='center';
-  x.fillText(p.got?'✅':'🎨',p.x,p.y+10);
+  x.fillText(p.got?'i:check':'i:suit',p.x,p.y+10);
  });
- x.font='24px system-ui';x.fillText('🔦',px,py+8);
+ x.font='24px system-ui';x.fillText('',px,py+8);
  if(t>150){gameOver(doc>=5);return;}
 });
 }});

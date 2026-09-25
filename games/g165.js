@@ -16,7 +16,7 @@ H.loop(dt=>{
   if(over)return;
   time-=dt;cool-=dt;wt+=dt;
   hud.set("tp",Math.max(0,Math.ceil(time)));
-  if(wt>=8){wt=0;water=Math.min(MAXL,water+1);hud.set("ag",water);H.sfx("bad");say("🌊 Água no nível "+water+"!");}
+  if(wt>=8){wt=0;water=Math.min(MAXL,water+1);hud.set("ag",water);H.sfx("bad");say("Água no nível "+water+"!");}
   // vazamento: coluna abaixo do nível tendo vizinho abaixo? qualquer coluna < nível
   let bad=stack.filter(s=>s<water).length;
   if(water>0&&bad>0){
@@ -41,6 +41,6 @@ H.loop(dt=>{
   x.fillStyle="#fff";x.font="bold 13px 'Space Mono',monospace";
   if(water>0)x.fillText("NÍVEL "+water,10,300-water*lh+18);
   if(leak>0.3){x.fillStyle=H.C.terra;x.font="bold 14px 'Space Mono',monospace";
-    x.fillText("⚠ VAZANDO!",200,24);}
+    x.fillText("VAZANDO!",200,24);}
 });
 }});

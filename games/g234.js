@@ -27,19 +27,19 @@ function battle(){
     if(!you.length||!cpu.length)break;
     const a=you.shift(),b=cpu.shift();
     pile.push(a,b);
-    vs.innerHTML="⚔️ Você <b>"+RN(a)+"</b> × <b>"+RN(b)+"</b> CPU";
+    vs.innerHTML="Você <b>"+RN(a)+"</b> × <b>"+RN(b)+"</b> CPU";
     if(a===1||b===1){/* A vale 14 */}
     const va=a===1?14:a,vb=b===1?14:b;
     if(va===vb){
-      log.push("🔥 GUERRA! ("+pile.length+" na mesa)");
+      log.push("GUERRA! ("+pile.length+" na mesa)");
       for(let i=0;i<3;i++){
         if(you.length)pile.push(you.shift());
         if(cpu.length)pile.push(cpu.shift());
       }
       continue;
     }
-    if(va>vb){you.push(...pile);log.push("✅ Você levou "+pile.length+"!");}
-    else{cpu.push(...pile);log.push("❌ CPU levou "+pile.length+".");}
+    if(va>vb){you.push(...pile);log.push("✔ Você levou "+pile.length+"!");}
+    else{cpu.push(...pile);log.push("✕ CPU levou "+pile.length+".");}
     break;
   }
   H.sfx("tick");paint();
@@ -55,6 +55,6 @@ function battle(){
   }
 }
 paint();
-H.btn(root,"⚔️ BATALHAR!",battle,true);
-H.btn(root,"⏩ 10 batalhas",()=>{if(!over){for(let i=0;i<10&&!over;i++)battle();}},false);
+H.btn(root,"BATALHAR!",battle,true);
+H.btn(root,"→ 10 batalhas",()=>{if(!over){for(let i=0;i<10&&!over;i++)battle();}},false);
 }});

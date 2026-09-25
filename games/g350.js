@@ -3,12 +3,12 @@ GREG(350,{
 init(root,H){
 // [emoji, nome, venenoso?, dica]
 const M=[
- ['🍄','champignon',false,'chapéu marrom liso'],
- ['☠️','cicuta verde',true,'chapéu verde + anel'],
- ['🍄‍🟫','porcini',false,'chapéu marrom grosso'],
- ['🔴','agárico',true,'chapéu vermelho com pintas'],
- ['🦪','ostra',false,'parece concha'],
- ['👻','anjo destruidor',true,'todo branco']
+ ['','champignon',false,'chapéu marrom liso'],
+ ['','cicuta verde',true,'chapéu verde + anel'],
+ ['','porcini',false,'chapéu marrom grosso'],
+ ['○','agárico',true,'chapéu vermelho com pintas'],
+ ['','ostra',false,'parece concha'],
+ ['','anjo destruidor',true,'todo branco']
 ];
 let over=false,round=0,score=0,basket=0;
 const hud=H.hud(root,[['r','COGUMELO','1/10'],['pt','PONTOS',0],['c','CESTA',0]]);
@@ -21,10 +21,10 @@ function show(){
  if(round>=10){gameOver(true);return;}
  cur=M[(Math.random()*M.length)|0];
  hud.set('r',(round+1)+'/10');
- sh.innerHTML='<span style="font-size:56px">'+cur[0]+'</span><br><b>'+cur[1]+'</b> · '+cur[3]+'<br>❤️'.repeat(1)+' '+lives;
+ sh.innerHTML='<span style="font-size:56px">'+cur[0]+'</span><br><b>'+cur[1]+'</b> · '+cur[3]+'<br>♥'.repeat(1)+' '+lives;
  brow.innerHTML='';
- H.btn(brow,'🧺 COLHER',()=>decide(false),true);
- H.btn(brow,'☠️ VENENOSO (evitar)',()=>decide(true),false);
+ H.btn(brow,'COLHER',()=>decide(false),true);
+ H.btn(brow,'VENENOSO (evitar)',()=>decide(true),false);
 }
 function decide(saysPois){
  if(over)return;
@@ -41,6 +41,6 @@ function decide(saysPois){
  show();
 }
 function gameOver(win){over=true;brow.innerHTML='';H.score(score);
-H.done({win:win&&basket>=4,score,title:win&&basket>=4?'🍄 Cesta cheia!':'🍄 Fim da coleta!',sub:score+' pontos · '+basket+' colhidos.'});}
+H.done({win:win&&basket>=4,score,title:win&&basket>=4?'Cesta cheia!':'Fim da coleta!',sub:score+' pontos · '+basket+' colhidos.'});}
 show();
 }});

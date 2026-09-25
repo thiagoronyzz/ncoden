@@ -10,11 +10,11 @@ const CAMS=[
  {x:370,y:70,a:5,sp:.55,r:160}
 ];
 const hud=H.hud(root,[['v','VIDAS',3],['dt','DETECÇÃO','0%'],['fr','TRAVAR',3]]);
-const say=H.msg(root,'Chegue à saída 🚪! Câmeras giram — ande pelos pontos cegos. Botão TRAVAR congela tudo por 4s!');
+const say=H.msg(root,'Chegue à saída ! Câmeras giram — ande pelos pontos cegos. Botão TRAVAR congela tudo por 4s!');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
-H.btn(root,'📷 Travar câmeras ('+charges+')',()=>{
+H.btn(root,'Travar câmeras ('+charges+')',()=>{
  if(over||charges<=0||freeze>0)return;
  charges--;freeze=4;H.sfx('ok');hud.set('fr',charges);
 },false);
@@ -28,7 +28,7 @@ function seen(){
  });
 }
 function gameOver(win){over=true;const sc=win?350+lives*100+charges*30:60;H.score(sc);
-H.done(win?{win:true,score:sc,title:'📷 Fantasma!',sub:'Nenhuma câmera te registrou.'}:{win:false,score:sc,title:'Gravado!',sub:'A detecção encheu. Congele nas horas críticas!'});}
+H.done(win?{win:true,score:sc,title:'Fantasma!',sub:'Nenhuma câmera te registrou.'}:{win:false,score:sc,title:'Gravado!',sub:'A detecção encheu. Congele nas horas críticas!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(freeze>0)freeze-=dt;else CAMS.forEach(cm=>cm.a+=cm.sp*dt);
@@ -44,7 +44,7 @@ H.loop(dt=>{
  if(det>=100){lives--;H.sfx('bad');det=0;if(lives<=0){gameOver(false);return;}px=30;py=430;tx=px;ty=py;}
  if(px>406&&py<54){gameOver(true);return;}
  x.fillStyle='#20242C';x.fillRect(0,0,460,460);
- x.fillStyle='#3E7C4F';x.fillRect(406,8,46,46);x.fillStyle='#fff';x.font='24px system-ui';x.textAlign='center';x.fillText('🚪',429,42);
+ x.fillStyle='#3E7C4F';x.fillRect(406,8,46,46);x.fillStyle='#fff';x.font='24px system-ui';x.textAlign='center';x.fillText('i:door',429,42);
  CAMS.forEach(cm=>{
   x.fillStyle=freeze>0?'rgba(196,214,69,.15)':'rgba(217,78,52,.25)';
   x.beginPath();x.moveTo(cm.x,cm.y);x.arc(cm.x,cm.y,cm.r,cm.a-.38,cm.a+.38);x.fill();

@@ -17,7 +17,7 @@ H.onTap(o,(px,py)=>{
  });
 });
 function gameOver(win){over=true;const sc=saved*70+(win?200:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🌉 Resgate total!',sub:saved+' carros salvos!'}:{win:false,score:sc,title:'A ponte caiu!',sub:saved+'/5 salvos. Seja rápido!'});}
+H.done(win?{win:true,score:sc,title:'Resgate total!',sub:saved+' carros salvos!'}:{win:false,score:sc,title:'A ponte caiu!',sub:saved+'/5 salvos. Seja rápido!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  CARS.forEach(c=>{
@@ -31,13 +31,13 @@ H.loop(dt=>{
  x.fillStyle='#8A877C';x.fillRect(30,220,400,20);
  x.fillStyle='#3E7C4F';x.fillRect(0,220,30,20);x.fillRect(430,220,30,20);
  CARS.forEach(c=>{
-  if(c.saved){x.font='22px system-ui';x.textAlign='center';x.fillText('🚗',12+saved*4,210);return;}
+  if(c.saved){x.font='22px system-ui';x.textAlign='center';x.fillText('i:car',12+saved*4,210);return;}
   if(c.gone){return;}
-  x.font='26px system-ui';x.textAlign='center';x.fillText('🚗',c.x,c.y+8+Math.sin(t*10+c.x)*2);
+  x.font='26px system-ui';x.textAlign='center';x.fillText('i:car',c.x,c.y+8+Math.sin(t*10+c.x)*2);
   x.fillStyle='#000';x.fillRect(c.x-20,c.y-26,40,6);
   x.fillStyle=c.ttl<8?'#D94E34':'#E8A33D';x.fillRect(c.x-20,c.y-26,40*Math.max(0,c.ttl/39),6);
  });
  x.fillStyle='#181816';x.font='bold 15px system-ui';x.textAlign='left';
- x.fillText('🚗 '+saved+'/5 salvos',12,28);
+ x.fillText('i:car'+saved+'/5 salvos',12,28);
 });
 }});

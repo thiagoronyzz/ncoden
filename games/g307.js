@@ -13,7 +13,7 @@ const kb=H.keys(),dn={};kb.on((c,d)=>{
  if(d&&(c==='ArrowRight'||c==='KeyD'))px+=26;
 });
 H.onTap(o,(qx,qy)=>{px=qx;});
-const jb=H.btn(root,'🟢 Segurar e soltar = PULAR',()=>{},true);
+const jb=H.btn(root,'● Segurar e soltar = PULAR',()=>{},true);
 jb.addEventListener('pointerdown',()=>{if(!over&&vy===0)charge=true;});
 jb.addEventListener('pointerup',()=>{if(charge)jump();});
 function jump(){
@@ -23,7 +23,7 @@ function jump(){
  vy=-(280+power*5);power=0;H.sfx('tick');
 }
 function gameOver(win){over=true;const sc=win?Math.max(250,800-(t|0)*8):best|0;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🦘 Topo!',sub:'Escalada completa!'}:{win:false,score:sc,title:'Caiu!',sub:'Altura máxima: '+best.toFixed(0)+'m.'});}
+H.done(win?{win:true,score:sc,title:'Topo!',sub:'Escalada completa!'}:{win:false,score:sc,title:'Caiu!',sub:'Altura máxima: '+best.toFixed(0)+'m.'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  if(charge)power=Math.min(100,power+90*dt);
@@ -45,7 +45,7 @@ H.loop(dt=>{
   if(sy<-20||sy>540)return;
   x.fillStyle='#C4D645';x.fillRect(p.x-44,sy-8,88,16);
  });
- x.font='40px system-ui';x.textAlign='center';x.fillText('🦘',px,py-cam-8);
+ x.font='40px system-ui';x.textAlign='center';x.fillText('',px,py-cam-8);
  x.fillStyle='#000';x.fillRect(180,16,200,16);
  x.fillStyle=power>80?'#D94E34':'#E8A33D';x.fillRect(180,16,200*power/100,16);
  x.fillStyle='#fff';x.font='bold 13px system-ui';x.textAlign='left';

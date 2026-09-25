@@ -2,7 +2,7 @@
 GREG(256,{
 init(root,H){
 const AREAS=['amor','carreira','saude','espirito'];
-const AE={amor:'💘 AMOR',carreira:'💼 CARREIRA',saude:'🌿 SAÚDE',espirito:'🔮 ESPÍRITO'};
+const AE={amor:'♥ AMOR',carreira:'CARREIRA',saude:'SAÚDE',espirito:'ESPÍRITO'};
 const FLAV={
   amor:['Um novo olhar cruzou seu caminho…','Uma relação pede uma decisão…','O coração quer se declarar…'],
   carreira:['Uma proposta inesperada chegou…','Seu esforço será avaliado…','Um rumo novo se desenha…'],
@@ -67,7 +67,7 @@ function newRound(){
   correct=trio.indexOf(ci);
   cards.innerHTML='';info.innerHTML='';nav.innerHTML='';
   scn.innerHTML='<b>'+AE[area]+'</b> · '+FLAV[area][(Math.random()*FLAV[area].length)|0]+'<br>Qual arcano rege este momento?';
-  trio.forEach((ci2,k)=>cardBtn('🌙<br><b>?</b><br><span style="font-size:12px">revelar</span>',()=>pick(k),false));
+  trio.forEach((ci2,k)=>cardBtn('<br><b>?</b><br><span style="font-size:12px">revelar</span>',()=>pick(k),false));
   status();
 }
 function pick(k){
@@ -79,14 +79,14 @@ function pick(k){
   cards.innerHTML='';
   trio.forEach((ci2,j)=>{
     const a=ARC[ci2];
-    const mark=j===correct?' ✅':(j===k?' ❌':'');
+    const mark=j===correct?'✔':(j===k?'✕':'');
     const b=cardBtn('<b>'+a[0]+'</b><br><span style="font-size:12px">'+a[1]+' · '+a[2]+'</span>'+mark,()=>{},j===correct);
     if(j===k&&!ok)b.style.outline='3px solid #B23A24';
   });
   const a=ARC[trio[correct]];
-  info.innerHTML=(ok?'✨ <b>Perfeito! +'+(100+streak*25)+'</b> ':'💫 Não foi dessa vez. ')+'<b>'+a[0]+'</b> rege '+area+': <i>'+a[4]+'</i>';
+  info.innerHTML=(ok?'<b>Perfeito! +'+(100+streak*25)+'</b> ':'Não foi dessa vez. ')+'<b>'+a[0]+'</b> rege '+area+': <i>'+a[4]+'</i>';
   const last=round>=ROUNDS-1;
-  H.btn(nav,last?'🔮 Revelar minha leitura':'Próximo momento →',()=>{
+  H.btn(nav,last?'Revelar minha leitura':'Próximo momento →',()=>{
     if(over||phase!=='reveal')return;
     round++;
     if(round>=ROUNDS)finalSpread();else newRound();
@@ -99,22 +99,22 @@ function finalSpread(){
   for(let i=pool.length-1;i>0;i--){const j=(Math.random()*(i+1))|0;const t=pool[i];pool[i]=pool[j];pool[j]=t;}
   spread=[0,1,2].map(k=>({i:pool[k],rev:Math.random()<.4}));
   cards.innerHTML='';nav.innerHTML='';
-  scn.innerHTML='<b>🔮 SUA LEITURA</b> · Passado · Presente · Futuro';
+  scn.innerHTML='<b> SUA LEITURA</b> · Passado · Presente · Futuro';
   const tags=['PASSADO','PRESENTE','FUTURO'];
   let txt='';
   spread.forEach((s,k)=>{
     const a=ARC[s.i];
-    cardBtn('<span style="font-size:11px">'+tags[k]+'</span><br><b>'+a[0]+'</b>'+(s.rev?'<br>🙃':''),()=>{},!s.rev);
+    cardBtn('<span style="font-size:11px">'+tags[k]+'</span><br><b>'+a[0]+'</b>'+(s.rev?'<br>':''),()=>{},!s.rev);
     txt+='<b>'+tags[k]+' — '+a[0]+(s.rev?' (invertido)':'')+':</b> '+a[4]+(s.rev?' <i>No avesso: energia pedindo atenção redobrada.</i>':'')+'<br>';
   });
   info.innerHTML=txt;
-  H.btn(nav,'✨ Concluir leitura',()=>{
+  H.btn(nav,'Concluir leitura',()=>{
     if(over||phase!=='spread')return;
     over=true;
     const win=hits>=3;
     score+=hits*50;
     H.score(score);
-    H.done(win?{win:true,score,title:'🔮 Leitura completa!',sub:hits+'/'+ROUNDS+' acertos · '+score+' pontos · os arcanos sorriem.'}
+    H.done(win?{win:true,score,title:'Leitura completa!',sub:hits+'/'+ROUNDS+' acertos · '+score+' pontos · os arcanos sorriem.'}
       :{win:false,score,title:'Névoa densa…',sub:hits+'/'+ROUNDS+' acertos · medite e tente de novo!'});
   },true);
   status();

@@ -9,7 +9,7 @@ const say=H.msg(root,'Ande com o detector! Perto de metal, ele apita forte (barr
 const o=H.cvs(root,460,420),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
-H.btn(root,'⛏️ ESCAVAR aqui!',()=>{
+H.btn(root,'ESCAVAR aqui!',()=>{
  if(over||digs<=0)return;
  digs--;hud.set('p',digs);
  const hit=MET.find(m=>!m.got&&Math.hypot(px-m.x,py-m.y)<36);
@@ -24,7 +24,7 @@ function sig(){
  return H.clamp(1-bd/250,0,1);
 }
 function gameOver(win){over=true;const sc=found*80+(win?digs*30:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'☄️ Caça estelar!',sub:'4 meteoritos!'}:{win:false,score:sc,title:'Sem pás!',sub:found+'/4. Cave só no sinal máximo!'});}
+H.done(win?{win:true,score:sc,title:'Caça estelar!',sub:'4 meteoritos!'}:{win:false,score:sc,title:'Sem pás!',sub:found+'/4. Cave só no sinal máximo!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const sp=150*dt;
@@ -36,8 +36,8 @@ H.loop(dt=>{
  const s=sig();
  if(s>.75&&Math.random()<dt*8)H.sfx('tick');
  x.fillStyle='#8A877C';x.fillRect(0,0,460,420);
- MET.forEach(m=>{if(m.got){x.font='26px system-ui';x.textAlign='center';x.fillText('☄️',m.x,m.y);}});
- x.font='28px system-ui';x.textAlign='center';x.fillText('🧑‍🔬',px,py+10);
+ MET.forEach(m=>{if(m.got){x.font='26px system-ui';x.textAlign='center';x.fillText('i:meteor',m.x,m.y);}});
+ x.font='28px system-ui';x.textAlign='center';x.fillText('i:detective',px,py+10);
  x.fillStyle='#181816';x.font='bold 14px system-ui';x.textAlign='left';
  x.fillText('SINAL',12,28);
  x.fillStyle='#000';x.fillRect(80,18,220,14);

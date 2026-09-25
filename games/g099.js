@@ -21,10 +21,10 @@ function paint(){
   for(let i=0;i<N*N;i++){
     const d=H.el("button","g-cell",null,board);
     d.style.aspectRatio="1";d.style.fontSize="18px";
-    if(qt[i]){d.textContent="⛔";d.classList.add("sel");}
-    else if(st[i]===1){d.textContent="🤒";d.classList.add("bad");}
-    else if(st[i]===3){d.textContent="💚";}
-    else{d.textContent="🏠";(function(idx){d.addEventListener("click",()=>quar(idx));})(i);}
+    if(qt[i]){d.textContent="✕";d.classList.add("sel");}
+    else if(st[i]===1){d.textContent="";d.classList.add("bad");}
+    else if(st[i]===3){d.textContent="♥";}
+    else{d.textContent="";(function(idx){d.addEventListener("click",()=>quar(idx));})(i);}
   }
 }
 function quar(i){
@@ -59,6 +59,6 @@ function next(){
   }
   say("Turno "+turn+": "+add.length+" novos casos. Saudáveis: "+healthy+"/36.");
 }
-H.btn(root,"⏭ Próximo turno",next,true);
+H.btn(root,"Próximo turno",next,true);
 build();
 }});

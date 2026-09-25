@@ -31,7 +31,7 @@ H.loop(dt=>{
     if(!g.passed&&dist>=g.d){
       g.passed=true;
       if(Math.abs(px-g.gx)<46){H.sfx("ok");}
-      else{miss++;pen+=3;H.sfx("bad");say("🚩 Fora da porteira! +3s (faltas: "+miss+")");}
+      else{miss++;pen+=3;H.sfx("bad");say("Fora da porteira! +3s (faltas: "+miss+")");}
     }
   }
   for(const tr of trees){
@@ -50,7 +50,7 @@ H.loop(dt=>{
   for(const tr of trees){
     const sy=py-(tr.d-dist)*0.9;
     if(sy<-30||sy>o.H+30)continue;
-    x.font="26px serif";x.fillText("🌲",tr.x-13,sy+9);
+    x.font="26px serif";x.fillText("i:pine",tr.x-13,sy+9);
   }
   for(const g of gates){
     const sy=py-(g.d-dist)*0.9;
@@ -62,7 +62,7 @@ H.loop(dt=>{
     x.beginPath();x.moveTo(g.gx-46,sy-24);x.lineTo(g.gx-28,sy-18);x.lineTo(g.gx-46,sy-12);x.fill();
     x.beginPath();x.moveTo(g.gx+46,sy-24);x.lineTo(g.gx+28,sy-18);x.lineTo(g.gx+46,sy-12);x.fill();
   }
-  x.font="30px serif";x.fillText("⛷️",px-15,py+10);
+  x.font="30px serif";x.fillText("i:ski",px-15,py+10);
   x.fillStyle=H.C.ink3;x.font="11px 'Space Mono',monospace";
   x.fillText(Math.floor(dist)+"m / "+GOAL+"m",12,20);
 });

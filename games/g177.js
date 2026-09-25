@@ -1,7 +1,7 @@
 /* NCODE N · 177 Túnel de Vento — 3 voos na faixa! */
 GREG(177,{
 init(root,H){
-const OBJ=[{e:"🪶",n:"pena",w:[35,55]},{e:"🎈",n:"balão",w:[55,75]},{e:"✈️",n:"avião",w:[75,95]}];
+const OBJ=[{e:"i:feather",n:"pena",w:[35,55]},{e:"i:balloon",n:"balão",w:[55,75]},{e:"i:plane",n:"avião",w:[75,95]}];
 let over=false,st=0,wind=30,oy=200,vy=0,holdT=0,gust=0,t=0;
 const hud=H.hud(root,[["fs","FASE","1/3"],["vn","VENTO",30],["fx","NA FAIXA","0s/5s"]]);
 const say=H.msg(root,"Ajuste o <b>vento</b> (+/−) para segurar o objeto na <b>faixa verde</b> por 5s! Cada um voa numa faixa de vento. Rajadas atrapalham!");
@@ -24,7 +24,7 @@ H.loop(dt=>{
     if(st>=OBJ.length){over=true;
       return H.done({win:true,score:400,title:"Aerodinâmica dominada!",sub:"3 objetos estabilizados no túnel."});}
     holdT=0;oy=200;vy=0;
-    say("✅ "+OBJ[st-1].n+"! Agora: "+OBJ[st].e+" "+OBJ[st].n+" (vento "+OBJ[st].w.join("–")+").");
+    say("✔ "+OBJ[st-1].n+" estabilizado! Agora: <b>"+OBJ[st].n+"</b> (vento "+OBJ[st].w.join("–")+").");
     hud.set("fs",(st+1)+"/3");
   }
   x.fillStyle="#2c3e4d";x.fillRect(0,0,o.W,o.H);
@@ -42,6 +42,6 @@ H.loop(dt=>{
   x.fillStyle=H.C.wasabi;x.fillRect(12,308,wind*3,12);
 });
 const row=H.el("div","g-row",null,root);
-H.btn(row,"💨 − vento",()=>{wind=Math.max(0,wind-5);hud.set("vn",Math.round(wind));H.sfx("tick");},false);
-H.btn(row,"🌪️ + vento",()=>{wind=Math.min(100,wind+5);hud.set("vn",Math.round(wind));H.sfx("tick");},false);
+H.btn(row,"− vento",()=>{wind=Math.max(0,wind-5);hud.set("vn",Math.round(wind));H.sfx("tick");},false);
+H.btn(row,"+ vento",()=>{wind=Math.min(100,wind+5);hud.set("vn",Math.round(wind));H.sfx("tick");},false);
 }});

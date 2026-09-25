@@ -5,7 +5,7 @@ const N=8,TURNS=10;
 const WIND=[[0,1,"L→"],["Vento E →",""],[1,0,"↓"],[0,-1,"←"],[-1,0,"↑"]];
 let over=false,turn=1,g=[],acts=2,wind=0;
 const hud=H.hud(root,[["tn","TURNO","1/10"],["vn","VENTO","E"],["ac","AÇÕES",2]]);
-const say=H.msg(root,"<b>Árvore pegando fogo 🔥</b>: clique para apagar. <b>Árvore verde</b>: clique para cortar aceiro. 2 ações/turno. Salve 70%!");
+const say=H.msg(root,"<b>Árvore pegando fogo </b>: clique para apagar. <b>Árvore verde</b>: clique para cortar aceiro. 2 ações/turno. Salve 70%!");
 const board=H.el("div","g-board",null,root);
 board.style.gridTemplateColumns="repeat(8,1fr)";
 board.style.width="min(100%,360px)";
@@ -23,17 +23,17 @@ function paint(){
   for(let i=0;i<N*N;i++){
     const d=H.el("button","g-cell",null,board);
     d.style.aspectRatio="1";d.style.fontSize="17px";
-    if(g[i]===1)d.textContent="🌲";
-    else if(g[i]===2){d.textContent="🔥";d.classList.add("bad");}
-    else if(g[i]===3){d.textContent="⬛";d.disabled=true;}
-    else{d.textContent="🟫";d.disabled=true;}
+    if(g[i]===1)d.textContent="";
+    else if(g[i]===2){d.textContent="";d.classList.add("bad");}
+    else if(g[i]===3){d.textContent="■";d.disabled=true;}
+    else{d.textContent="■";d.disabled=true;}
     if(g[i]===1||g[i]===2){(function(idx){d.addEventListener("click",()=>act(idx));})(i);}
   }
 }
 function act(i){
   if(over||acts<=0)return;
-  if(g[i]===2){g[i]=4;acts--;H.sfx("ok");say("💧 Fogo apagado!");}
-  else if(g[i]===1){g[i]=4;acts--;H.sfx("tick");say("🪓 Aceiro aberto!");}
+  if(g[i]===2){g[i]=4;acts--;H.sfx("ok");say("Fogo apagado!");}
+  else if(g[i]===1){g[i]=4;acts--;H.sfx("tick");say("Aceiro aberto!");}
   else return;
   paint();
 }
@@ -65,6 +65,6 @@ function next(){
   }
   say("Turno "+turn+": "+ignite.size+" novos focos! Vento "+WL[wind]+".");
 }
-H.btn(root,"⏭ Próximo turno",next,true);
+H.btn(root,"Próximo turno",next,true);
 build();
 }});

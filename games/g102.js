@@ -4,7 +4,7 @@ init(root,H){
 const LV=[{n:5},{n:6}];
 let lv=0,n=5,grid=[],over=false;
 const hud=H.hud(root,[["nv","FASE","1/2"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique nos canos para <b>girar</b>. Ligue a 💧 fonte (esquerda) ao 🏁 ralo (direita) sem vazamento!");
+const say=H.msg(root,"Clique nos canos para <b>girar</b>. Ligue a fonte (esquerda) ao ralo (direita) sem vazamento!");
 const o=H.cvs(root,440,440),x=o.x;
 let sc=0;
 // tipo: 0 reto (|), 1 cotovelo. rot 0..3. aberturas [N,L,S,O]
@@ -87,7 +87,7 @@ function test(){
     H.after(500,build);
   }else{
     H.sfx("bad");
-    say(!seen.has((n-1)+","+(n-1))?"💧 A água não chegou ao ralo!":"🚿 Chegou, mas há vazamento! Feche as pontas abertas.");
+    say(!seen.has((n-1)+","+(n-1))?"A água não chegou ao ralo!":"Chegou, mas há vazamento! Feche as pontas abertas.");
   }
 }
 H.loop(()=>{
@@ -104,8 +104,8 @@ H.loop(()=>{
     x.fillStyle="#2E6E8A";x.beginPath();x.arc(cx,cy,Math.max(3,ss*.09),0,7);x.fill();
   }
   x.font="20px serif";
-  x.fillText("💧",2,ss/2+8);
-  x.fillText("🏁",o.W-28,o.H-12);
+  x.fillText("i:drop",2,ss/2+8);
+  x.fillText("i:flag",o.W-28,o.H-12);
 });
-H.btn(root,"💧 Testar água",test,true);
+H.btn(root,"Testar água",test,true);
 }});

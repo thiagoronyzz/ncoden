@@ -30,7 +30,7 @@ function draw(){
   x.fillStyle=H.C.ink3;x.font="11px 'Space Mono',monospace";
   x.fillText("// MOLDE-ALVO",24,30);x.fillText("// SUA PEÇA",o.W/2+24,30);
   x.fillStyle=H.C.terra;x.font="bold 12px 'Space Mono',monospace";
-  x.fillText("☀ LUZ",o.W/2-58,44);
+  x.fillText("LUZ",o.W/2-58,44);
   const pts=SHAPES[lv%SHAPES.length],A=ANG[lv%ANG.length];
   poly(130,200,pts,A,"rgba(217,78,52,.14)",H.C.terra,true);
   poly(390,140,pts,cur,H.C.ink,H.C.ink,false);

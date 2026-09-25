@@ -48,7 +48,7 @@ function test(){
     H.sfx("ok");const sc=(round+1)*150+(8-att)*15;H.score(sc);hud.set("sc",sc);
     round++;
     if(round>=2){over=true;return H.done({win:true,score:sc+100,title:"Cofre aberto!",sub:"2 fechaduras decifradas pela lógica."});}
-    say("🔓 Primeira fechadura aberta! Nova combinação…");H.after(800,build);
+    say("Primeira fechadura aberta! Nova combinação…");H.after(800,build);
   }else{
     H.sfx("bad");
     if(att>=8){over=true;return H.done({win:false,score:round*120,title:"Fechadura emperrada",sub:"8 tentativas sem abrir. A combinação era "+code.join(" ")+"."});}
@@ -56,6 +56,6 @@ function test(){
   }
   draw();
 }
-H.btn(root,"🔑 Testar combinação",test,true);
+H.btn(root,"Testar combinação",test,true);
 build();
 }});

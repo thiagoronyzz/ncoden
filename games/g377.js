@@ -18,12 +18,12 @@ function show(){
  if(qi>=5){gameOver();return;}
  phase='mem';mem=5;
  hud.set('f',(qi+1)+'/5');
- ph.innerHTML='🤫 MEMORIZE:<br><b style="font-size:26px">"'+P[qi][0]+'"</b><br>5s…';
+ ph.innerHTML='MEMORIZE:<br><b style="font-size:26px">"'+P[qi][0]+'"</b><br>5s…';
  brow.innerHTML='';
  H.after(5000,()=>{if(!over&&phase==='mem'){phase='ask';ask();}});
 }
 function ask(){
- ph.innerHTML='🤫 Fale "<b>???</b>" em silêncio!<br>O grupo adivinhou?';
+ ph.innerHTML='Fale "<b>???</b>" em silêncio!<br>O grupo adivinhou?';
  brow.innerHTML='';
  P[qi][1].forEach((opt,i)=>{
   H.btn(brow,opt,()=>{
@@ -35,6 +35,6 @@ function ask(){
  });
 }
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=300,score,title:score>=300?'👄 Lábios de ouro!':'👄 Fim!',sub:score+'/500 pontos.'});}
+H.done({win:score>=300,score,title:score>=300?'Lábios de ouro!':'Fim!',sub:score+'/500 pontos.'});}
 show();
 }});

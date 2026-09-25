@@ -2,14 +2,14 @@
 GREG(368,{
 init(root,H){
 const M=[
- ['🦁👑','Rei Leão',['Rei Leão','Madagascar','Tarzan','Mogli'],0],
- ['🚢💔🌊','Titanic',['Titanic','Náufrago','Piratas','Aquaman'],0],
- ['🕷️🏙️','Homem-Aranha',['Batman','Homem-Aranha','Super-Homem','Flash'],1],
- ['🧊🚢','Frozen',['Moana','Frozen','Era do Gelo','Atlantis'],1],
- ['🦖🏝️','Jurassic Park',['Kong','Jurassic Park','Godzilla','Jumanji'],1],
- ['🤖❤️','WALL-E',['Robocop','Star Wars','WALL-E','Avatar'],2],
- ['🏠🎈','Up',['Up','Divertida Mente','Forrest Gump','Gigante'],0],
- ['👻🏠','Caça-Fantasmas',['It','Caça-Fantasmas','Invocação','Hotel'],1]
+ ['','Rei Leão',['Rei Leão','Madagascar','Tarzan','Mogli'],0],
+ ['♥','Titanic',['Titanic','Náufrago','Piratas','Aquaman'],0],
+ ['','Homem-Aranha',['Batman','Homem-Aranha','Super-Homem','Flash'],1],
+ ['','Frozen',['Moana','Frozen','Era do Gelo','Atlantis'],1],
+ ['','Jurassic Park',['Kong','Jurassic Park','Godzilla','Jumanji'],1],
+ ['♥','WALL-E',['Robocop','Star Wars','WALL-E','Avatar'],2],
+ ['','Up',['Up','Divertida Mente','Forrest Gump','Gigante'],0],
+ ['','Caça-Fantasmas',['It','Caça-Fantasmas','Invocação','Hotel'],1]
 ];
 let over=false,qi=0,score=0;
 const hud=H.hud(root,[['f','FILME','1/8'],['pt','PONTOS',0]]);
@@ -27,12 +27,12 @@ function show(){
   H.btn(brow,opt,()=>{
    if(over)return;
    if(i===m[3]){score+=100;H.sfx('ok');}
-   else{H.sfx('bad');say('❌ Era: '+m[1]);}
+   else{H.sfx('bad');say('✕ Era: '+m[1]);}
    qi++;hud.set('pt',score);show();
   },false);
  });
 }
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=600,score,title:score>=600?'🎬 Cinéfilo!':'🎬 Fim!',sub:score+'/800 pontos.'});}
+H.done({win:score>=600,score,title:score>=600?'Cinéfilo!':'Fim!',sub:score+'/800 pontos.'});}
 show();
 }});

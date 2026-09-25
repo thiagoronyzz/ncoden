@@ -14,16 +14,16 @@ let nid=0;
 function paint(){
   qrow.innerHTML="";trow.innerHTML="";
   queue.forEach((g,i)=>{
-    const b=H.el("button","g-chip"+(sel===i?" hot":""),"👥"+g.n+" ⏳"+Math.ceil(g.p),qrow);
+    const b=H.el("button","g-chip"+(sel===i?" hot":""),""+g.n+""+Math.ceil(g.p),qrow);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>{sel=i;H.sfx("tick");paint();});
   });
   if(!queue.length)H.el("div","g-chip","fila vazia…",qrow);
   tabs.forEach((t,i)=>{
-    const b=H.el("button","g-chip"+(t.busy>0?"":" hot"),t.busy>0?("🍽️ "+Math.ceil(t.busy)+"s"):("🪑 mesa "+t.s+" ("+(t.s)+" lug.)"),trow);
+    const b=H.el("button","g-chip"+(t.busy>0?"":" hot"),t.busy>0?(""+Math.ceil(t.busy)+"s"):("mesa "+t.s+" ("+(t.s)+" lug.)"),trow);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>{
-      if(over||sel<0||t.busy>0)return;
+      if(over||sel<0||sel>=queue.length||t.busy>0)return;
       const g=queue[sel];
       if(g.n>t.s){H.sfx("bad");say("Grupo de "+g.n+" não cabe na mesa de "+t.s+"!");return;}
       t.busy=8;queue.splice(sel,1);sel=-1;H.sfx("ok");paint();

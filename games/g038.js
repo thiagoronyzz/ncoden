@@ -8,7 +8,7 @@ const LV=[
 ];
 let lv=0,over=false,released=false;
 const hud=H.hud(root,[["nv","NÍVEL",1],["fk","FEROMÔNIO",0],["sc","PONTOS",0]]);
-const say=H.msg(root,"Arraste para pintar a <b>trilha</b> da colônia 🏠 até a comida 🍎. Depois <b>solte as formigas</b>.");
+const say=H.msg(root,"Arraste para pintar a <b>trilha</b> da colônia até a <b>comida</b>. Depois <b>solte as formigas</b>.");
 const o=H.cvs(root,440,440),x=o.x;
 const ptr=H.ptr(o);
 let N=8,trail=new Set(),obs=new Set(),ants=[],ap=0;
@@ -43,14 +43,14 @@ H.loop(()=>{
     x.strokeStyle=H.C.cement;x.strokeRect(X+1,Y+1,s-2,s-2);
   }
   x.font=Math.floor(s*0.6)+"px serif";
-  x.fillText("🏠",ox+L.col[1]*s+4,oy+L.col[0]*s+s-6);
-  x.fillText("🍎",ox+L.food[1]*s+4,oy+L.food[0]*s+s-6);
+  x.fillText("i:house",ox+L.col[1]*s+4,oy+L.col[0]*s+s-6);
+  x.fillText("i:fruit",ox+L.food[1]*s+4,oy+L.food[0]*s+s-6);
   if(released&&ants.path){
     for(let i=0;i<3;i++){
       const idx=Math.floor(ap-i*2);
       if(idx<0)continue;
       const[r,c]=ants.path[idx];
-      x.font="16px serif";x.fillText("🐜",ox+c*s+s/2-8,oy+r*s+s/2+6);
+      x.font="16px serif";x.fillText("i:ant",ox+c*s+s/2-8,oy+r*s+s/2+6);
     }
   }
 });
@@ -72,12 +72,12 @@ function bfs(){
   return null;
 }
 const row=H.el("div","g-row",null,root);
-H.btn(row,"🐜 Soltar formigas",()=>{
+H.btn(row,"Soltar formigas",()=>{
   if(over||released)return;
   const p=bfs();
   if(!p){H.sfx("bad");say("Trilha <b>desconectada</b>! Ligue a colônia à comida sem pular casas.");return;}
   released=true;ants={path:p};H.sfx("pop");
-  say("Formigas a caminho… 🐜🐜🐜");
+  say("Formigas a caminho… ");
   H.after(2500,()=>{
     if(over)return;
     const sc=(lv+1)*140;H.score(sc);hud.set("sc",sc);H.sfx("ok");
@@ -85,6 +85,6 @@ H.btn(row,"🐜 Soltar formigas",()=>{
     lv++;say("Nível "+(lv+1)+": obstáculos novos na floresta.");build();
   });
 },true);
-H.btn(row,"🧽 Apagar trilha",()=>{if(!over&&!released){trail=new Set();hud.set("fk","0/"+LV[lv].ink);}},false);
+H.btn(row,"Apagar trilha",()=>{if(!over&&!released){trail=new Set();hud.set("fk","0/"+LV[lv].ink);}},false);
 build();
 }});

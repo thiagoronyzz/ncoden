@@ -3,7 +3,7 @@ GREG(48,{
 init(root,H){
 let over=false,holes=[],sc=0,lives=3,t=45,spawn=0;
 const hud=H.hud(root,[["sc","PONTOS",0],["vd","VIDAS",3],["tp","TEMPO",45]]);
-const say=H.msg(root,"Acerte as toupeiras 🐹 (10 pts) e as <b>douradas</b> ⭐ (30). Bombas 💣 custam vida!");
+const say=H.msg(root,"Acerte as toupeiras (10 pts) e as <b>douradas</b> ★ (30). Bombas custam vida!");
 const o=H.cvs(root,460,400),x=o.x;
 for(let r=0;r<3;r++)for(let c=0;c<3;c++)holes.push({x:80+c*150,y:90+r*110,m:null});
 H.onTap(o,(px,py)=>{
@@ -12,7 +12,7 @@ H.onTap(o,(px,py)=>{
     if(h.m&&Math.hypot(h.x-px,h.y-py)<44){
       if(h.m.k==="bomb"){lives--;hud.set("vd",lives);H.sfx("bad");
         if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Dedos queimados!",sub:sc+" pontos antes da terceira bomba."});}
-        say("💥 Bomba! Vidas: "+lives);
+        say("Bomba! Vidas: "+lives);
       }else{sc+=h.m.k==="gold"?30:10;H.score(sc);hud.set("sc",sc);H.sfx("pop");}
       h.m=null;return;
     }
@@ -39,7 +39,7 @@ H.loop(dt=>{
     x.fillStyle=H.C.ink;x.beginPath();x.ellipse(h.x,h.y+24,44,16,0,0,7);x.fill();
     if(h.m){
       x.font="44px serif";
-      x.fillText(h.m.k==="bomb"?"💣":h.m.k==="gold"?"🌟":"🐹",h.x-22,h.y+18);
+      x.fillText(h.m.k==="bomb"?"i:bomb":h.m.k==="gold"?"":"",h.x-22,h.y+18);
       if(h.m.k==="gold"){x.strokeStyle=H.C.terra;x.lineWidth=3;x.beginPath();x.arc(h.x,h.y,34,0,7);x.stroke();}
     }
   }

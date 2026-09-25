@@ -14,7 +14,7 @@ H.onTap(o,(px,py)=>{
   if(cash<10){H.sfx("bad");say("Sem caixa!");return;}
   cash-=10;walls[i]++;hud.set("cx","$"+cash);H.sfx("tick");
 });
-H.btn(root,"🌊 Soltar a onda!",()=>{
+H.btn(root,"Soltar a onda!",()=>{
   if(over||phase!=="build")return;
   phase="wave";anim=0;flood=false;H.sfx("bad");
 },true);
@@ -23,7 +23,7 @@ H.loop(dt=>{
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   x.fillStyle=H.C.ok;x.fillRect(0,240,o.W,120);
   x.font="22px serif";
-  for(let i=0;i<10;i++)x.fillText("🏠",i*50+12,330);
+  for(let i=0;i<10;i++)x.fillText("i:house",i*50+12,330);
   const cw=o.W/10;
   walls.forEach((hp,i)=>{
     if(hp>0){

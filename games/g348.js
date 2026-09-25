@@ -1,7 +1,7 @@
 /* NCODE N · 348 Observador de Aves — identifique! */
 GREG(348,{
 init(root,H){
-const BIRDS=[['🐦','pardal'],['🦜','papagaio'],['🦅','águia'],['🦉','coruja'],['🦩','flamingo'],['🐧','pinguim']];
+const BIRDS=[['','pardal'],['','papagaio'],['','águia'],['','coruja'],['','flamingo'],['','pinguim']];
 let over=false,round=0,score=0,t=0,cur=0,opts=[];
 const hud=H.hud(root,[['r','AVE','1/8'],['pt','PONTOS',0]]);
 const say=H.msg(root,'Uma ave aparece — identifique a espécie! 8 aves, tempo por ave. Rápido = mais pontos!');
@@ -36,6 +36,6 @@ H.every(1000,()=>{
  bd.innerHTML='<span style="font-size:64px">'+BIRDS[cur][0]+'</span><br>Que ave é essa? ('+Math.ceil(timer)+'s)';
 });
 function gameOver(win){over=true;H.score(score);
-H.done({win:score>=400,score,title:score>=400?'🔭 Ornitólogo!':'🔭 Fim da observação!',sub:score+' pontos em 8 aves.'});}
+H.done({win:score>=400,score,title:score>=400?'Ornitólogo!':'Fim da observação!',sub:score+' pontos em 8 aves.'});}
 show();
 }});

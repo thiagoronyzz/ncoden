@@ -96,7 +96,7 @@ H.loop(dt=>{
     x.save();x.translate(px,py);
     x.fillStyle=COL[train.c];x.fillRect(-16,-9,32,18);
     x.strokeStyle=H.C.ink;x.lineWidth=2;x.strokeRect(-16,-9,32,18);
-    x.fillStyle=H.C.paper;x.font="11px serif";x.fillText("🚂",-9,5);
+    x.fillStyle=H.C.paper;x.font="11px serif";x.fillText("i:train",-9,5);
     x.restore();
   }
 });
@@ -107,7 +107,7 @@ function arrive(){
     say("Trem entregue na estação "+st.n+". "+(LV[lv].trains.length-qi)+" restantes.");
     train=null;H.after(500,spawn);
   }else{
-    H.sfx("bad");say("❌ Estação errada! O trem "+train.c+" voltou. Reajuste os desvios.");
+    H.sfx("bad");say("✕ Estação errada! O trem "+train.c+" voltou. Reajuste os desvios.");
     train=null;H.after(700,spawn);
   }
 }

@@ -3,7 +3,7 @@ GREG(9,{
 init(root,H){
 let over=false,dead=false;
 const hud=H.hud(root,[["dst","DISTÂNCIA",0],["sc","PONTOS",0]]);
-const say=H.msg(root,"<b>Espaço / toque</b> inverte a gravidade. Passe pelas fendas e alcance a 🏁 em 2400m.");
+const say=H.msg(root,"<b>Espaço / toque</b> inverte a gravidade. Passe pelas fendas e alcance a em 2400m.");
 const o=H.cvs(root,520,360),x=o.x;
 const GOAL=2400;
 let bx,by,vy,g,scroll,obs,speed;
@@ -24,7 +24,7 @@ H.loop(dt=>{
   if(over)return;
   if(!dead){
     vy+=g*1400*dt;vy=H.clamp(vy,-420,420);by+=vy*dt;scroll+=speed*dt;
-    if(by<14||by>o.H-14){dead=true;H.sfx("bad");say("💥 Bateu na borda! Pressione <b>reiniciar</b> ou toque para tentar de novo.");H.after(900,()=>{if(!over){reset();say("De novo! Inverta antes das bordas.");}});}
+    if(by<14||by>o.H-14){dead=true;H.sfx("bad");say("Bateu na borda! Pressione <b>reiniciar</b> ou toque para tentar de novo.");H.after(900,()=>{if(!over){reset();say("De novo! Inverta antes das bordas.");}});}
     for(const ob of obs){
       const sx=ob.d-scroll;
       if(sx>bx-60&&sx<bx+20){
@@ -48,7 +48,7 @@ H.loop(dt=>{
     x.fillStyle=H.C.wasabi;x.fillRect(sx,ob.top-4,26,4);x.fillRect(sx,ob.bot,26,4);
   }
   const gx=GOAL-scroll;
-  if(gx>-20&&gx<o.W+60){x.font="30px serif";x.fillText("🏁",gx,o.H/2);}
+  if(gx>-20&&gx<o.W+60){x.font="30px serif";x.fillText("i:flag",gx,o.H/2);}
   x.save();x.translate(bx,by);if(g<0)x.scale(1,-1);
   x.fillStyle=H.C.terra;x.beginPath();x.arc(0,0,13,0,7);x.fill();
   x.strokeStyle=H.C.ink;x.lineWidth=2;x.stroke();

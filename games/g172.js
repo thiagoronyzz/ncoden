@@ -1,9 +1,9 @@
-/* NCODE N · 172 Avalanche — soterre a cabana 🎯 */
+/* NCODE N · 172 Avalanche — soterre a cabana  */
 GREG(172,{
 init(root,H){
 let over=false,balls=[],snow=[],cabs=[],throws=6;
 const hud=H.hud(root,[["bl","BOLAS",6],["al","ALVO","0%"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique no alto da montanha para soltar a bola de neve — ela cresce rolando! Soterre 100% a cabana 🎯 sem passar de 60% nas outras.");
+const say=H.msg(root,"Clique no alto da montanha para soltar a bola de neve — ela cresce rolando! Soterre 100% a cabana sem passar de 60% nas outras.");
 const o=H.cvs(root,520,380),x=o.x;
 cabs=[{x:120,y:300,t:false,f:0},{x:300,y:320,t:true,f:0},{x:460,y:300,t:false,f:0}];
 const slopeY=px=>80+px*0.42;
@@ -59,7 +59,7 @@ H.loop(dt=>{
   snow.forEach(s=>{x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill();});
   x.font="34px serif";
   cabs.forEach(c=>{
-    x.fillText(c.t?"🎯":"🛖",c.x-17,c.y+10);
+    x.fillText(c.t?"i:target":"i:cabin",c.x-17,c.y+10);
     x.fillStyle="rgba(255,255,255,.85)";
     x.fillRect(c.x-20,c.y-52,40*Math.min(1,c.f/100),6);
     x.strokeStyle=H.C.ink;x.strokeRect(c.x-20,c.y-52,40,6);

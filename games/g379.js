@@ -18,24 +18,24 @@ function show(){
  if(round>=5){gameOver();return;}
  const c=CHAIN[round];
  hud.set('r',(round+1)+'/5');
- ph.innerHTML='📞 FRASE ORIGINAL:<br><b>"'+c[0]+'"</b><br>Memorize e toque PRONTO!';
+ ph.innerHTML='FRASE ORIGINAL:<br><b>"'+c[0]+'"</b><br>Memorize e toque PRONTO!';
  brow.innerHTML='';
- H.btn(brow,'👂 PRONTO! (ver fim)',()=>{
+ H.btn(brow,'PRONTO! (ver fim)',()=>{
   if(over)return;
-  ph.innerHTML='📞 O que chegou no fim?';
+  ph.innerHTML='O que chegou no fim?';
   brow.innerHTML='';
   const opts=c[1].slice().sort(()=>Math.random()-.5);
   opts.forEach(o=>{
    H.btn(brow,'"'+o+'"',()=>{
     if(over)return;
     if(o===c[0]){score+=100;H.sfx('ok');}
-    else{H.sfx('bad');say('❌ Era: "'+c[0]+'"');}
+    else{H.sfx('bad');say('✕ Era: "'+c[0]+'"');}
     round++;hud.set('pt',score);show();
    },false);
   });
  },true);
 }
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=300,score,title:score>=300?'📞 Linha clara!':'📞 Chiado!',sub:score+'/500 pontos.'});}
+H.done({win:score>=300,score,title:score>=300?'Linha clara!':'Chiado!',sub:score+'/500 pontos.'});}
 show();
 }});

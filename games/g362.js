@@ -15,14 +15,14 @@ function show(){
  if(round>=4){gameOver();return;}
  time=45;strokes=[];
  hud.set('r',(round+1)+'/4');
- wd.innerHTML='✏️ DESENHE: <b style="font-size:28px">'+words[round]+'</b>';
+ wd.innerHTML='DESENHE: <b style="font-size:28px">'+words[round]+'</b>';
  brow.innerHTML='';
- H.btn(brow,'🧹 Limpar',()=>{strokes=[];H.sfx('tick');},false);
- H.btn(brow,'✅ Adivinharam!',()=>{score+=100+Math.ceil(time)*2;round++;H.sfx('ok');hud.set('pt',score);show();},true);
- H.btn(brow,'⏭️ Pular',()=>{round++;H.sfx('bad');show();},false);
+ H.btn(brow,'Limpar',()=>{strokes=[];H.sfx('tick');},false);
+ H.btn(brow,'✔ Adivinharam!',()=>{score+=100+Math.ceil(time)*2;round++;H.sfx('ok');hud.set('pt',score);show();},true);
+ H.btn(brow,'Pular',()=>{round++;H.sfx('bad');show();},false);
 }
 function gameOver(){over=true;H.score(score);
-H.done({win:score>=300,score,title:score>=300?'🎨 Artista veloz!':'🎨 Fim!',sub:score+' pontos.'});}
+H.done({win:score>=300,score,title:score>=300?'Artista veloz!':'Fim!',sub:score+' pontos.'});}
 H.loop(dt=>{
  if(over)return;
  time-=dt;
@@ -36,7 +36,7 @@ H.loop(dt=>{
  strokes.forEach(s=>{x.beginPath();s.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke();});
  if(cur&&cur.length){x.beginPath();cur.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke();}
  x.fillStyle='#181816';x.font='bold 16px system-ui';x.textAlign='left';
- x.fillText(words[round]+' · ⏱️'+Math.ceil(time)+'s · '+score+' pts',12,28);
+ x.fillText(words[round]+' · '+Math.ceil(time)+'s · '+score+' pts',12,28);
 });
 show();
 }});

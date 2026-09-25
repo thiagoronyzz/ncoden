@@ -2,11 +2,11 @@
 GREG(386,{
 init(root,H){
 let over=false,fx=0,sp=0,fruit=0,score=0,cut=null,round=0;
-const FR=['🍉','🍍','🍎','🍊','🥝'];
+const FR=['','','','',''];
 const hud=H.hud(root,[['f','FRUTA','1/10'],['pt','PONTOS',0]]);
 const say=H.msg(root,'Toque FATIAR quando a fruta cruzar a LINHA! Centro = 100, perto = 50. 10 frutas!');
 const o=H.cvs(root,560,300),x=o.x;
-H.btn(root,'🔪 FATIAR!',()=>{
+H.btn(root,'FATIAR!',()=>{
  if(over||cut)return;
  cut=fx;
  const err=Math.abs(fx-280);
@@ -21,7 +21,7 @@ function newFruit(){
  hud.set('f',Math.min(10,round)+'/10');
 }
 function gameOver(){over=true;H.score(score);
-H.done({win:score>=700,score,title:score>=700?'🔪 Mestre sushi!':'🔪 Fim!',sub:score+'/1000 pontos.'});}
+H.done({win:score>=700,score,title:score>=700?'Mestre sushi!':'Fim!',sub:score+'/1000 pontos.'});}
 newFruit();
 H.loop(dt=>{
  if(over)return;
@@ -37,8 +37,8 @@ H.loop(dt=>{
  x.beginPath();x.moveTo(262,20);x.lineTo(262,280);x.moveTo(298,20);x.lineTo(298,280);x.stroke();
  x.font='44px system-ui';x.textAlign='center';
  if(cut!=null){
-  x.fillText('🍽️',cut,150);
-  x.fillText('💥',cut,200);
+  x.fillText('i:pot',cut,150);
+  x.fillText('i:burst',cut,200);
  }else x.fillText(FR[fruit],fx,160);
 });
 }});

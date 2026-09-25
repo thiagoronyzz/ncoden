@@ -3,7 +3,7 @@ GREG(44,{
 init(root,H){
 let over=false,px=250,items=[],sc=0,lives=3,t=60,spawn=0;
 const hud=H.hud(root,[["sc","PONTOS",0],["vd","VIDAS",3],["tp","TEMPO",60]]);
-const say=H.msg(root,"Mova com <b>mouse, toque ou setas</b>. Moedas 🪙 valem 10, estrelas ⭐ 30, bigornas 💥 machucam!");
+const say=H.msg(root,"Mova com <b>mouse, toque ou setas</b>. Moedas valem 10, estrelas ★ 30, bigornas machucam!");
 const o=H.cvs(root,500,400),x=o.x;
 const ptr=H.ptr(o);
 const kb=H.keys();
@@ -31,7 +31,7 @@ H.loop(dt=>{
       else if(it.k==="star"){sc+=30;H.sfx("ok");}
       else{lives--;hud.set("vd",lives);H.sfx("bad");
         if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Esmagado!",sub:sc+" pontos antes da terceira bigorna."});}
-        say("💥 Ai! Vidas: "+lives);
+        say("Ai! Vidas: "+lives);
       }
       H.score(sc);hud.set("sc",sc);
     }else if(it.y>o.H+20)items.splice(i,1);
@@ -40,8 +40,8 @@ H.loop(dt=>{
   x.strokeStyle=H.C.cement;
   for(let i=0;i<8;i++){x.beginPath();x.moveTo(i*70,0);x.lineTo(i*70-20,o.H);x.stroke();}
   x.font="26px serif";
-  for(const it of items)x.fillText(it.k==="coin"?"🪙":it.k==="star"?"⭐":"💥",it.x-13,it.y+9);
-  x.font="34px serif";x.fillText("🧑‍🌾",px-17,o.H-34);
+  for(const it of items)x.fillText(it.k==="coin"?"i:coin":it.k==="star"?"★":"",it.x-13,it.y+9);
+  x.font="34px serif";x.fillText("i:person",px-17,o.H-34);
   x.fillStyle=H.C.ink3;x.font="11px 'Space Mono',monospace";
   x.fillText("◀ ▶ ou arraste",12,20);
 });

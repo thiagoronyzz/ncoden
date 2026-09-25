@@ -1,7 +1,7 @@
 /* NCODE N · 137 Livraria — 10 leitores atendidos */
 GREG(137,{
 init(root,H){
-const GEN=["📕 romance","📗 aventura","📘 história"];
+const GEN=["romance","aventura","história"];
 let over=false,stock=[3,3,3],cust=[],served=0,lost=0,spawn=1,time=150,nid=0;
 const hud=H.hud(root,[["rd","LEITORES","0/10"],["tp","TEMPO",150],["sc","PONTOS",0]]);
 const say=H.msg(root,"Clique no cliente para <b>recomendar</b> (gasta 1 do gênero). <b>Repor</b> enche a prateleira. <b>Sarau</b> acalma a fila (+6s para todos, recarrega)!");
@@ -13,7 +13,7 @@ function paint(){
   hud.set("rd",served+"/10");
   cbox.innerHTML="";
   cust.forEach(c=>{
-    const b=H.el("button","g-chip","🧍 quer "+GEN[c.g]+" ⏳"+Math.ceil(c.p),cbox);
+    const b=H.el("button","g-chip","quer "+GEN[c.g]+""+Math.ceil(c.p),cbox);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>{
       if(over)return;
@@ -26,15 +26,15 @@ function paint(){
   if(!cust.length)H.el("div","g-chip","loja calma…",cbox);
   sbox.innerHTML="";
   GEN.forEach((g,i)=>{
-    const b=H.el("button","g-chip","📚 "+g+": "+stock[i]+" · repor",sbox);
+    const b=H.el("button","g-chip",""+g+": "+stock[i]+" · repor",sbox);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>{if(!over){stock[i]=Math.min(6,stock[i]+2);H.sfx("tick");paint();}});
   });
 }
 paint();
-H.btn(root,"🎤 Sarau (+6s p/ todos)",()=>{
+H.btn(root,"Sarau (+6s p/ todos)",()=>{
   if(over||cool>0)return;
-  cool=20;cust.forEach(c=>c.p+=6);H.sfx("ok");say("🎤 Sarau! Fila acalmada.");paint();
+  cool=20;cust.forEach(c=>c.p+=6);H.sfx("ok");say("Sarau! Fila acalmada.");paint();
 },false);
 H.loop(dt=>{
   if(over)return;

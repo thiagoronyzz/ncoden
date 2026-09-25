@@ -2,16 +2,16 @@
 GREG(122,{
 init(root,H){
 let over=false,day=1,cash=20,lem=0,sug=0,cup=0,price=3,wx=0;
-const hud=H.hud(root,[["dd","DIA","1/7"],["cx","CAIXA","$20"],["cl","CLIMA","☀️"]]);
-const say=H.msg(root,"Compre insumos, ajuste o preço e abra a barraca! Sol ☀️ = sede · nublado ⛅ = morno · chuva 🌧️ = fraco.");
+const hud=H.hud(root,[["dd","DIA","1/7"],["cx","CAIXA","$20"],["cl","CLIMA",""]]);
+const say=H.msg(root,"Compre insumos, ajuste o preço e abra a barraca! Sol = sede · nublado = morno · chuva = fraco.");
 const box=H.el("div","g-col",null,root);
-const WX=[["☀️ sol",30],["⛅ nublado",18],["🌧️ chuva",8]];
+const WX=[["sol",30],["nublado",18],["chuva",8]];
 function paint(){
   hud.set("dd",day+"/7");hud.set("cx","$"+cash);hud.set("cl",WX[wx][0]);
   box.innerHTML="";
-  H.el("div","g-msg","📦 limões "+lem+" · açúcar "+sug+" · copos "+cup+" (1 copo vendido = 1 de cada)",box);
+  H.el("div","g-msg","limões "+lem+" · açúcar "+sug+" · copos "+cup+" (1 copo vendido = 1 de cada)",box);
   const r2=H.el("div","g-row",null,box);
-  [["🍋 Limão $1","lem",1],["🍬 Açúcar $1","sug",1],["🥤 2 copos $1","cup",1]].forEach(([nm,k,pr])=>{
+  [["Limão $1","lem",1],["Açúcar $1","sug",1],["2 copos $1","cup",1]].forEach(([nm,k,pr])=>{
     const b=H.el("button","g-btn ghost",nm,r2);
     b.addEventListener("click",()=>{
       if(over||cash<pr){H.sfx("bad");return;}
@@ -21,11 +21,11 @@ function paint(){
     });
   });
   const r3=H.el("div","g-row",null,box);
-  H.el("div","g-chip","💲 Preço: <b>$"+price+"</b>",r3);
+  H.el("div","g-chip","Preço: <b>$"+price+"</b>",r3);
   const bm=H.el("button","g-btn ghost","−",r3),bp=H.el("button","g-btn ghost","+",r3);
   bm.addEventListener("click",()=>{if(price>1&&!over){price--;H.sfx("tick");paint();}});
   bp.addEventListener("click",()=>{if(price<8&&!over){price++;H.sfx("tick");paint();}});
-  const go=H.el("button","g-btn","🍋 Abrir a barraca!",box);
+  const go=H.el("button","g-btn","Abrir a barraca!",box);
   go.addEventListener("click",sell);
 }
 function sell(){

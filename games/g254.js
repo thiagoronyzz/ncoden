@@ -74,8 +74,8 @@ function refresh(){
     H.btn(brow,tag,()=>humanPlay(op.i,op.side),false);
   });
   if(!opts.length){
-    if(bone.length)H.btn(brow,'🎲 Comprar ('+bone.length+' no monte)',humanDraw,true);
-    else{H.btn(brow,'⏭️ Passar (sem pedras)',humanPass,true);}
+    if(bone.length)H.btn(brow,'Comprar ('+bone.length+' no monte)',humanDraw,true);
+    else{H.btn(brow,'Passar (sem pedras)',humanPass,true);}
   }
 }
 function paintHand(){
@@ -135,7 +135,7 @@ function endRound(w,how){
   if(how==='batida'){
     const pts=w===0?ap:hp;
     sc[w]+=pts;dominos[w]++;
-    msg=(w===0?'🎉 VOCÊ BATEU! +'+pts+' pts.':'CPU bateu! +'+pts+' para ela.');
+    msg=(w===0?'VOCÊ BATEU! +'+pts+' pts.':'CPU bateu! +'+pts+' para ela.');
   }else{
     if(hp===ap){msg='Mesa fechada em empate ('+hp+' × '+ap+'): ninguém pontua.';}
     else if(hp<ap){sc[0]+=ap-hp;msg='Mesa fechada! Você tinha menos ('+hp+' × '+ap+'): +'+(ap-hp)+'!';}
@@ -152,7 +152,7 @@ function gameOver(){
   const win=sc[0]>=TARGET&&sc[0]>sc[1];
   const scf=sc[0]*5+dominos[0]*30;
   H.score(scf);
-  H.done(win?{win:true,score:scf,title:'🏆 Dominó vencido!',sub:sc[0]+' × '+sc[1]+' · '+dominos[0]+' batidas.'}
+  H.done(win?{win:true,score:scf,title:'Dominó vencido!',sub:sc[0]+' × '+sc[1]+' · '+dominos[0]+' batidas.'}
     :{win:false,score:scf,title:'CPU fez '+TARGET+'!',sub:sc[0]+' × '+sc[1]+' · guarde as carroças!'});
 }
 function tile2(cx,cy,a,b,horiz){
@@ -181,7 +181,7 @@ H.loop(()=>{
     tile2(cx,cy,chain[i].l,chain[i].r,true);
   }
   x.fillStyle=H.C.paper;x.font='bold 13px system-ui';x.textAlign='left';
-  if(chain.length){const{L,R}=ends();x.fillText('⬅ '+L+'   ·   '+R+' ➡',20,240);}
+  if(chain.length){const{L,R}=ends();x.fillText('←'+L+'   ·   '+R+'→',20,240);}
   x.fillStyle=H.C.ink;x.font='bold 15px system-ui';
   x.fillText('Você: '+hand.length+' pedras ('+handPips(hand)+' pts)',14,274);
   x.fillText('CPU: '+ai.length+' pedras · Monte: '+bone.length,14,296);

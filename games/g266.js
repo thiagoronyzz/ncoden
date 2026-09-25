@@ -22,7 +22,7 @@ const SW=[
 ];
 let grid=MAP.map(r=>r.split(''));
 const hud=H.hud(root,[['v','VIDAS',3],['f','FUSÍVEIS','0/3']]);
-const say=H.msg(root,'Colete 3 fusíveis 🔌 e chegue ao cofre 💰! Olhos 👁️ patrulham os dutos. Setas ou toque na casa vizinha.');
+const say=H.msg(root,'Colete 3 fusíveis e chegue ao cofre ! Olhos patrulham os dutos. Setas ou toque na casa vizinha.');
 const o=H.cvs(root,480,440),x=o.x;
 const kb=H.keys();kb.on((c,d)=>{if(!d)return;
  if(c==='ArrowLeft'||c==='KeyA')step(-1,0);else if(c==='ArrowRight'||c==='KeyD')step(1,0);
@@ -44,9 +44,9 @@ function check(){
  }
  status();
 }
-function status(){hud.set('v',lives);hud.set('f',fuses+'/3');say(fuses>=3?'Cofre destravado! Vá até 💰!':'Fusíveis: '+fuses+'/3 — o cofre precisa de 3!');}
+function status(){hud.set('v',lives);hud.set('f',fuses+'/3');say(fuses>=3?'Cofre destravado! Vá até !':'Fusíveis: '+fuses+'/3 — o cofre precisa de 3!');}
 function gameOver(win){over=true;const sc=win?350+fuses*50+lives*60:fuses*50;H.score(sc);
-H.done(win?{win:true,score:sc,title:'💰 Cofre aberto!',sub:'Rastejou como um profissional.'}:{win:false,score:sc,title:'Detectado!',sub:'A segurança te pegou. Decore as rotas!'});}
+H.done(win?{win:true,score:sc,title:'Cofre aberto!',sub:'Rastejou como um profissional.'}:{win:false,score:sc,title:'Detectado!',sub:'A segurança te pegou. Decore as rotas!'});}
 H.onTap(o,(px,py)=>{
  const c=Math.floor((px-OX)/CS),r=Math.floor((py-OY)/CS);
  if(Math.abs(c-pc)+Math.abs(r-pr)===1)step(c-pc,r-pr);
@@ -63,11 +63,11 @@ H.loop(dt=>{
   x.fillRect(OX+c*CS,OY+r*CS,CS,CS);
   x.strokeStyle=H.C.paper;x.strokeRect(OX+c*CS+.5,OY+r*CS+.5,CS-1,CS-1);
   x.font='20px system-ui';x.textAlign='center';
-  if(v==='F')x.fillText('🔌',OX+c*CS+19,OY+r*CS+28);
-  if(v==='V')x.fillText('💰',OX+c*CS+19,OY+r*CS+28);
+  if(v==='F')x.fillText('i:plug',OX+c*CS+19,OY+r*CS+28);
+  if(v==='V')x.fillText('i:money',OX+c*CS+19,OY+r*CS+28);
  }
  x.font='20px system-ui';
- SW.forEach(s=>{const p=s.path[s.i];x.fillText('👁️',OX+p[0]*CS+19,OY+p[1]*CS+28);});
+ SW.forEach(s=>{const p=s.path[s.i];x.fillText('i:eye',OX+p[0]*CS+19,OY+p[1]*CS+28);});
  x.fillStyle='#181816';x.beginPath();x.arc(OX+pc*CS+19,OY+pr*CS+19,13,0,7);x.fill();
  x.fillStyle='#C4D645';x.beginPath();x.arc(OX+pc*CS+19,OY+pr*CS+19,5,0,7);x.fill();
 });

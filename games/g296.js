@@ -7,13 +7,13 @@ for(let i=0;i<26;i++)CORAL.push({x:400+i*330,y:60+Math.random()*340,hit:false});
 const CUR=[];
 for(let i=0;i<8;i++)CUR.push({x:600+i*900,y:100+Math.random()*260,dy:Math.random()<.5?-1:1});
 const hud=H.hud(root,[['ox','OXIGÊNIO','100%'],['d','DIST','0%']]);
-const say=H.msg(root,'Nade até o fim! ⬆️⬇️ movem, correntes 🌀 empurram, corais 🪸 machucam. Acabou o O₂ = fim!');
+const say=H.msg(root,'Nade até o fim! ↑↓ movem, correntes empurram, corais machucam. Acabou o O₂ = fim!');
 const o=H.cvs(root,560,400),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{tapY=qy;});
 let tapY=null;
 function gameOver(win){over=true;const sc=win?Math.max(200,700-(t|0)*6):dist/90|0;H.score(sc);
-H.done(win?{win:true,score:sc,title:'🤿 Travessia completa!',sub:'Percurso subaquático vencido!'}:{win:false,score:sc,title:'Sem ar!',sub:'Gerencie o oxigênio e desvie dos corais!'});}
+H.done(win?{win:true,score:sc,title:'Travessia completa!',sub:'Percurso subaquático vencido!'}:{win:false,score:sc,title:'Sem ar!',sub:'Gerencie o oxigênio e desvie dos corais!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;
  const U=dn.ArrowUp||dn.KeyW,D=dn.ArrowDown||dn.KeyS;
@@ -36,14 +36,14 @@ H.loop(dt=>{
   if(cx>-60&&cx<620){
    x.strokeStyle='rgba(196,214,69,.5)';x.lineWidth=3;
    x.beginPath();x.arc(cx,c.y,34+t*20%20,0,7);x.stroke();
-   x.fillStyle='#C4D645';x.font='16px system-ui';x.textAlign='center';x.fillText(c.dy<0?'⬆':'⬇',cx,c.y+6);
+   x.fillStyle='#C4D645';x.font='16px system-ui';x.textAlign='center';x.fillText(c.dy<0?'↑':'↓',cx,c.y+6);
   }
  });
  CORAL.forEach(c=>{
   const cx=c.x-dist;
-  if(cx>-40&&cx<600){x.font=c.hit?'20px system-ui':'26px system-ui';x.textAlign='center';x.fillText(c.hit?'💥':'🪸',cx,c.y);}
+  if(cx>-40&&cx<600){x.font=c.hit?'20px system-ui':'26px system-ui';x.textAlign='center';x.fillText(c.hit?'i:burst':'i:coral',cx,c.y);}
  });
- x.font='30px system-ui';x.fillText('🤿',120,py+10);
+ x.font='30px system-ui';x.fillText('i:diver',120,py+10);
  x.fillStyle='#fff';x.font='bold 14px system-ui';x.textAlign='left';
  x.fillText('O₂ '+(Math.max(0,o2)|0)+'%  '+(dist/9000*100|0)+'%',12,26);
  x.fillStyle='#000';x.fillRect(12,34,200,10);

@@ -48,7 +48,7 @@ H.loop(dt=>{
   x.strokeStyle=H.C.wasabi;x.lineWidth=4;
   x.beginPath();x.arc(o.W/2,140,22,0,7);x.stroke();
   x.font="34px serif";
-  x.fillText("🏄",o.W/6+lane*o.W/3-17,300+Math.sin(t*4)*8);
+  x.fillText("i:surf",o.W/6+lane*o.W/3-17,300+Math.sin(t*4)*8);
   x.fillStyle="#fff";x.font="12px 'Space Mono',monospace";
   x.fillText("fique na raia quando o círculo fechar!",120,340);
 });

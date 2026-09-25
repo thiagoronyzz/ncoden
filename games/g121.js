@@ -1,21 +1,21 @@
 /* NCODE N · 121 Cafeteria — 10 pedidos, estoque contado */
 GREG(121,{
 init(root,H){
-const DR={cafe:{e:"☕",n:"Café",t:2,need:["bean","cup"],pr:5},latte:{e:"🥛",n:"Latte",t:3,need:["bean","milk","cup"],pr:8},choc:{e:"🍫",n:"Mocha",t:4,need:["bean","milk","cup","choc"],pr:11}};
+const DR={cafe:{e:"",n:"Café",t:2,need:["bean","cup"],pr:5},latte:{e:"",n:"Latte",t:3,need:["bean","milk","cup"],pr:8},choc:{e:"",n:"Mocha",t:4,need:["bean","milk","cup","choc"],pr:11}};
 let over=false,orders=[],stock={bean:6,milk:4,cup:8,choc:3},cash=10,served=0,lost=0,spawn=1,time=150,nid=0;
 const hud=H.hud(root,[["sv","SERVIDOS","0/10"],["cx","CAIXA","$10"],["tp","TEMPO",150]]);
 const say=H.msg(root,"Clique no pedido para <b>preparar</b> (gasta estoque), clique de novo para <b>servir</b>. Compre estoque com o caixa!");
 const box=H.el("div","g-col",null,root);
 const orow=H.el("div","g-col",null,box);
 const srow=H.el("div","g-row",null,box);
-const SNM={bean:"🫘 grão $2",milk:"🥛 leite $2",cup:"🥤 copo $1",choc:"🍫 choc $3"};
+const SNM={bean:"grão $2",milk:"leite $2",cup:"copo $1",choc:"chocolate $3"};
 function paint(){
   hud.set("sv",served+"/10");hud.set("cx","$"+cash);
   orow.innerHTML="";
   orders.forEach(o2=>{
     const d=H.el("button","g-chip"+(o2.ready?" good":"")+(o2.brew>0?" hot":""),null,orow);
     d.style.cursor="pointer";
-    d.innerHTML=DR[o2.k].e+" "+DR[o2.k].n+(o2.brew>0?" ⏳"+Math.ceil(o2.brew)+"s":o2.ready?" ✅ SERVIR!":" 🅿️ preparar")+" · ⏳"+Math.ceil(o2.p);
+    d.innerHTML=DR[o2.k].n+(o2.brew>0?" · "+Math.ceil(o2.brew)+"s":o2.ready?" · ✔ SERVIR!":" · preparar")+" · "+Math.ceil(o2.p);
     d.addEventListener("click",()=>act(o2.id));
   });
   if(!orders.length)H.el("div","g-chip","balcão livre…",orow);

@@ -49,7 +49,7 @@ H.loop(dt=>{
     if(Math.abs(s.x-px)<20&&s.y>o.H-70&&s.y<o.H-30){
       eshots.splice(i,1);lives--;hud.set("vd",lives);H.sfx("bad");
       if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Base destruída!",sub:sc+" pontos até a onda "+wave+"."});}
-      say("🔥 Nave atingida! Vidas: "+lives);
+      say("Nave atingida! Vidas: "+lives);
     }
   }
   if(aliens.some(a=>a.y>o.H-90)){over=true;H.sfx("lose");
@@ -60,8 +60,8 @@ H.loop(dt=>{
   }
   x.fillStyle="#14161c";x.fillRect(0,0,o.W,o.H);
   x.fillStyle=H.C.ok;x.font="20px serif";
-  for(const a of aliens)x.fillText("👾",a.x-10,a.y+7);
-  x.font="26px serif";x.fillText("🚀",px-13,o.H-40);
+  for(const a of aliens)x.fillText("i:robot",a.x-10,a.y+7);
+  x.font="26px serif";x.fillText("i:rocket",px-13,o.H-40);
   x.fillStyle=H.C.wasabi;
   for(const s of shots)x.fillRect(s.x-2,s.y-8,4,10);
   x.fillStyle=H.C.terra;

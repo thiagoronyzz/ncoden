@@ -11,9 +11,9 @@ let over=false,pos=[1,1,1],turn=0,dice=1,phase='roll',seq=0,plies=0,rollT=0;
 let steps=[],stepT=0,slide=null,msg='Quem chegar ao 100 exato vence!';
 let lad=[0,0,0],snk=[0,0,0];
 const hud=H.hud(root,[['t','TURNO','Você'],['d','DADO','—'],['p','SUA POS','1'],['e','ESC×COB','0×0']]);
-const say=H.msg(root,'Dado 6 dá jogada extra! 🪜 escadas sobem, 🐍 cobras descem. Só vence cravando o 100 exato.');
+const say=H.msg(root,'Dado 6 dá jogada extra! escadas sobem, cobras descem. Só vence cravando o 100 exato.');
 const o=H.cvs(root,450,504),x=o.x;
-const rollBtn=H.btn(root,'🎲 Rolar dado',doRoll,true);
+const rollBtn=H.btn(root,'Rolar dado',doRoll,true);
 function cellXY(n){
   const rb=((n-1)/10)|0,idx=(n-1)%10;
   const c=rb%2?9-idx:idx,r=9-rb;
@@ -42,8 +42,8 @@ function resolveRoll(p){
 }
 function animDone(p){
   const sq=pos[p];
-  if(LD[sq]){slide={a:sq,b:LD[sq],t:0,p};lad[p]++;msg=NAME[p]+' subiu 🪜 '+sq+' → '+LD[sq]+'!';H.sfx('ok');}
-  else if(SN[sq]){slide={a:sq,b:SN[sq],t:0,p};snk[p]++;msg=NAME[p]+' escorregou 🐍 '+sq+' → '+SN[sq]+'!';H.sfx('bad');}
+  if(LD[sq]){slide={a:sq,b:LD[sq],t:0,p};lad[p]++;msg=NAME[p]+' subiu '+sq+' → '+LD[sq]+'!';H.sfx('ok');}
+  else if(SN[sq]){slide={a:sq,b:SN[sq],t:0,p};snk[p]++;msg=NAME[p]+' escorregou '+sq+' → '+SN[sq]+'!';H.sfx('bad');}
   else finishMove(p);
   status();
 }
@@ -62,7 +62,7 @@ function gameOver(w,cap){
   over=true;seq++;rollBtn.disabled=true;
   const sc=Math.max(0,pos[0]*2+lad[0]*25-snk[0]*5+(w===0?250:0));
   H.score(sc);
-  H.done(w===0?{win:true,score:sc,title:'🏆 Chegou ao 100!',sub:lad[0]+' escadas · '+snk[0]+' cobras.'}
+  H.done(w===0?{win:true,score:sc,title:'Chegou ao 100!',sub:lad[0]+' escadas · '+snk[0]+' cobras.'}
     :{win:false,score:sc,title:NAME[w]+' chegou primeiro!',sub:cap?'Limite de turnos — você estava no '+pos[0]+'.':'Você estava no '+pos[0]+'.'});
 }
 function drawSnake(a,b){
@@ -130,9 +130,9 @@ H.loop((dt,now)=>{
   x.fillStyle='#fff';x.font='bold 12px system-ui';x.textAlign='center';x.textBaseline='middle';
   x.fillText(NAME[turn][0],26,483);
   x.fillStyle=H.C.ink;x.font='bold 17px system-ui';x.textAlign='left';
-  x.fillText('Vez: '+NAME[turn]+'   🎲 '+(rollT>0?1+((Math.random()*6)|0):dice),48,483);
+  x.fillText('Vez: '+NAME[turn]+'i:dice'+(rollT>0?1+((Math.random()*6)|0):dice),48,483);
   x.fillStyle=H.C.ink2;x.font='13px system-ui';
-  x.fillText('pos '+pos[0]+' · 🪜'+lad[0]+' 🐍'+snk[0],310,483);
+  x.fillText('pos '+pos[0]+' · '+lad[0]+'i:snake'+snk[0],310,483);
   x.textAlign='left';x.textBaseline='alphabetic';
 });
 status();

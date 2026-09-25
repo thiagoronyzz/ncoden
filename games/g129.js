@@ -1,7 +1,7 @@
 /* NCODE N · 129 Food Truck — 20 marmitas no almoço */
 GREG(129,{
 init(root,H){
-const SPOTS=[{n:"🏢 Centro",x:90,crowd:0},{n:"🏫 Escola",x:250,crowd:0},{n:"🏟️ Estádio",x:410,crowd:0}];
+const SPOTS=[{n:"Centro",x:90,crowd:0},{n:"Escola",x:250,crowd:0},{n:"Estádio",x:410,crowd:0}];
 let over=false,at=0,cook=0,ready=4,served=0,time=150,drive=0;
 const hud=H.hud(root,[["sv","SERVIDOS","0/20"],["mm","MARMITAS",4],["tp","TEMPO",150]]);
 const say=H.msg(root,"Dirija-se à <b>multidão</b>, frite marmitas (4 por vez) e sirva! A fome muda de lugar…");
@@ -10,9 +10,9 @@ H.onTap(o,(px,py)=>{
   if(over||drive>0)return;
   let bi=0,bd=1e9;
   SPOTS.forEach((s,i)=>{const d=Math.abs(px-s.x);if(d<bd){bd=d;bi=i;}});
-  if(bi!==at){drive=2.5;at=bi;H.sfx("tick");say("🚚 A caminho do "+SPOTS[bi].n+"…");}
+  if(bi!==at){drive=2.5;at=bi;H.sfx("tick");say("A caminho do "+SPOTS[bi].n+"…");}
 });
-H.btn(root,"🍔 Fritar 4 marmitas (6s)",()=>{
+H.btn(root,"Fritar 4 marmitas (6s)",()=>{
   if(over||cook>0||ready>=8)return;
   cook=6;H.sfx("tick");
 },false);
@@ -40,11 +40,11 @@ H.loop(dt=>{
     x.fillStyle=H.C.ink;x.font="11px 'Space Mono',monospace";
     x.fillText(sp.n.split(" ")[1],sp.x-22,78);
     x.font="16px serif";
-    for(let i=0;i<Math.floor(sp.crowd);i++)x.fillText("🧍",sp.x-30+(i%4)*16,120+Math.floor(i/4)*20);
+    for(let i=0;i<Math.floor(sp.crowd);i++)x.fillText("i:person",sp.x-30+(i%4)*16,120+Math.floor(i/4)*20);
   });
   x.font="40px serif";
-  x.fillText("🚚",SPOTS[at].x-20,225);
+  x.fillText("i:truck",SPOTS[at].x-20,225);
   if(drive>0){x.fillStyle=H.C.ink;x.font="12px 'Space Mono',monospace";x.fillText("dirigindo…",SPOTS[at].x-32,190);}
-  if(cook>0){x.fillStyle=H.C.terra;x.font="bold 13px 'Space Mono',monospace";x.fillText("🍔 "+Math.ceil(cook)+"s",10,20);}
+  if(cook>0){x.fillStyle=H.C.terra;x.font="bold 13px 'Space Mono',monospace";x.fillText("i:burger"+Math.ceil(cook)+"s",10,20);}
 });
 }});

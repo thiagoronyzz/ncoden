@@ -13,11 +13,11 @@ function tap(){
   hud.set("es",Math.floor(stab));
   if(stab<=0){over=true;return H.done({win:false,score:0,title:"INFARTO!",sub:"Estabilidade zerada."});}
 }
-H.btn(root,"❤️ PULSAR!",tap,true);
+H.btn(root,"♥ PULSAR!",tap,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")tap();});
 H.onTap(o,()=>tap());
-const EV=[["☕ Café! Ritmo acelera!",0.6],["😱 Susto! Uma pausa…",1.4],["🏃 Corrida! Mais rápido!",0.55],["🧘 Respire… devagar.",1.1]];
+const EV=[["Café! Ritmo acelera!",0.6],["Susto! Uma pausa…",1.4],["Corrida! Mais rápido!",0.55],["Respire… devagar.",1.1]];
 H.loop(dt=>{
   if(over)return;
   t+=dt;
@@ -28,7 +28,7 @@ H.loop(dt=>{
     et=10+Math.random()*6;
     event=EV[Math.floor(Math.random()*EV.length)];
     iv=event[1];next=t+iv;
-    say("⚠️ "+event[0]+" (novo pulso a cada "+iv.toFixed(2)+"s)");
+    say(""+event[0]+" (novo pulso a cada "+iv.toFixed(2)+"s)");
     H.sfx("bad");
   }
   if(t>next+0.18){
@@ -52,7 +52,7 @@ H.loop(dt=>{
   x.stroke();
   const near=Math.abs(t-next)<0.18;
   x.font="54px serif";
-  x.fillText(near?"❤️":"🖤",o.W/2-27,90);
+  x.fillText(near?"i:heart":"♥",o.W/2-27,90);
   x.fillStyle="#fff";x.font="12px 'Space Mono',monospace";
   x.fillText("pulso a cada "+iv.toFixed(2)+"s · estabilidade "+Math.floor(stab)+"%",130,290);
 });

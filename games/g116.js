@@ -7,7 +7,7 @@ const MAPS=[
 ];
 let m=0,order=[],over=false,moving=false;
 const hud=H.hud(root,[["mp","MAPA","1/2"],["km","DISTÂNCIA","—"],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique nas 🏠 casas na ordem da rota (do correio 📮 e de volta). Respeite o <b>limite de km</b>!");
+const say=H.msg(root,"Clique nas casas na ordem da rota (do correio e de volta). Respeite o <b>limite de km</b>!");
 const o=H.cvs(root,500,360),x=o.x;
 let sc=0,budget=0;
 const P0=[40,320];
@@ -55,20 +55,20 @@ H.loop(()=>{
   if(order.length===H2.length)x.lineTo(P0[0],P0[1]);
   x.stroke();
   x.font="22px serif";
-  x.fillText("📮",P0[0]-12,P0[1]+8);
+  x.fillText("i:mailbox",P0[0]-12,P0[1]+8);
   H2.forEach((h,i)=>{
-    x.fillText("🏠",h[0]-12,h[1]+8);
+    x.fillText("i:house",h[0]-12,h[1]+8);
     const ix=order.indexOf(i);
     if(ix>=0){x.fillStyle=H.C.terra;x.font="bold 13px 'Space Mono',monospace";
       x.fillText(ix+1,h[0]+10,h[1]-8);x.font="22px serif";}
   });
 });
-H.btn(root,"📬 Entregar rota",()=>{
+H.btn(root,"Entregar rota",()=>{
   if(over||moving)return;
   if(order.length!==MAPS[m].h.length){H.sfx("bad");say("Visite todas as 8 casas!");return;}
   const L=Math.round(routeLen(order));
   hud.set("km",L+" / "+budget);
-  if(L>budget){H.sfx("bad");say("❌ "+L+" km — acima do limite! Encurte a rota.");return;}
+  if(L>budget){H.sfx("bad");say("✕"+L+" km — acima do limite! Encurte a rota.");return;}
   sc+=150;H.score(sc);hud.set("sc",sc);H.sfx("ok");
   m++;
   if(m>=MAPS.length){over=true;return H.done({win:true,score:sc+100,title:"Carteiro eficiente!",sub:"2 rotas dentro do limite de km."});}

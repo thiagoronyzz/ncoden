@@ -14,24 +14,24 @@ function paint(){
   hives.forEach((h,i)=>{
     const b=H.el("button","g-cell"+(h.f>=100?" good":""),null,hbox);
     b.style.minWidth="90px";b.style.fontSize="13px";
-    b.innerHTML="🍯 "+Math.floor(h.f)+"%"+(h.f>=100?"<br>COLHER!":"");
+    b.innerHTML=""+Math.floor(h.f)+"%"+(h.f>=100?"<br>COLHER!":"");
     b.addEventListener("click",()=>{
       if(over||h.f<100)return;
-      h.f=0;honey+=3;H.sfx("ok");say("🍯 +3 mel! Envasar precisa de potes.");paint();
+      h.f=0;honey+=3;H.sfx("ok");say("+3 mel! Envasar precisa de potes.");paint();
     });
   });
-  sbox.innerHTML="🍯 mel a granel: "+honey+" · 🏺 cheios: "+full+" · vazios: "+empty;
+  sbox.innerHTML="mel a granel: "+honey+" · cheios: "+full+" · vazios: "+empty;
 }
 paint();
-H.btn(root,"🏺 Comprar 2 potes ($6)",()=>{
+H.btn(root,"Comprar 2 potes ($6)",()=>{
   if(over||cash<6)return;
   cash-=6;empty+=2;H.sfx("tick");paint();
 },false);
-H.btn(root,"🫙 Envasar (3 mel → 1 pote)",()=>{
+H.btn(root,"Envasar (3 mel → 1 pote)",()=>{
   if(over||honey<3||empty<=0)return;
-  honey-=3;empty--;full++;H.sfx("tick");say("🫙 Pote cheio! Venda no preço do dia ($"+price+").");paint();
+  honey-=3;empty--;full++;H.sfx("tick");say("Pote cheio! Venda no preço do dia ($"+price+").");paint();
 },false);
-H.btn(root,"💰 Vender 1 pote ($ do dia)",()=>{
+H.btn(root,"Vender 1 pote ($ do dia)",()=>{
   if(over||full<=0)return;
   full--;cash+=price;H.score(cash);H.sfx("ok");paint();
   if(cash>=100){over=true;return H.done({win:true,score:cash+Math.floor(time),title:"Rei do mel!",sub:"$"+cash+" em potes vendidos."});}
@@ -41,7 +41,7 @@ H.loop(dt=>{
   time-=dt;dt2+=dt;
   hud.set("tp",Math.max(0,Math.ceil(time)));
   if(dt2>=30){dt2=0;day++;price=5+Math.floor(Math.random()*8);
-    say("☀️ Dia "+day+": pote vale $"+price+".");paint();}
+    say("Dia "+day+": pote vale $"+price+".");paint();}
   hives.forEach(h=>{if(h.f<100)h.f+=dt*6;});
   if(Math.random()<dt)paint();
   if(time<=0){over=true;return H.done({win:false,score:cash,title:"Safra encerrada!",sub:"$"+cash+"/100. Colha, envase e venda no dia caro!"});}

@@ -17,7 +17,7 @@ function shoot(){
 }
 function startWave(){
   wave++;spawnQ=4+wave*3;hud.set("wv",wave+"/3");
-  say(wave>=3?"🌊 Onda final! Segure o núcleo!":"🌊 Onda "+wave+" se aproximando!");
+  say(wave>=3?"Onda final! Segure o núcleo!":"Onda "+wave+" se aproximando!");
 }
 H.loop(dt=>{
   if(over)return;
@@ -63,7 +63,7 @@ H.loop(dt=>{
     if(Math.hypot(rocks[j].x-cx,rocks[j].y-cy)<34){
       rocks.splice(j,1);lives--;hud.set("vd",lives);H.sfx("lose");
       if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Núcleo destruído!",sub:sc+" pontos até a onda "+wave+"."});}
-      say("💥 Impacto no núcleo! Vidas: "+lives);
+      say("Impacto no núcleo! Vidas: "+lives);
     }
   }
   x.fillStyle="#14161c";x.fillRect(0,0,o.W,o.H);

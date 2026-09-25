@@ -26,7 +26,7 @@ H.loop(dt=>{
   if(wave<=0){
     wave=18;H.sfx("bad");
     h=h.map(v=>v>=4?v:Math.max(0,v-1));
-    say("🌊 Onda! Torres fracas (<4) perderam areia.");
+    say("Onda! Torres fracas (<4) perderam areia.");
   }
   if(time<=0){over=true;
     return H.done({win:false,score:sc,title:"Maré levou tudo!",sub:"Só "+h.filter(v=>v>=6).length+"/5 torres. Foque uma por vez!"});}
@@ -42,13 +42,13 @@ H.loop(dt=>{
       x.fillRect(zx-w/2,300-(j+1)*24,w,22);
       x.strokeStyle="#8A6A2F";x.strokeRect(zx-w/2,300-(j+1)*24,w,22);
     }
-    if(h[i]>=6){x.font="24px serif";x.fillText("🚩",zx-12,300-h[i]*24-26);}
+    if(h[i]>=6){x.font="24px serif";x.fillText("i:pennant",zx-12,300-h[i]*24-26);}
     x.fillStyle=H.C.ink;x.font="bold 12px 'Space Mono',monospace";
     x.fillText(h[i]+"/6",zx-12,318);
   });
   x.fillStyle="#2E6E8A";
   parts.forEach(p=>{x.globalAlpha=Math.max(0,p.l);x.fillRect(p.x,p.y,4,4);x.globalAlpha=1;});
   x.fillStyle="#2E6E8A";x.font="12px 'Space Mono',monospace";
-  x.fillText("🌊 onda em "+Math.ceil(wave)+"s",12,20);
+  x.fillText("onda em "+Math.ceil(wave)+"s",12,20);
 });
 }});

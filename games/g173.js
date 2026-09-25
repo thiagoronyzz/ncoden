@@ -3,7 +3,7 @@ GREG(173,{
 init(root,H){
 let over=false,builds=[],mag=0,charging=false,tries=3,shake=0;
 const hud=H.hud(root,[["tt","TENTATIVAS",3],["mg","MAGNITUDE","0.0"],["sc","PONTOS",0]]);
-const say=H.msg(root,"SEGURE para carregar (0→10) e SOLTE! 🏚️ fracas caem com 4+ · 🏢 fortes caem com 8.5+. Derrube as 2 fracas mantendo as 3 fortes!");
+const say=H.msg(root,"SEGURE para carregar (0→10) e SOLTE! fracas caem com 4+ · fortes caem com 8.5+. Derrube as 2 fracas mantendo as 3 fortes!");
 const o=H.cvs(root,520,340),x=o.x;
 builds=[
   {x:60,w:70,h:150,weak:true,down:false,tilt:0},
@@ -70,7 +70,7 @@ H.loop(dt=>{
     for(let wy=-b.h+10;wy<-10;wy+=24)for(let wx=-b.w/2+6;wx<b.w/2-6;wx+=16)x.fillRect(wx,wy,9,12);
     x.restore();
     x.font="18px serif";
-    x.fillText(b.weak?"🏚️":"🏢",b.x+b.w/2-9,296-b.h-4);
+    x.fillText(b.weak?"i:house":"i:building",b.x+b.w/2-9,296-b.h-4);
   });
   x.restore();
   x.fillStyle=H.C.ink;x.font="bold 14px 'Space Mono',monospace";

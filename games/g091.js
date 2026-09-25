@@ -60,6 +60,6 @@ function close(){
   }
   hud.set("tm",se+"/4");paint();
 }
-H.btn(root,"⛵ Fechar temporada",close,true);
+H.btn(root,"Fechar temporada",close,true);
 paint();
 }});

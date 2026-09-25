@@ -31,7 +31,7 @@ function build(){
 }
 function paint(){
   for(let i=0;i<N*N;i++){
-    cells[i].textContent=grid[i]?"💡":"·";
+    cells[i].textContent=grid[i]?"":"·";
     cells[i].classList.toggle("good",grid[i]);
   }
 }

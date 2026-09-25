@@ -79,7 +79,7 @@ function checkComplete(c){
   if(nc.length&&!nc[nc.length-1].up)nc[nc.length-1].up=true;
   seqs++;score+=100;
   H.sfx('ok');
-  msg='✨ Sequência K→A completa! +100 ('+seqs+'/8)';
+  msg='Sequência K→A completa! +100 ('+seqs+'/8)';
   if(seqs>=8){paint();gameOver(true);}
 }
 function legalMoves(){
@@ -100,7 +100,7 @@ function legalMoves(){
 function dealRow(){
   if(over)return;
   hintM=null;
-  if(!stock.length){H.sfx('bad');msg='Monte vazio!';status();return;}
+  if(stock.length<10){H.sfx('bad');msg='O monte precisa de 10 cartas para distribuir!';status();return;}
   if(cols.some(c=>!c.length)){H.sfx('bad');msg='Preencha as colunas vazias antes de distribuir!';status();return;}
   for(let c=0;c<10;c++){const k=stock.pop();k.up=true;cols[c].push(k);}
   moves++;score--;H.sfx('tick');
@@ -111,7 +111,7 @@ function dealRow(){
 function hint(){
   if(over)return;
   const m=legalMoves();
-  if(m){hintM=m;hintT=6;msg='💡 Tente mover a sequência de '+rn(cols[m.c][m.i].r)+' para a coluna '+(m.t+1)+'.';H.sfx('tick');}
+  if(m){hintM=m;hintT=6;msg='Tente mover a sequência de '+rn(cols[m.c][m.i].r)+' para a coluna '+(m.t+1)+'.';H.sfx('tick');}
   else{msg=stock.length?'Sem jogadas — distribua!':'Sem jogadas e sem monte!';H.sfx('bad');}
   status();
 }
@@ -119,7 +119,7 @@ function gameOver(win){
   over=true;
   score=Math.max(0,score+(win?Math.max(0,800-moves):0));
   H.score(score);
-  H.done(win?{win:true,score,title:'🕷️ Aranha vencida!',sub:'8 sequências · '+moves+' lances · '+score+' pontos.'}
+  H.done(win?{win:true,score,title:'Aranha vencida!',sub:'8 sequências · '+moves+' lances · '+score+' pontos.'}
     :{win:false,score,title:'Teia travada!',sub:seqs+'/8 sequências · '+moves+' lances · revele cartas cedo!'});
 }
 function paint(){
@@ -145,9 +145,9 @@ function paint(){
     });
   });
   brow.innerHTML='';
-  const sb=H.btn(brow,'🃏 Distribuir ('+stock.length+')',dealRow,false);
+  const sb=H.btn(brow,'Distribuir ('+stock.length+')',dealRow,false);
   if(!stock.length)sb.disabled=true;
-  H.btn(brow,'💡 Dica',hint,false);
+  H.btn(brow,'Dica',hint,false);
 }
 function clickEmpty(c){
   if(over||!sel||sel.c===c)return;

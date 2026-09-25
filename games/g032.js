@@ -49,7 +49,7 @@ H.loop(()=>{
       p.done=true;p.x=p.slot[0];p.y=p.slot[1];
       placed++;sc+=100;H.score(sc);hud.set("sc",sc);hud.set("pc",placed+"/4");H.sfx("ok");
       if(placed>=4){over=true;return H.done({win:true,score:sc+100,title:"Silhueta completa!",sub:"4 peças de tangram no lugar exato."});}
-      say("✔ "+p.n+" encaixado! Faltam "+(4-placed)+".");
+      say("✔"+p.n+" encaixado! Faltam "+(4-placed)+".");
     }
     sel=null;
   }

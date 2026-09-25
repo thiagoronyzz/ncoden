@@ -3,7 +3,7 @@ GREG(117,{
 init(root,H){
 let over=false,d={x:250,y:40},ox=100,pearls=[],got=0,time=150,vy=0;
 const hud=H.hud(root,[["pe","PÉROLAS","0/8"],["ox","OXIGÊNIO",100],["tp","TEMPO",150]]);
-const say=H.msg(root,"<b>↑/↓ ou W/S</b> (ou toque acima/abaixo) para nadar. Superfície = ar. Ostras 🦪 no fundo guardam pérolas!");
+const say=H.msg(root,"<b>↑/↓ ou W/S</b> (ou toque acima/abaixo) para nadar. Superfície = ar. Ostras no fundo guardam pérolas!");
 const o=H.cvs(root,500,420),x=o.x;
 const r=H.rng(9);
 for(let i=0;i<8;i++)pearls.push({x:40+r()*420,y:250+r()*140,got:false});
@@ -40,9 +40,9 @@ H.loop(dt=>{
   x.fillStyle=g;x.fillRect(0,0,o.W,o.H);
   x.fillStyle="rgba(255,255,255,.35)";x.fillRect(0,44,o.W,3);
   x.font="20px serif";
-  pearls.forEach(p=>{if(!p.got)x.fillText("🦪",p.x-10,p.y+8);});
+  pearls.forEach(p=>{if(!p.got)x.fillText("i:shellfish",p.x-10,p.y+8);});
   x.font="26px serif";
-  x.fillText("🤿",d.x-13,d.y+9);
+  x.fillText("i:diver",d.x-13,d.y+9);
   x.fillStyle="#fff";x.font="12px 'Space Mono',monospace";
   x.fillText("profundidade "+Math.floor(depth*30)+"m",12,20);
 });

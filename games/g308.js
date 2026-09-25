@@ -3,7 +3,7 @@ GREG(308,{
 init(root,H){
 let over=false,px=230,py=400,dist=0,t=0,got=0,time=120;
 const ITEMS=[];
-for(let i=0;i<12;i++)ITEMS.push({x:60+Math.random()*340,y:-i*420-200,got:false,k:['🍎','💎','🪙','🍌'][i%4]});
+for(let i=0;i<12;i++)ITEMS.push({x:60+Math.random()*340,y:-i*420-200,got:false,k:['','','',''][i%4]});
 const hud=H.hud(root,[['i','ITENS','0/12'],['tp','TEMPO',120]]);
 const say=H.msg(root,'Colete os 12 itens flutuantes! Setas/toque movem a balsa. 2 minutos!');
 const o=H.cvs(root,460,520),x=o.x;
@@ -11,7 +11,7 @@ const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(qx,qy)=>{tx=qx;ty=qy;});
 let tx=null,ty=null;
 function gameOver(win){over=true;const sc=got*50+(win?Math.ceil(time)*3:0);H.score(sc);
-H.done(win?{win:true,score:sc,title:'🛶 Rio limpo!',sub:'12/12 itens!'}:{win:false,score:sc,title:'Fim do tempo!',sub:got+'/12 itens.'});}
+H.done(win?{win:true,score:sc,title:'Rio limpo!',sub:'12/12 itens!'}:{win:false,score:sc,title:'Fim do tempo!',sub:got+'/12 itens.'});}
 H.loop(dt=>{
  if(over)return;t+=dt;time-=dt;
  const sp=180*dt;
@@ -35,6 +35,6 @@ H.loop(dt=>{
   const iy=it.y+dist;
   if(!it.got&&iy>-20&&iy<540){x.font='24px system-ui';x.textAlign='center';x.fillText(it.k,it.x,iy+8);}
  });
- x.font='34px system-ui';x.fillText('🛶',px,py+11);
+ x.font='34px system-ui';x.fillText('i:canoe',px,py+11);
 });
 }});

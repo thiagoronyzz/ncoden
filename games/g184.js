@@ -33,14 +33,14 @@ const box=H.el("div","g-row",null,root);
 function paint(){
   box.innerHTML="";
   planks.forEach((p,i)=>{
-    const b=H.el("button","g-chip"+(sel===i?" hot":""),"🪵 "+p.L+"cm",box);
+    const b=H.el("button","g-chip"+(sel===i?" hot":""),""+p.L+"cm",box);
     b.style.cursor="pointer";
     b.addEventListener("click",()=>{sel=i;H.sfx("tick");paint();});
   });
   if(!planks.length)H.el("div","g-chip","sem tábuas…",box);
 }
 paint();
-H.btn(root,"🚶 ATRAVESSAR!",()=>{
+H.btn(root,"ATRAVESSAR!",()=>{
   if(over||walk)return;
   if(gaps.some(g=>!g.plank)){H.sfx("bad");say("Faltam tábuas em vãos!");return;}
   walk={x:pillars[0].x,g:0};hud.set("st","atravessando…");H.sfx("tick");
@@ -54,7 +54,7 @@ H.loop(dt=>{
     if(loose.length){
       const g=loose[Math.floor(Math.random()*loose.length)];
       planks.push(g.plank);g.plank=null;H.sfx("bad");paint();
-      say("💨 A ventania levou uma tábua solta! PREGUE tudo.");
+      say("A ventania levou uma tábua solta! PREGUE tudo.");
     }
   }
   if(walk&&!over){
@@ -88,8 +88,8 @@ H.loop(dt=>{
       x.beginPath();x.moveTo(xa-14,227);x.lineTo(xb+14,227);x.stroke();x.setLineDash([]);
     }
   });
-  if(walk){x.font="26px serif";x.fillText("🧍",walk.x-13,222);}
-  else{x.font="26px serif";x.fillText("🧍",pillars[0].x-40,300);}
-  if(wind){x.fillStyle=H.C.ink;x.font="bold 14px 'Space Mono',monospace";x.fillText("💨💨💨",200,40);}
+  if(walk){x.font="26px serif";x.fillText("i:person",walk.x-13,222);}
+  else{x.font="26px serif";x.fillText("i:person",pillars[0].x-40,300);}
+  if(wind){x.fillStyle=H.C.ink;x.font="bold 14px 'Space Mono',monospace";x.fillText("i:smokei:smokei:smoke",200,40);}
 });
 }});

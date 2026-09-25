@@ -3,7 +3,7 @@ GREG(245,{
 init(root,H){
 let over=false,b=[],sel=null,must=[],turn=0;
 const hud=H.hud(root,[["vc","SUAS",12],["cp","CPU",12],["vz","VEZ","você"]]);
-const say=H.msg(root,"Você é ⚫ (embaixo)! Captura é <b>obrigatória</b> (inclusive em cadeia). Clique na peça e no destino. Coma as 12!");
+const say=H.msg(root,"Você é ● (embaixo)! Captura é <b>obrigatória</b> (inclusive em cadeia). Clique na peça e no destino. Coma as 12!");
 const o=H.cvs(root,440,440),x=o.x;
 const CS=52,OX=12,OY=12;
 function mk(){

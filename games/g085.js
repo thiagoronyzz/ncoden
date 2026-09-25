@@ -25,7 +25,7 @@ H.loop(dt=>{
       wall-=dmg;sc+=dmg;H.score(sc);hud.set("mr",Math.max(0,wall));hud.set("sc",sc);
       H.sfx("bad");proj=null;newWind();
       if(wall<=0){over=true;return H.done({win:true,score:sc+stones*20+100,title:"Muralha abaixo!",sub:"O castelo caiu com "+stones+" pedras de sobra."});}
-      say("💥 Impacto direto! −"+dmg+" (vento agora "+wind+")");
+      say("Impacto direto! −"+dmg+" (vento agora "+wind+")");
     }else if(proj.x>o.W+20||proj.y>o.H+20||proj.x<-20){
       proj=null;newWind();
       if(stones<=0){over=true;return H.done({win:false,score:sc,title:"Sem pedras!",sub:"A muralha resistiu com "+wall+" HP. Ajuste a mira!"});}
@@ -62,5 +62,5 @@ const r1=H.el("div","g-row",null,root);
     H.sfx("tick");
   });
 });
-H.btn(root,"💥 DISPARAR",fire,true);
+H.btn(root,"DISPARAR",fire,true);
 }});

@@ -3,7 +3,7 @@ GREG(109,{
 init(root,H){
 let over=false,plants=[],sel=0,time=60,decay=0;
 const hud=H.hud(root,[["vv","VIVAS","8/8"],["tp","TEMPO",60],["sc","PONTOS",0]]);
-const say=H.msg(root,"Clique na planta e use <b>💧 Regar</b> / <b>💡 Iluminar</b>. Se 💧 e ☀️ zerarem juntos, ela murcha!");
+const say=H.msg(root,"Clique na planta e use <b> Regar</b> / <b> Iluminar</b>. Se e zerarem juntos, ela murcha!");
 const board=H.el("div","g-board",null,root);
 board.style.gridTemplateColumns="repeat(4,1fr)";
 board.style.width="min(100%,340px)";
@@ -14,7 +14,7 @@ function paint(){
   plants.forEach((p,i)=>{
     const d=H.el("button","g-cell"+(sel===i?" sel":""),null,board);
     d.style.fontSize="13px";d.style.minHeight="64px";
-    d.innerHTML=!p.alive?"🥀<br>morta":("🌱<br>💧".repeat(1)+p.w+" ☀️"+p.l);
+    d.innerHTML=!p.alive?"<br>morta":("<br>".repeat(1)+p.w+""+p.l);
     d.addEventListener("click",()=>{if(!over&&p.alive){sel=i;H.sfx("tick");paint();}});
   });
   const alive=plants.filter(p=>p.alive).length;
@@ -22,11 +22,11 @@ function paint(){
 }
 paint();
 const row=H.el("div","g-row",null,root);
-H.btn(row,"💧 Regar",()=>{
+H.btn(row,"Regar",()=>{
   if(over)return;const p=plants[sel];
   if(p&&p.alive){p.w=Math.min(3,p.w+1);H.sfx("tick");paint();}
 },false);
-H.btn(row,"💡 Iluminar",()=>{
+H.btn(row,"Iluminar",()=>{
   if(over)return;const p=plants[sel];
   if(p&&p.alive){p.l=Math.min(3,p.l+1);H.sfx("tick");paint();}
 },false);
@@ -39,7 +39,7 @@ H.loop(dt=>{
     plants.forEach(p=>{
       if(!p.alive)return;
       if(Math.random()<.6)p.w=Math.max(0,p.w-1);else p.l=Math.max(0,p.l-1);
-      if(p.w===0&&p.l===0){p.alive=false;H.sfx("bad");say("🥀 Uma planta murchou!");}
+      if(p.w===0&&p.l===0){p.alive=false;H.sfx("bad");say("Uma planta murchou!");}
     });
     paint();
   }

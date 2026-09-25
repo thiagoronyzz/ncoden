@@ -9,15 +9,15 @@ const st=H.el('div','g-msg','',box);
 const brow=H.el('div','g-row',null,box);
 function status(){
  hud.set('d',day+'/15');hud.set('t',logs);hud.set('c',Math.max(0,food|0));hud.set('h',cabin+'%');
- st.innerHTML='🌲 Dia '+day+'/15 · Ações: '+act+'<br>🪵 '+logs+' · 🍖 '+food.toFixed(0)+' · 🛖 '+cabin+'%'+(cabin>=100?' ✅ PRONTA!':'');
+ st.innerHTML='Dia '+day+'/15 · Ações: '+act+'<br> '+logs+' · '+food.toFixed(0)+' · '+cabin+'%'+(cabin>=100?'✔ PRONTA!':'');
  paintBtns();
 }
 function paintBtns(){
  brow.innerHTML='';
  if(over)return;
- H.btn(brow,'🪓 Cortar (+2 toras)',()=>{if(act<=0||over)return;logs+=2;act--;H.sfx('tick');after();},false);
- H.btn(brow,'🍖 Caçar (+20 comida)',()=>{if(act<=0||over)return;food=Math.min(100,food+20);act--;H.sfx('tick');after();},false);
- H.btn(brow,'🔨 Construir (−2 toras, +25%)',()=>{
+ H.btn(brow,'Cortar (+2 toras)',()=>{if(act<=0||over)return;logs+=2;act--;H.sfx('tick');after();},false);
+ H.btn(brow,'Caçar (+20 comida)',()=>{if(act<=0||over)return;food=Math.min(100,food+20);act--;H.sfx('tick');after();},false);
+ H.btn(brow,'Construir (−2 toras, +25%)',()=>{
   if(act<=0||over)return;
   if(logs<2){say('Sem toras! Corte primeiro.');H.sfx('bad');return;}
   logs-=2;cabin=Math.min(100,cabin+25);act--;H.sfx('ok');after();
@@ -34,6 +34,6 @@ function after(){
 }
 function gameOver(win,why){over=true;brow.innerHTML='';
  const sc=win?400+food:cabin*3;H.score(sc|0);
-H.done(win?{win:true,score:sc|0,title:'🛖 Cabana pronta!',sub:'Inverno tranquilo!'}:{win:false,score:sc|0,title:'Inverno cruel!',sub:why+' Priorize toras!'});}
+H.done(win?{win:true,score:sc|0,title:'Cabana pronta!',sub:'Inverno tranquilo!'}:{win:false,score:sc|0,title:'Inverno cruel!',sub:why+' Priorize toras!'});}
 status();
 }});

@@ -4,10 +4,10 @@ init(root,H){
 let over=false,px=0,sp=0,wob=0,t=0;
 let rivals=[{x:0},{x:0}];
 const hud=H.hud(root,[['d','DIST','0m'],['pos','POS','3º']]);
-const say=H.msg(root,'Pedale (toque PEDAL!) e segure o bambo com ⬅️➡️! Bambo no limite = queda (perde velocidade). 300m contra 2 malucos!');
+const say=H.msg(root,'Pedale (toque PEDAL!) e segure o bambo com ←→! Bambo no limite = queda (perde velocidade). 300m contra 2 malucos!');
 const o=H.cvs(root,560,320),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;if(d&&c==='Space')pedal();});
-H.btn(root,'🚲 PEDAL!',pedal,true);
+H.btn(root,'PEDAL!',pedal,true);
 function pedal(){
  if(over)return;
  sp=Math.min(50,sp+3);wob+=(Math.random()-.5)*36;H.sfx('tick');
@@ -17,7 +17,7 @@ function gameOver(){
  const win=px>=900&&px>=rivals[0].x&&px>=rivals[1].x;
  const sc=win?Math.max(200,600-(t|0)*6):px|0;
  H.score(sc);
- H.done(win?{win:true,score:sc,title:'🚲 Rei do bambo!',sub:'300m em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Os malucos venceram!',sub:'Pedale e corrija o bambo sem parar!'});
+ H.done(win?{win:true,score:sc,title:'Rei do bambo!',sub:'300m em '+t.toFixed(1)+'s.'}:{win:false,score:sc,title:'Os malucos venceram!',sub:'Pedale e corrija o bambo sem parar!'});
 }
 H.loop(dt=>{
  if(over)return;t+=dt;
@@ -35,9 +35,9 @@ H.loop(dt=>{
  x.fillStyle='#C9B189';x.fillRect(0,0,560,320);
  const cam=Math.max(0,px-200);
  x.font='28px system-ui';x.textAlign='center';
- x.save();x.translate(px-cam,110);x.rotate(wob/200);x.fillText('🚲',0,9);x.restore();
- x.fillText('🛺',rivals[0].x-cam,190);
- x.fillText('🛵',rivals[1].x-cam,260);
+ x.save();x.translate(px-cam,110);x.rotate(wob/200);x.fillText('i:bike',0,9);x.restore();
+ x.fillText('i:truck',rivals[0].x-cam,190);
+ x.fillText('i:scooter',rivals[1].x-cam,260);
  x.fillStyle='#fff';x.fillRect(900-cam,60,8,220);
  x.fillStyle='#181816';x.fillRect(180,20,200,14);
  x.fillStyle=Math.abs(wob)>70?'#D94E34':'#E8A33D';

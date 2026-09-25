@@ -4,7 +4,7 @@ init(root,H){
 const N=16;
 let over=false,snake,dir,nd,food,sc=0,tick=0,speed=.12;
 const hud=H.hud(root,[["cp","COMPRIMENTO",3],["sc","PONTOS",0]]);
-const say=H.msg(root,"<b>Setas / deslize</b> para virar. Coma 🍎 para crescer. 120 pontos vencem — sem morder o rabo!");
+const say=H.msg(root,"<b>Setas / deslize</b> para virar. Coma para crescer. 120 pontos vencem — sem morder o rabo!");
 const o=H.cvs(root,440,440),x=o.x;
 function build(){
   snake=[{x:8,y:8},{x:7,y:8},{x:6,y:8}];dir={x:1,y:0};nd=dir;sc=0;speed=.12;
@@ -47,7 +47,7 @@ H.loop(dt=>{
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   x.strokeStyle=H.C.ink;x.lineWidth=3;x.strokeRect(ox-3,oy-3,s*N+6,s*N+6);
   x.font=Math.floor(s*.8)+"px serif";
-  x.fillText("🍎",ox+food.x*s+2,oy+food.y*s+s-3);
+  x.fillText("i:fruit",ox+food.x*s+2,oy+food.y*s+s-3);
   snake.forEach((sg,i)=>{
     x.fillStyle=i===0?H.C.ink:H.C.ok;
     x.fillRect(ox+sg.x*s+1,oy+sg.y*s+1,s-2,s-2);

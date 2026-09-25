@@ -27,7 +27,7 @@ function release(){
   mode="fly";H.sfx("tick");
   say("Voando…");
 }
-H.btn(root,"🙌 SOLTAR!",release,true);
+H.btn(root,"SOLTAR!",release,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&(c==="Space"))release();});
 H.onTap(o,()=>release());
@@ -54,7 +54,7 @@ H.loop(dt=>{
       if(lives<=0){over=true;
         return H.done({win:false,score:sc,title:"Banho de rio!",sub:"3 quedas. Solte subindo para a direita!"});
       }
-      say("💦 Caiu! ("+lives+" vidas) Solte quando o cipó apontar →!");
+      say("Caiu! ("+lives+" vidas) Solte quando o cipó apontar →!");
       mode="swing";fly=null;a=-1.1;va=0;
     }else if(fly.x>o.W+30||fly.x<-30){
       lives--;hud.set("vd",lives);
@@ -71,14 +71,14 @@ H.loop(dt=>{
     if(i===ri&&mode==="swing"){
       const p=pos();
       x.beginPath();x.moveTo(R.x,40);x.lineTo(p.x,p.y);x.stroke();
-      x.font="26px serif";x.fillText("🧍",p.x-13,p.y-4);
+      x.font="26px serif";x.fillText("i:person",p.x-13,p.y-4);
     }else if(i>ri){
       x.beginPath();x.moveTo(R.x,40);x.lineTo(R.x,40+R.l);x.stroke();
       x.strokeStyle=H.C.wasabi;x.lineWidth=2;
       x.beginPath();x.arc(R.x,190,46,0,7);x.stroke();
     }
   });
-  if(fly){x.font="26px serif";x.fillText("🤸",fly.x-13,fly.y+8);}
+  if(fly){x.font="26px serif";x.fillText("i:acrobat",fly.x-13,fly.y+8);}
   x.fillStyle=H.C.ink;x.font="12px 'Space Mono',monospace";
   x.fillText("solte subindo → para voar longe!",150,55);
 });

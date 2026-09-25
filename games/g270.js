@@ -8,11 +8,11 @@ const GD=[
  {wp:[[400,400],[60,400]],i:0,sp:75,x:400,y:400,a:Math.PI}
 ];
 const hud=H.hud(root,[['f','FOTOS','0/5'],['a','ALERTAS','0/3']]);
-const say=H.msg(root,'Chegue perto dos artefatos 🏺 e toque em FOTOGRAFAR! O flash denuncia se um cone te vir. Depois, fuja pela saída 🚪!');
+const say=H.msg(root,'Chegue perto dos artefatos e toque em FOTOGRAFAR! O flash denuncia se um cone te vir. Depois, fuja pela saída !');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{dn[c]=d;});
 H.onTap(o,(a,b)=>{tx=a;ty=b;});
-H.btn(root,'📸 Fotografar',()=>{
+H.btn(root,'Fotografar',()=>{
  if(over)return;
  const a=ART.find(q=>!q.g&&Math.hypot(px-q.x,py-q.y)<55);
  if(!a){H.sfx('bad');return;}
@@ -30,7 +30,7 @@ function inCone(){
  });
 }
 function gameOver(win){over=true;const sc=win?400+(3-alerts)*80:photos*50;H.score(sc);
-H.done(win?{win:true,score:sc,title:'📸 Exposição roubada!',sub:'5 artefatos fotografados.'}:{win:false,score:sc,title:'Alarme!',sub:photos+'/5 fotos. Fotografe fora dos cones!'});}
+H.done(win?{win:true,score:sc,title:'Exposição roubada!',sub:'5 artefatos fotografados.'}:{win:false,score:sc,title:'Alarme!',sub:photos+'/5 fotos. Fotografe fora dos cones!'});}
 H.loop(dt=>{
  if(over)return;t+=dt;if(flash>0)flash-=dt;
  GD.forEach(g=>{
@@ -46,11 +46,11 @@ H.loop(dt=>{
  px=H.clamp(px,12,448);py=H.clamp(py,12,448);
  if(photos>=5&&px>406&&py<54){gameOver(true);return;}
  x.fillStyle='#2A2620';x.fillRect(0,0,460,460);
- x.fillStyle='#3E7C4F';x.fillRect(406,8,46,46);x.fillStyle='#fff';x.font='24px system-ui';x.textAlign='center';x.fillText('🚪',429,42);
+ x.fillStyle='#3E7C4F';x.fillRect(406,8,46,46);x.fillStyle='#fff';x.font='24px system-ui';x.textAlign='center';x.fillText('i:door',429,42);
  ART.forEach(a=>{
   if(a.g)return;
   x.fillStyle='rgba(196,214,69,.15)';x.beginPath();x.arc(a.x,a.y,55,0,7);x.fill();
-  x.font='26px system-ui';x.fillText('🏺',a.x,a.y+9);
+  x.font='26px system-ui';x.fillText('i:pot',a.x,a.y+9);
  });
  GD.forEach(g=>{
   x.fillStyle='rgba(232,163,61,.3)';x.beginPath();x.moveTo(g.x,g.y);x.arc(g.x,g.y,140,g.a-.45,g.a+.45);x.fill();

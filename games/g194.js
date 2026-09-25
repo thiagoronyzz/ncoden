@@ -13,7 +13,7 @@ function beat(){
   else{score=Math.max(0,score-4);H.sfx("bad");}
   H.score(Math.floor(score));hud.set("en",Math.floor(score));
 }
-H.btn(root,"🥁 BEAT!",beat,true);
+H.btn(root,"BEAT!",beat,true);
 const kb=H.keys();
 kb.on((c,d)=>{if(d&&c==="Space")beat();});
 H.loop(dt=>{

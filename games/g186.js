@@ -3,8 +3,8 @@ GREG(186,{
 init(root,H){
 const N=10;
 let over=false,ice=[],src=[],toy={r:5,c:5},heat=0,time=90;
-const hud=H.hud(root,[["tp","TEMPO",90],["br","BRINQUEDO","preso 🧊"],["tq","CALOR NO BRINQUEDO","0%"]]);
-const say=H.msg(root,"Clique para plantar <b>🔥 fonte de calor</b> (3 no total, clique de novo para mover). Derreta o gelo ao redor do 🧸 — mas calor demais nele (100% por 3s) derrete o brinquedo!");
+const hud=H.hud(root,[["tp","TEMPO",90],["br","BRINQUEDO","preso "],["tq","CALOR NO BRINQUEDO","0%"]]);
+const say=H.msg(root,"Clique para plantar uma <b>fonte de calor</b> (3 no total; clique de novo para mover). Derreta o gelo ao redor do <b>brinquedo</b> — mas calor demais nele (100% por 3s) o derrete!");
 const o=H.cvs(root,400,400),x=o.x;
 const CS=36,OX=20,OY=20;
 const r=H.rng(4);
@@ -68,7 +68,7 @@ H.loop(dt=>{
     }
   }
   x.font="22px serif";
-  src.forEach(s=>x.fillText("🔥",OX+s.c*CS+4,OY+s.r*CS+28));
-  x.fillText("🧸",OX+toy.c*CS+4,OY+toy.r*CS+28);
+  src.forEach(s=>x.fillText("i:flame",OX+s.c*CS+4,OY+s.r*CS+28));
+  x.fillText("i:teddy",OX+toy.c*CS+4,OY+toy.r*CS+28);
 });
 }});

@@ -3,16 +3,16 @@ GREG(110,{
 init(root,H){
 let over=false,fish=[],food=[],dirt=10,time=60,cool=0;
 const hud=H.hud(root,[["px","PEIXES","5/5"],["sj","SUJEIRA","10%"],["tp","TEMPO",60]]);
-const say=H.msg(root,"<b>🍤 Ração</b> afunda e os peixes caçam. <b>🧹 Limpar</b> tira sujeira (recarrega). Fome zerada ou sujeira 100% = morte!");
+const say=H.msg(root,"<b> Ração</b> afunda e os peixes caçam. <b> Limpar</b> tira sujeira (recarrega). Fome zerada ou sujeira 100% = morte!");
 const o=H.cvs(root,500,360),x=o.x;
 const cols=["#E8A33D","#D94E34","#7fb3d5","#C4D645","#E86AA0"];
 for(let i=0;i<5;i++)fish.push({x:60+Math.random()*380,y:80+Math.random()*200,vx:40*(Math.random()<.5?-1:1),hung:80,c:cols[i]});
-H.btn(root,"🍤 Jogar ração",()=>{
+H.btn(root,"Jogar ração",()=>{
   if(over)return;
   food.push({x:40+Math.random()*420,y:10});H.sfx("tick");
   if(food.length>12)food.shift();
 },false);
-H.btn(root,"🧹 Limpar (+rec. 8s)",()=>{
+H.btn(root,"Limpar (+rec. 8s)",()=>{
   if(over||cool>0)return;
   cool=8;dirt=Math.max(0,dirt-45);H.sfx("ok");
 },false);
@@ -36,7 +36,7 @@ H.loop(dt=>{
     }
   }
   for(let i=fish.length-1;i>=0;i--){
-    if(fish[i].hung<=0||dirt>=100){fish.splice(i,1);H.sfx("bad");say("🐟 Um peixe não resistiu!");}
+    if(fish[i].hung<=0||dirt>=100){fish.splice(i,1);H.sfx("bad");say("Um peixe não resistiu!");}
   }
   hud.set("px",fish.length+"/5");
   if(fish.length<4){over=true;H.sfx("lose");

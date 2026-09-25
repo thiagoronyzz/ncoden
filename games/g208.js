@@ -8,7 +8,7 @@ const say=H.msg(root,"Digite a palavra antes do prazo (teclado físico ou botõe
 const box=H.el("div","g-col",null,root);
 const wd=H.el("div","g-msg","",box);
 function paint(){
-  wd.innerHTML="🎷 <b>"+WORDS[wi]+"</b> → "+(buf||"_")+" ("+buf.length+"/"+WORDS[wi].length+")";
+  wd.innerHTML="<b>"+WORDS[wi]+"</b> → "+(buf||"_")+" ("+buf.length+"/"+WORDS[wi].length+")";
 }
 paint();
 const kb=H.keys();
@@ -28,7 +28,7 @@ function feed(ch){
       wi++;buf="";dead=8;
       if(wi>=WORDS.length){over=true;return H.done({win:true,score:score+100,title:"Datilógrafo jazz!",sub:"10 palavras no swing da máquina."});}
     }
-  }else{buf="";H.sfx("bad");say("❌ Errou! Palavra zerada.");}
+  }else{buf="";H.sfx("bad");say("✕ Errou! Palavra zerada.");}
   paint();
 }
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(ch=>{
@@ -48,7 +48,7 @@ H.loop(dt=>{
   dead-=dt;hud.set("tp",Math.max(0,Math.ceil(dead)));
   if(dead<=0){
     err++;buf="";dead=8;H.sfx("bad");paint();
-    say("⏰ Prazo! ("+err+"/3)");
+    say("Prazo! ("+err+"/3)");
     if(err>=3){over=true;return H.done({win:false,score,title:"Máquina emperrou!",sub:wi+"/10 palavras."});}
   }
 });

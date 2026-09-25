@@ -11,7 +11,7 @@ let lv=0,over=false,flowing=false;
 const hud=H.hud(root,[["nv","NÍVEL",1],["sc","PONTOS",0]]);
 const say=H.msg(root,"Clique nas peças para <b>girar</b>. Quando o caminho estiver pronto, abra a água.");
 const board=H.el("div","g-board",null,root);
-const GLYPH={src:"🚰",drn:"🕳️",str0:"═",str1:"║",elb0:"╔",elb1:"╗",elb2:"╝",elb3:"╚"};
+const GLYPH={src:"",drn:"",str0:"═",str1:"║",elb0:"╔",elb1:"╗",elb2:"╝",elb3:"╚"};
 let n=3,cells=[],tiles=[];
 function openings(t){
   if(t.k==="src"||t.k==="drn")return t.fix;
@@ -94,12 +94,12 @@ function openWater(){
         H.sfx("ok");const sc=(lv+1)*120;H.score(sc);hud.set("sc",sc);
         if(lv>=PATHS.length-1){over=true;return H.done({win:true,score:sc+150,title:"Encanamento perfeito!",sub:"Água fluindo da fonte ao ralo nos 3 setores."});}
         lv++;say("Nível "+(lv+1)+": uma rede maior e mais peças falsas.");H.after(700,build);
-      }else{say("💦 A água <b>vazou</b> no caminho! Gire as peças e tente de novo.");H.sfx("bad");flowing=false;}
+      }else{say("A água <b>vazou</b> no caminho! Gire as peças e tente de novo.");H.sfx("bad");flowing=false;}
     }
   });
 }
 const row=H.el("div","g-row",null,root);
-H.btn(row,"💧 Abrir água",openWater,true);
+H.btn(row,"Abrir água",openWater,true);
 H.btn(row,"↻ Embaralhar",()=>{if(!flowing)build();},false);
 build();
 }});

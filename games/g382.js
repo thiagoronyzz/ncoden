@@ -5,13 +5,13 @@ let over=false,a=1,av=0,round=0,hits=0,released=false,ba=null;
 const hud=H.hud(root,[['t','TENTATIVA','1/5'],['a','ACERTOS','0/5']]);
 const say=H.msg(root,'O pêndulo balança! Toque SOLTAR quando passar pelo CENTRO para acertar o alvo. 5 tentativas, 3+ acertos!');
 const o=H.cvs(root,460,400),x=o.x;
-H.btn(root,'🎯 SOLTAR!',()=>{
+H.btn(root,'SOLTAR!',()=>{
  if(over||released)return;
  released=true;
  const err=Math.abs(a);
  ba={x:230+Math.sin(a)*220,y:120+Math.cos(a)*220,vy:0};
- if(err<.18){hits++;H.sfx('ok');say('🎯 ACERTOU!');}
- else{H.sfx('bad');say('❌ Errou por '+(err*57|0)+'°!');}
+ if(err<.18){hits++;H.sfx('ok');say('ACERTOU!');}
+ else{H.sfx('bad');say('✕ Errou por '+(err*57|0)+'°!');}
  hud.set('a',hits+'/5');
  round++;
  H.after(1200,()=>{
@@ -22,7 +22,7 @@ H.btn(root,'🎯 SOLTAR!',()=>{
  });
 },true);
 function gameOver(){over=true;H.score(hits*100);
-H.done({win:hits>=3,score:hits*100,title:hits>=3?'🎯 Mira de mestre!':'🎯 Fim!',sub:hits+'/5 acertos.'});}
+H.done({win:hits>=3,score:hits*100,title:hits>=3?'Mira de mestre!':'Fim!',sub:hits+'/5 acertos.'});}
 H.loop(dt=>{
  if(over)return;
  if(!released){av+=-9.8/2.2*Math.sin(a)*dt;a+=av*dt;}

@@ -4,7 +4,7 @@ init(root,H){
 const N=7,FLAGS=[[3,1],[3,5]];
 let over=false,units=[],sel=null,turn=1;
 const hud=H.hud(root,[["tn","TURNO",1],["vo","SUA TROPA",3],["ia","INIMIGOS",3]]);
-const say=H.msg(root,"Clique num soldado e depois em <b>vizinho vazio</b> (mover) ou <b>inimigo vizinho</b> (atacar). Capture as 2 ⚑ ou destrua todos!");
+const say=H.msg(root,"Clique num soldado e depois em <b>vizinho vazio</b> (mover) ou <b>inimigo vizinho</b> (atacar). Capture as 2 ou destrua todos!");
 const board=H.el("div","g-board",null,root);
 board.style.gridTemplateColumns="repeat(7,1fr)";
 board.style.width="min(100%,350px)";
@@ -27,11 +27,11 @@ function paint(){
     const isF=FLAGS.some(f=>f[0]===r&&f[1]===c);
     const u=at(r,c);
     if(u){
-      d.textContent=(u.s===1?"🛡️":"⚔️")+u.hp;
+      d.textContent=(u.s===1?"":"")+u.hp;
       d.style.background=u.s===1?"#dce8c8":"#f2c9c2";
       if(u===sel)d.classList.add("sel");
       if(u.acted)d.style.opacity=.55;
-    }else if(isF){d.textContent="⚑";d.style.fontSize="18px";}
+    }else if(isF){d.textContent="";d.style.fontSize="18px";}
     (function(rr,cc){d.addEventListener("click",()=>tap(rr,cc));})(r,c);
   }
 }
@@ -81,6 +81,6 @@ function aiTurn(){
   if(turn>30){over=true;return H.done({win:false,score:50,title:"Reforços inimigos!",sub:"A batalha se arrastou demais."});}
   say("Turno "+turn+": sua vez de marchar.");
 }
-H.btn(root,"🏁 Encerrar turno (IA joga)",()=>{if(!over){H.sfx("pop");aiTurn();}},true);
+H.btn(root,"Encerrar turno (IA joga)",()=>{if(!over){H.sfx("pop");aiTurn();}},true);
 build();
 }});

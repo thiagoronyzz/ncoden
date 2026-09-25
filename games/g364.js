@@ -24,13 +24,13 @@ function show(){
  s[0].forEach((f,i)=>{
   H.btn(brow,'"'+f+'"',()=>{
    if(over)return;
-   if(i===s[1]){score+=100;H.sfx('ok');say('✅ Mentira encontrada! +100');}
-   else{H.sfx('bad');say('❌ A mentira era: "'+s[0][s[1]]+'"');}
+   if(i===s[1]){score+=100;H.sfx('ok');say('✔ Mentira encontrada! +100');}
+   else{H.sfx('bad');say('✕ A mentira era: "'+s[0][s[1]]+'"');}
    round++;hud.set('pt',score);show();
   },false);
  });
 }
 function gameOver(){over=true;brow.innerHTML='';H.score(score);
-H.done({win:score>=400,score,title:score>=400?'🕵️ Detector humano!':'🕵️ Fim!',sub:score+'/600 pontos.'});}
+H.done({win:score>=400,score,title:score>=400?'Detector humano!':'Fim!',sub:score+'/600 pontos.'});}
 show();
 }});

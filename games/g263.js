@@ -9,7 +9,7 @@ const LV=[
  [{o:'r',k:0,p:2.2,ph:0},{o:'c',k:1,p:2.4,ph:1},{o:'r',k:3,p:2.2,ph:2},{o:'c',k:3,p:2.6,ph:0},{o:'r',k:5,p:2.2,ph:1},{o:'c',k:5,p:2.4,ph:2},{o:'r',k:7,p:2.6,ph:0}]
 ];
 const hud=H.hud(root,[['v','VIDAS',3],['nv','FASE','1/3']]);
-const say=H.msg(root,'Chegue ao cofre 💰! Lasers vermelhos queimam — atravesse quando apagarem. Setas ou toque na casa vizinha.');
+const say=H.msg(root,'Chegue ao cofre ! Lasers vermelhos queimam — atravesse quando apagarem. Setas ou toque na casa vizinha.');
 const o=H.cvs(root,460,460),x=o.x;
 const kb=H.keys(),dn={};kb.on((c,d)=>{if(d)tryMove(c);});
 function active(L){return((t+L.ph)%L.p)<L.p/2;}
@@ -36,7 +36,7 @@ function check(){
  }
 }
 function gameOver(win){over=true;const sc=win?400+lives*100:lvl*120;H.score(sc);
-H.done(win?{win:true,score:sc,title:'⚡ Ninja do laser!',sub:'3 salas sem um arranhão.'}:{win:false,score:sc,title:'Frito!',sub:'O laser te pegou na fase '+(lvl+1)+'.'});}
+H.done(win?{win:true,score:sc,title:'Ninja do laser!',sub:'3 salas sem um arranhão.'}:{win:false,score:sc,title:'Frito!',sub:'O laser te pegou na fase '+(lvl+1)+'.'});}
 H.onTap(o,(px,py)=>{
  const c=Math.floor((px-OX)/CS),r=Math.floor((py-OY)/CS);
  if(Math.abs(c-pc)+Math.abs(r-pr)===1)step(c-pc,r-pr);
@@ -55,7 +55,7 @@ H.loop(dt=>{
   else x.fillRect(OX+L.k*CS+CS/2-3,OY,6,N*CS);
  });
  x.font='26px system-ui';x.textAlign='center';
- x.fillText('💰',OX+7*CS+27,OY+0*CS+38);
+ x.fillText('i:money',OX+7*CS+27,OY+0*CS+38);
  x.fillStyle=onLaser()?'#D94E34':'#C4D645';
  x.beginPath();x.arc(OX+pc*CS+27,OY+pr*CS+27,14,0,7);x.fill();
  x.strokeStyle='#fff';x.lineWidth=2;x.stroke();

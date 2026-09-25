@@ -3,7 +3,7 @@ GREG(55,{
 init(root,H){
 let over=false,px=250,drops=[],sc=0,lives=3,t=60,spawn=0;
 const hud=H.hud(root,[["sc","PONTOS",0],["vd","VIDAS",3],["tp","TEMPO",60]]);
-const say=H.msg(root,"Mova o balde com <b>mouse, toque ou setas</b>. Gotas 💧 +10, lama 🟤 −1 vida!");
+const say=H.msg(root,"Mova o balde com <b>mouse, toque ou setas</b>. Gotas +10, lama ● −1 vida!");
 const o=H.cvs(root,500,400),x=o.x;
 const ptr=H.ptr(o);const kb=H.keys();
 H.loop(dt=>{
@@ -25,7 +25,7 @@ H.loop(dt=>{
       drops.splice(i,1);
       if(d.mud){lives--;hud.set("vd",lives);H.sfx("bad");
         if(lives<=0){over=true;return H.done({win:false,score:sc,title:"Balde de lama!",sub:sc+" pontos antes da terceira lama."});}
-        say("🟤 Lama! Vidas: "+lives);
+        say("● Lama! Vidas: "+lives);
       }else{sc+=10;H.score(sc);hud.set("sc",sc);H.beep(700,.05,"sine",.04);}
     }else if(d.y>o.H+16)drops.splice(i,1);
   }

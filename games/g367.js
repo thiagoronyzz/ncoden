@@ -29,14 +29,14 @@ function show(){
    if(over)return;
    story.push(o);
    const bot=MID[(Math.random()*MID.length)|0];
-   story.push('(Bot 🤖: '+bot+')');
+   story.push('(Bot : '+bot+')');
    round+=2;H.sfx('ok');show();
   },false);
  });
 }
 function gameOver(){over=true;brow.innerHTML='';
- st.innerHTML='<b>📖 SUA HISTÓRIA:</b><br><i>'+story.join(' ')+'</i>';
+ st.innerHTML='<b> SUA HISTÓRIA:</b><br><i>'+story.join(' ')+'</i>';
  H.score(story.length*20);
-H.done({win:true,score:story.length*20,title:'📖 História pronta!',sub:story.length+' trechos de pura arte.'});}
+H.done({win:true,score:story.length*20,title:'História pronta!',sub:story.length+' trechos de pura arte.'});}
 show();
 }});

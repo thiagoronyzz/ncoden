@@ -3,7 +3,7 @@ GREG(166,{
 init(root,H){
 let over=false,dom=[],falling=false,fallT=0;
 const hud=H.hud(root,[["dm","DOMINÓS","0/22"],["st","STATUS","monte"]]);
-const say=H.msg(root,"Clique para plantar dominós em <b>cadeia</b> (cada um mira o anterior). Chegue perto da ⭐ e aperte <b>DERRUBAR</b>! Alcance: 46px. Evite as 🌳.");
+const say=H.msg(root,"Clique para plantar dominós em <b>cadeia</b> (cada um mira o anterior). Chegue perto da ★ e aperte <b>DERRUBAR</b>! Alcance: 46px. Evite as .");
 const o=H.cvs(root,500,360),x=o.x;
 const OBS=[{x:170,y:130,r:34},{x:340,y:240,r:34}],STAR={x:450,y:70};
 H.onTap(o,(px,py)=>{
@@ -19,12 +19,12 @@ H.onTap(o,(px,py)=>{
   dom.push({x:px,y:py,a:prev?Math.atan2(py-prev.y,px-prev.x):0,f:-1});
   H.sfx("tick");hud.set("dm",dom.length+"/22");
 });
-H.btn(root,"🎬 DERRUBAR!",()=>{
+H.btn(root,"DERRUBAR!",()=>{
   if(over||falling||dom.length<3)return;
   falling=true;fallT=0;dom[0].f=0;
   hud.set("st","caindo…");H.sfx("ok");
 },true);
-H.btn(root,"↩️ Desfazer",()=>{if(!over&&!falling){dom.pop();hud.set("dm",dom.length+"/22");H.sfx("tick");}},false);
+H.btn(root,"↩ Desfazer",()=>{if(!over&&!falling){dom.pop();hud.set("dm",dom.length+"/22");H.sfx("tick");}},false);
 H.loop(dt=>{
   if(falling&&!over){
     fallT+=dt;
@@ -42,15 +42,15 @@ H.loop(dt=>{
       over=true;
       const dS=Math.hypot(last.x-STAR.x,last.y-STAR.y);
       if(dS<=70)return H.done({win:true,score:200+dom.length*10,title:"Reação perfeita!",sub:dom.length+" dominós até a estrela!"});
-      return H.done({win:false,score:dom.length*5,title:"Cadeia curta!",sub:"O último caiu longe da ⭐. Chegue mais perto!"});
+      return H.done({win:false,score:dom.length*5,title:"Cadeia curta!",sub:"O último caiu longe da ★. Chegue mais perto!"});
     }
     if(allF&&last.f<0){over=true;
       return H.done({win:false,score:dom.length*5,title:"Cadeia quebrou!",sub:"Um vão maior que 46px parou tudo."});}
   }
   x.fillStyle=H.C.paper;x.fillRect(0,0,o.W,o.H);
   x.font="30px serif";
-  OBS.forEach(b=>{x.fillText("🌳",b.x-15,b.y+10);});
-  x.font="34px serif";x.fillText("⭐",STAR.x-17,STAR.y+12);
+  OBS.forEach(b=>{x.fillText("i:tree",b.x-15,b.y+10);});
+  x.font="34px serif";x.fillText("★",STAR.x-17,STAR.y+12);
   x.strokeStyle=H.C.wasabi;x.lineWidth=2;
   x.beginPath();x.arc(STAR.x,STAR.y,70,0,7);x.stroke();
   dom.forEach((d,i)=>{
